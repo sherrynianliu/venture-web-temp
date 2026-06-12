@@ -1,0 +1,366 @@
+@use '../utils' as *;
+
+/*----------------------------------------*/
+/*  21. shop sidebar css start
+/*----------------------------------------*/
+.it-shop {
+  &-sidebar {
+    margin-right: 80px;
+    @media #{$lg} {
+      margin-right: 30px;
+    }
+    @media #{$md,$xs} {
+      margin-right: 0;
+    }
+    & .tagcloud a {
+      background-color: var(--it-gray-1);
+      &:hover {
+        background-color: var(--it-theme-1);
+      }
+    }
+    &-left {
+      margin-left: 30px;
+      @media #{$xl,$lg,$md,$xs} {
+        margin-left: 0;
+      }
+    }
+    & .it-blog-sidebar-search button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 30px;
+      border-radius: 50%;
+      display: inline-block;
+      color: var(--it-common-black);
+      font-size: 18px;
+    }
+  }
+  &-widget {
+    &-title {
+      font-weight: 600;
+      font-size: 24px;
+      padding-bottom: 15px;
+      margin-bottom: 35px;
+      color: var(--it-common-black);
+      border-bottom: 1px solid rgba($color: #0f313a, $alpha: 0.1);
+      &.no-border {
+        border: 0;
+        padding-bottom: 0;
+        margin-bottom: 25px;
+      }
+    }
+    &-filter {
+      & .ui-widget.ui-widget-content {
+        height: 3px;
+        background-color: #ededed;
+        border: 0;
+        position: relative;
+      }
+
+      & .ui-slider-horizontal .ui-slider-range {
+        background-color: var(--it-theme-1);
+      }
+
+      & .ui-slider .ui-slider-handle {
+        position: absolute;
+        top: -7px;
+        width: 5px;
+        height: 17px;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+        background-color: var(--it-theme-1);
+      }
+
+      &-info {
+        & .input-range {
+          & input {
+            width: 100%;
+            height: auto;
+            padding: 0;
+            border: 0;
+            font-size: 16px;
+            font-weight: 400;
+            background-color: transparent;
+            color: var(--it-common-black);
+          }
+        }
+        & .it-shop-widget-filter-btn {
+          font-weight: 400;
+          font-size: 14px;
+          padding: 2px 21px;
+          background-color: #f5f5f5;
+          color: var(--it-common-black);
+          &:hover {
+            color: var(--it-common-white);
+            background-color: var(--it-common-black);
+          }
+        }
+      }
+    }
+    &-checkbox {
+      & ul {
+        & li {
+          list-style: none;
+          &:not(:last-child) {
+            margin-bottom: 4px;
+          }
+          & input {
+            display: none;
+
+            & .single-widget-category input:checked + label::after {
+              opacity: 1;
+              visibility: visible;
+            }
+
+            &:checked {
+              & ~ label {
+                &::after {
+                  background-color: var(--it-common-black);
+                  border-color: var(--it-common-black);
+                }
+                &::before {
+                  visibility: visible;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+          & label {
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+            padding-left: 26px;
+            color: #55585b;
+            &::after {
+              position: absolute;
+              content: '';
+              top: 3px;
+              left: 0;
+              width: 16px;
+              height: 16px;
+              line-height: 12px;
+              text-align: center;
+              border: 2px solid #dadada;
+              z-index: -1;
+              transition: 0.2s;
+            }
+            &::before {
+              position: absolute;
+              content: url('../../img/icon/check.svg');
+              top: 3px;
+              left: 0;
+              width: 16px;
+              height: 16px;
+              line-height: 12px;
+              text-align: center;
+              visibility: hidden;
+              opacity: 0;
+              color: var(--it-common-white);
+              transition: 0.2s;
+            }
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    &-categories {
+      height: 178px;
+      overflow-y: scroll;
+      overflow-y: scroll;
+      overscroll-behavior-y: contain;
+      scrollbar-width: thin;
+      padding-right: 10px;
+      & ul {
+        & li {
+          list-style: none;
+          width: 100%;
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
+          & button {
+            font-weight: 500;
+            font-size: 16px;
+            position: relative;
+            padding-left: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            &::after {
+              position: absolute;
+              content: '';
+              top: 8px;
+              left: 0;
+              width: 6px;
+              height: 6px;
+              text-align: center;
+              background-color: #00000059;
+              border-radius: 50%;
+              transition: 0.3s;
+            }
+            &:hover {
+              color: var(--it-theme-1);
+              &::after {
+                background-color: var(--it-theme-1);
+              }
+              & span {
+                border-color: var(--it-theme-1);
+              }
+            }
+
+            &.active {
+              color: var(--it-theme-1);
+              &::after {
+                background-color: var(--it-theme-1);
+              }
+              & span {
+                border-color: var(--it-theme-1);
+              }
+            }
+
+            & span {
+              font-weight: 500;
+              font-size: 12px;
+              line-height: 1;
+              border: 1px solid #eaeaea;
+              border-radius: 8px;
+              padding: 5px 6px 3px;
+              transition: 0.3s;
+            }
+          }
+        }
+      }
+    }
+    &-checkbox-circle {
+      position: relative;
+      & span {
+        &.all-colors {
+          background-color: #ededed;
+        }
+        &.red {
+          background-color: #ff401f;
+        }
+        &.dark_blue {
+          background-color: #4666ff;
+        }
+        &.orange {
+          background-color: #ff9e2c;
+        }
+        &.purple {
+          background-color: #b615fd;
+        }
+        &.yellow {
+          background-color: #ffd747;
+        }
+        &.green {
+          background-color: #41cf0f;
+        }
+      }
+      &-list {
+        & ul {
+          & li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            &:not(:last-child) {
+              margin-bottom: 5px;
+            }
+
+            &:hover {
+              & .it-shop-widget-checkbox-circle-number {
+                border-color: var(--it-common-black);
+              }
+            }
+          }
+        }
+      }
+      &-number {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 8px;
+        padding: 5px 6px 3px;
+        transition: 0.3s;
+        border: 1px solid #eaeaea;
+      }
+      & .it-shop-widget-checkbox-circle-self {
+        position: absolute;
+        content: '';
+        top: 1px;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        z-index: -1;
+        border-radius: 50%;
+        transition: 0.2s;
+      }
+      & > input[type='checkbox'] {
+        display: none;
+        .single-widget-category input:checked + label::after {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        &:checked {
+          & ~ label {
+            &::before {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+        }
+      }
+      label {
+        font-size: 16px;
+        color: #55585b;
+        position: relative;
+        padding-left: 26px;
+        &::before {
+          position: absolute;
+          content: url('../../img/icon/check.svg');
+          top: 0px;
+          left: 0;
+          width: 18px;
+          height: 18px;
+          line-height: 18px;
+          text-align: center;
+          visibility: hidden;
+          opacity: 0;
+          color: var(--it-common-white);
+          transition: 0.1s;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    &-brand {
+      margin-right: 40px;
+      &-item {
+        width: 50%;
+        flex: 0 0 50%;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+// Price filter Slider
+.it-shop-widget-content .rc-slider-handle {
+  width: 4px;
+  height: 18px;
+  margin-top: -7px;
+  background-color: var(--it-common-orange);
+  border-radius: 0;
+  cursor: pointer;
+}
