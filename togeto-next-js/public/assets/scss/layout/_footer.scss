@@ -44,6 +44,10 @@
             font-size: 17px;
             color: var(--it-common-white);
             position: relative;
+            // Hang-indent wrapped lines so they align with the first line's
+            // text (after the dash) instead of dropping back under the dash.
+            display: flex;
+            align-items: baseline;
             &::before {
               content: '';
               height: 1px;
