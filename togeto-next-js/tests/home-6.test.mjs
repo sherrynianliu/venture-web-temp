@@ -12,7 +12,7 @@ test('home 06 route is registered as a separate home page', async () => {
   const page = await readProjectFile('src/app/(homes)/home-6/page.tsx');
 
   assert.match(page, /HomeSixMain/);
-  assert.match(page, /Home Six Page/);
+  assert.match(page, /Venture Electronics/);
 });
 
 test('home 06 keeps the current template shell and effects', async () => {

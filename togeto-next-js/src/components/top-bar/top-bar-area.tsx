@@ -12,14 +12,14 @@ const TopBarArea = () => {
                 <li className="d-none d-lg-inline-block">
                   <span>
                     <Phone />
-                    <a href="tel:008757845682">(91) 187 047 5767</a>
+                    <a href="tel:+86075585296692">+86-0755-8529 6692</a>
                   </span>
                 </li>
                 <li>
                   <span>
                     <i className="fa-light fa-envelope-open-text"></i>
-                    <a href="mailto:mcssainfo@gmail.com">
-                      togetoinfo@gmail.com
+                    <a href="mailto:info@venture-mfg.com">
+                      info@venture-mfg.com
                     </a>
                   </span>
                 </li>
@@ -28,9 +28,9 @@ const TopBarArea = () => {
                     <i className="fa-light fa-location-dot"></i>
                     <a
                       target="_blank"
-                      href="https://www.google.com/maps/@23.843848,90.3081992,17.5z?entry=ttu&g_ep=EgoyMDI1MDEwMS4wIKXMDSoASAFQAw%3D%3D"
+                      href="https://maps.google.com/?q=Chentian+Industrial+Area+Xixiang+Bao%27an+Shenzhen"
                     >
-                      238, Arimantab, Moska - USA.
+                      Shenzhen, Guangdong, China
                     </a>
                   </span>
                 </li>

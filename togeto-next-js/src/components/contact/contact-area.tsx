@@ -21,8 +21,8 @@ const ContactArea = () => {
                   </i>
                   <div>
                     <span>Have any question?</span>
-                    <a className="border-line-black" href="tel:008757845682">
-                      (00) 875 784 5682
+                    <a className="border-line-black" href="tel:+86075585296692">
+                      +86-0755-8529 6692
                     </a>
                   </div>
                 </li>
@@ -34,9 +34,9 @@ const ContactArea = () => {
                     <span>Write email</span>
                     <a
                       className="border-line-black"
-                      href="mailto:togetoinfo@gmail.com"
+                      href="mailto:info@venture-mfg.com"
                     >
-                      togetoinfo@gmail.com
+                      info@venture-mfg.com
                     </a>
                   </div>
                 </li>
@@ -49,9 +49,9 @@ const ContactArea = () => {
                     <a
                       className="border-line-black"
                       target="_blank"
-                      href="https://www.google.com/maps/@-5.4432737,-73.6358025,8.83z?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D"
+                      href="https://maps.google.com/?q=Chentian+Industrial+Area+Xixiang+Bao%27an+Shenzhen"
                     >
-                      66 broklyn golden street. New York
+                      Building 36, Chentian Industrial Area, Xixiang, Bao&apos;an District, Shenzhen, Guangdong, China
                     </a>
                   </div>
                 </li>

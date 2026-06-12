@@ -46,7 +46,7 @@ const OffCanvas = () => {
               <Image
                 className="image-height-auto"
                 src={Logo}
-                alt="Togeto"
+                alt="Venture Electronics"
                 width={163}
                 height={43}
               />
@@ -82,7 +82,7 @@ const OffCanvas = () => {
               </div>
               <div className="itoffcanvas__info-address">
                 <span>Phone</span>
-                <a href="tel:(00)45611227890">(00) 456 1122 7890</a>
+                <a href="tel:+86075585296692">+86-0755-8529 6692</a>
               </div>
             </div>
             <div className="it-info-wrapper mb-20 d-flex align-items-center">
@@ -94,11 +94,11 @@ const OffCanvas = () => {
               <div className="itoffcanvas__info-address">
                 <span>Location</span>
                 <a
-                  href="https://www.google.com/maps/@37.4801311,22.8928877,3z"
+                  href="https://maps.google.com/?q=Chentian+Industrial+Area+Xixiang+Bao%27an+Shenzhen"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Riverside 255, San Francisco, USA
+                  Building 36, Chentian Industrial Area, Xixiang, Bao&apos;an District, Shenzhen, Guangdong, China
                 </a>
               </div>
             </div>

@@ -29,7 +29,7 @@ const SearchPopup = () => {
               <div className="search__top d-flex justify-content-between align-items-center">
                 <div className="search__logo">
                   <Link href="/">
-                    <Image src={Logo} alt="Togeto" width={163} height={43} />
+                    <Image src={Logo} alt="Venture Electronics" width={163} height={46} />
                   </Link>
                 </div>
                 <div className="search__close">

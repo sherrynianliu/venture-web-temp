@@ -13,7 +13,8 @@ import { useVentureReveals } from '@/components/venture-home/use-venture-reveals
 import { setIsOnePage, setOnePageData } from '@/redux/slices/header-slice';
 import Wrapper from '@/layouts/wrapper';
 import { Header } from '@/components/venture-site/site/Header';
-import { Footer } from '@/components/venture-site/site/Footer';
+import FooterOne from '@/layouts/footers/footer-one';
+import TopBarArea from '@/components/top-bar/top-bar-area';
 import HomeSixContent from '@/components/venture-home/home-six-content';
 import { LOADING_ANIMATION_TIMEOUT } from '@/utils/constants';
 
@@ -43,14 +44,20 @@ const HomeSixMain = () => {
 
   return (
     <Wrapper>
+      {/* Template top contact strip, fixed above the glass header. */}
+      <div className="venture-top-strip">
+        <TopBarArea />
+      </div>
       {/* `.venture-site` scopes the ported Venture design system (venture-exact.css)
           to this page only; the template Wrapper still provides preloader,
           scroll-to-top and WOW.js / GSAP init for the layered effects. */}
       <div className="venture-site">
         <Header />
         <HomeSixContent />
-        <Footer />
       </div>
+      {/* Template footer (FooterOne) — outside .venture-site so it uses the
+          site-wide togeto styles, consistent with the rest of the pages. */}
+      <FooterOne />
     </Wrapper>
   );
 };

@@ -23,7 +23,7 @@ const FooterOne = () => {
                 <div className="it-footer-widget it-footer-col-1">
                   <div className="it-footer-widget-logo mb-30">
                     <Link href="/">
-                      <Image src={Logo} alt="Togeto" width={163} height={43} />
+                      <Image src={Logo} alt="Venture Electronics" width={163} height={46} />
                     </Link>
                   </div>
                   <div className="it-footer-widget-text">

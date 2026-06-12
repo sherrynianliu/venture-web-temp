@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { navItems, routes, type NavItem } from "@/components/venture-site/site-data";
@@ -32,12 +33,15 @@ export function Header() {
     <header className={`site-header${scrolled ? " site-header--scrolled" : " site-header--glass"}`}>
       <div className="site-header__inner">
         <Link className="brand-mark" href={routes.home} aria-label="Venture Electronics home">
-          <img
+          {/* Glass (dark) state shows the white logo; on scroll the bar turns
+              white, so swap to the dark/colored logo for contrast. */}
+          <Image
             className="brand-mark__logo"
-            src="/venture-logo.png"
+            src={scrolled ? "/venture-logo-color.png" : "/venture-logo.png"}
             alt="Venture Electronics — PCBA · EMS · Box Build"
             width={233}
             height={66}
+            priority
           />
         </Link>
 

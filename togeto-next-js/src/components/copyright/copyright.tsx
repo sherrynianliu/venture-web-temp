@@ -6,8 +6,7 @@ const Copyright = () => {
           <div className="col-lg-6">
             <div className="it-copyright-left text-center text-lg-start">
               <p className="mb-0">
-                © 2025 <a href="#">Togeto</a> All Rights Reserved, Created by{' '}
-                <a href="#">OrdainIt.</a>
+                © 2026 Venture Electronics Technology Ltd. All Rights Reserved.
               </p>
             </div>
           </div>

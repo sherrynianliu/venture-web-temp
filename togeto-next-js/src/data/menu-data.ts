@@ -69,73 +69,40 @@ const homeMenuData: IMenuDT[] = [
 ];
 
 export const menuData: IMenuDT[] = [
+  // Venture Electronics sitemap — unified across all template pages.
+  // Sections without a dedicated page yet are mapped to the closest existing
+  // page as a placeholder until those pages are built.
+  // Home keeps the multi-home mega-menu so every home variant (incl. Home 06)
+  // stays reachable from the nav.
   ...homeMenuData,
-  {
-    id: 2,
-    title: 'About Us',
-    link: '/about',
-  },
+  { id: 2, title: 'About', link: '/about' },
   {
     id: 3,
     title: 'Services',
     link: '/service',
     dropdown_menus: [
-      { title: 'Service', link: '/service' },
-      { title: 'Service Details', link: '/service-details/1' },
+      { title: 'PCB Assembly / PCBA', link: '/service-details/1' },
+      { title: 'Turnkey PCB Assembly', link: '/service-details/2' },
+      { title: 'EMS & Box Build', link: '/service-details/3' },
+      { title: 'Component Sourcing & BOM Review', link: '/service-details/4' },
+      { title: 'Testing & Quality Control', link: '/service-details/5' },
+      { title: 'PCB Fabrication', link: '/service-details/6' },
+      { title: 'All Services', link: '/service' },
     ],
   },
+  { id: 4, title: 'Quality & Testing', link: '/service-details/5' },
+  { id: 5, title: 'Engineering', link: '/service-details/6' },
+  { id: 6, title: 'Industries', link: '/portfolio' },
   {
-    id: 4,
-    title: 'Pages',
-    link: '#',
-    dropdown_menus: [
-      { title: 'Team', link: '/team' },
-      { title: 'Team Details', link: '/team-details/1' },
-      { title: 'Price', link: '/price' },
-      { title: 'Testimonial', link: '/testimonial' },
-      { title: 'Shop', link: '/shop' },
-      { title: 'Shop Sidebar', link: '/shop-sidebar' },
-      { title: 'Shop Details', link: '/shop-details/1' },
-      { title: 'Wishlist', link: '/wishlist' },
-      { title: 'Compare', link: '/compare' },
-      { title: 'Cart', link: '/cart' },
-      { title: 'Checkout', link: '/checkout' },
-      { title: 'Faq', link: '/faq' },
-      { title: 'Error', link: '/404' },
-    ],
-  },
-  {
-    id: 5,
-    title: 'Portfolio',
-    link: '/portfolio',
-    dropdown_menus: [
-      { title: 'Portfolio', link: '/portfolio' },
-      { title: 'Portfolio Details', link: '/portfolio-details/1' },
-    ],
-  },
-  {
-    id: 6,
-    title: 'Blog',
+    id: 7,
+    title: 'Resources',
     link: '/blog',
     dropdown_menus: [
       { title: 'Blog', link: '/blog' },
-      { title: 'Blog Left Sidebar', link: '/blog-left-sidebar' },
-      { title: 'Blog Right Sidebar', link: '/blog-right-sidebar' },
-      {
-        title: 'Blog Details Left Sidebar',
-        link: '/blog-details-left-sidebar/1',
-      },
-      {
-        title: 'Blog Details Right Sidebar',
-        link: '/blog-details-right-sidebar/1',
-      },
+      { title: 'FAQ', link: '/faq' },
     ],
   },
-  {
-    id: 7,
-    title: 'Contact',
-    link: '/contact',
-  },
+  { id: 8, title: 'Contact', link: '/contact' },
 ];
 
 export const onePageDataOne: IMenuDT[] = [

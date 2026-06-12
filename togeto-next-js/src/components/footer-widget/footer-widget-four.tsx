@@ -12,26 +12,26 @@ const FooterWidgetFour = () => {
           <a
             className="border-line-white"
             target="_blank"
-            href="https://www.google.com/maps/dir///@24.4503253,17.1644279,4.17z?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D"
+            href="https://maps.google.com/?q=Chentian+Industrial+Area+Xixiang+Bao%27an+Shenzhen"
           >
-            11555 Heron Bay Blvd, Suite 200, Coral Springs, Florida, 33076,
-            United States
+            Building 36, Chentian Industrial Area, Xixiang, Bao&apos;an District, Shenzhen,
+            Guangdong, China
           </a>
         </div>
         <div className="it-footer-widget-tel-box mb-25">
           <span>
             <Mail />
           </span>
-          <a className="border-line-white" href="mailto:togetoinfo@gmail.com">
-            togetoinfo@gmail.com
+          <a className="border-line-white" href="mailto:info@venture-mfg.com">
+            info@venture-mfg.com
           </a>
         </div>
         <div className="it-footer-widget-tel-box">
           <span>
             <PhoneTwo />
           </span>
-          <a className="border-line-white" href="tel:912-345-987">
-            912-345-987
+          <a className="border-line-white" href="tel:+86075585296692">
+            +86-0755-8529 6692
           </a>
         </div>
       </div>

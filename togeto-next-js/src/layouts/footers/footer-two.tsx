@@ -8,14 +8,7 @@ import FooterWidgetFour from '@/components/footer-widget/footer-widget-four';
 
 import shapeImg from '@/assets/img/shape/footer-1-1.png';
 import Logo from '@/assets/img/logo/logo-white.png';
-import { Dribble, Facebook, Instagram, X } from '@/components/svg';
-
-const socialData = [
-  { id: 1, url: '#', platform: <Facebook /> },
-  { id: 2, url: '#', platform: <X /> },
-  { id: 3, url: '#', platform: <Dribble /> },
-  { id: 4, url: '#', platform: <Instagram /> },
-];
+import SocialBox from '@/components/social/social-box';
 
 const FooterTwo = () => {
   return (
@@ -44,7 +37,7 @@ const FooterTwo = () => {
                 <div className="it-footer-widget it-footer-col-1">
                   <div className="it-footer-widget-logo mb-30">
                     <Link href="/">
-                      <Image src={Logo} alt="Togeto" width={163} height={43} />
+                      <Image src={Logo} alt="Venture Electronics" width={163} height={46} />
                     </Link>
                   </div>
                   <div className="it-footer-widget-text">
@@ -54,11 +47,7 @@ const FooterTwo = () => {
                     </p>
                   </div>
                   <div className="it-footer-widget-social">
-                    {socialData.map((social) => (
-                      <Link key={social.id} href={social.url}>
-                        <span>{social.platform}</span>
-                      </Link>
-                    ))}
+                    <SocialBox />
                   </div>
                 </div>
               </div>

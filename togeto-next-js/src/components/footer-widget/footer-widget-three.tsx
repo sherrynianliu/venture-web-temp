@@ -13,18 +13,18 @@ const FooterWidgetThree = () => {
           <a
             className="border-line-white"
             target="_blank"
-            href="https://www.google.com/maps/dir///@24.4503253,17.1644279,4.17z?entry=ttu&g_ep=EgoyMDI0MTAwOS4wIKXMDSoASAFQAw%3D%3D"
+            href="https://maps.google.com/?q=Chentian+Industrial+Area+Xixiang+Bao%27an+Shenzhen"
           >
-            11555 Heron Bay Blvd, Suite 200, Coral Springs, Florida, 33076,
-            United States
+            Building 36, Chentian Industrial Area, Xixiang, Bao&apos;an District, Shenzhen,
+            Guangdong, China
           </a>
         </div>
         <div className="it-footer-widget-tel-box mb-25">
           <span>
             <Mail />
           </span>
-          <a className="border-line-white" href="mailto:togetoinfo@gmail.com">
-            togetoinfo@gmail.com
+          <a className="border-line-white" href="mailto:info@venture-mfg.com">
+            info@venture-mfg.com
           </a>
         </div>
         <div className="it-footer-widget-social">
