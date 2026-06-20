@@ -315,9 +315,12 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
   - URL: `http://localhost:3000`.
 - Smoke checks:
   - `curl -I http://127.0.0.1:3000/` -> `200 OK`.
+  - `curl -I http://127.0.0.1:3000/contact` -> `200 OK`.
+  - `curl -I http://127.0.0.1:3000/request-a-quote` -> `200 OK`.
   - `curl -I http://127.0.0.1:3000/services/pcb-assembly-pcba` -> `200 OK`.
   - `curl -I http://127.0.0.1:3000/home-6` -> `308 Permanent Redirect` to `/`.
   - `curl -I http://127.0.0.1:3000/blog` -> `307 Temporary Redirect` to `/`.
+  - Note: Next canonicalizes trailing-slash requests such as `/contact/` to `/contact` with `308`.
   - CSS static chunk check after Webpack build returned `200 OK`.
 - Screenshot:
   - Repo asset: `docs/devlog/assets/venture-pcba-sample-webpack.png`.
