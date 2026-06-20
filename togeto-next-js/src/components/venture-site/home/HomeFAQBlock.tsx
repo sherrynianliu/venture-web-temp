@@ -55,7 +55,7 @@ export function HomeFAQBlock() {
               </details>
             ))}
 
-            <Link href={routes.faq} className="home-faq__more">
+            <Link href={routes.resources} className="home-faq__more">
               View all FAQs
               <span aria-hidden="true">→</span>
             </Link>

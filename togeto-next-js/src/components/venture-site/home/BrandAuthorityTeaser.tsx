@@ -15,11 +15,11 @@ export function BrandAuthorityTeaser() {
         </div>
 
         <div className="teaser-actions">
-          <CTAButton href={routes.brandClarification} variant="secondary">
-            Read Brand Clarification
+          <CTAButton href={routes.officialResources} variant="secondary">
+            Read Official Resources
           </CTAButton>
           <CTAButton href={routes.officialResources} variant="secondary">
-            View Official Resources
+            View Domain Guidance
           </CTAButton>
         </div>
       </div>

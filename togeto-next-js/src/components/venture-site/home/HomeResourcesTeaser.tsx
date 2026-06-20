@@ -35,7 +35,7 @@ export function HomeResourcesTeaser() {
             Guides and insights on PCBA quoting, turnkey assembly, sourcing, testing, and EMS — to
             help you prepare a clearer RFQ.
           </p>
-          <Link href={routes.blog} className="home-blog__cta">
+          <Link href={routes.insights} className="home-blog__cta">
             View all posts
             <span aria-hidden="true">→</span>
           </Link>
@@ -43,7 +43,7 @@ export function HomeResourcesTeaser() {
 
         <div className="home-blog__cards">
           {posts.map((post) => (
-            <Link href={routes.blog} className="blog-card" key={post.title}>
+            <Link href={routes.insights} className="blog-card" key={post.title}>
               <span className="blog-card__media">
                 <Image
                   className="blog-card__img"

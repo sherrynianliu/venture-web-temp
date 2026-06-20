@@ -20,7 +20,7 @@ const services: Svc[] = [
   },
   {
     label: "Turnkey PCB Assembly",
-    href: routes.turnkey,
+    href: routes.pcba,
     description: "Full-process delivery, files to tested boards.",
     image: "/hero-assembly-robots.jpg",
   },
@@ -33,19 +33,19 @@ const services: Svc[] = [
   },
   {
     label: "Component Sourcing & BOM Review",
-    href: routes.componentSourcingBomReview,
+    href: routes.componentSourcingBomDfmReview,
     description: "Supply-chain and BOM review support.",
     image: "/hero-circuit-globe.jpg",
   },
   {
     label: "Testing & Quality Control",
-    href: routes.testingQualityControl,
+    href: routes.qualityTesting,
     description: "Quality and testing across workflows.",
     image: "/identity-smt-floor.jpg",
   },
   {
     label: "PCB Fabrication",
-    href: routes.pcbFabrication,
+    href: routes.pcbFabricationSupport,
     description: "Bare-board manufacturing support.",
     image: "/identity-pcb-closeup.jpg",
   },

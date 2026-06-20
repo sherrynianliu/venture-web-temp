@@ -1,14 +1,12 @@
 import { Metadata } from 'next';
-import HomeOnePage from './(homes)/home-1/page';
+import HomeSixMain from '@/views/home-6/home-6';
 
 export const metadata: Metadata = {
-  title: 'Togeto - Home Page',
+  title: 'Venture Electronics | PCB Assembly, PCBA & EMS Manufacturing Partner',
+  description:
+    'China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner with turnkey PCBA, sourcing, testing, and box build support.',
 };
 
 export default function Home() {
-  return (
-    <>
-      <HomeOnePage />
-    </>
-  );
+  return <HomeSixMain />;
 }

@@ -15,7 +15,7 @@ export function CatalogBanner() {
             Get the PCB &amp; Assembly catalog online today — one reference covering Venture&apos;s
             PCBA, EMS, component sourcing, and testing capabilities.
           </p>
-          <Link href={routes.catalog} className="catalog__btn">
+          <Link href={routes.resources} className="catalog__btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 3v12" />
               <path d="m7 10 5 5 5-5" />

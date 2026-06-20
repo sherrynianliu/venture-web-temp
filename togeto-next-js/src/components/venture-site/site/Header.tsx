@@ -19,8 +19,13 @@ function NavigationChildren({ items, nested = false }: { items: NavItem[]; neste
   );
 }
 
-export function Header() {
+type HeaderProps = {
+  variant?: "glass" | "solid";
+};
+
+export function Header({ variant = "glass" }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const solid = variant === "solid" || scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -30,14 +35,14 @@ export function Header() {
   }, []);
 
   return (
-    <header className={`site-header${scrolled ? " site-header--scrolled" : " site-header--glass"}`}>
+    <header className={`site-header${solid ? " site-header--scrolled" : " site-header--glass"}`}>
       <div className="site-header__inner">
         <Link className="brand-mark" href={routes.home} aria-label="Venture Electronics home">
-          {/* Glass (dark) state shows the white logo; on scroll the bar turns
-              white, so swap to the dark/colored logo for contrast. */}
+          {/* The homepage opens in glass mode over the hero; inner pages use
+              solid mode from first paint so the logo and navigation stay readable. */}
           <Image
             className="brand-mark__logo"
-            src={scrolled ? "/venture-logo-color.png" : "/venture-logo.png"}
+            src={solid ? "/venture-logo-color.png" : "/venture-logo.png"}
             alt="Venture Electronics — PCBA · EMS · Box Build"
             width={233}
             height={66}

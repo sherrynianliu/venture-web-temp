@@ -10,21 +10,21 @@ type Cap = { icon: CapIcon; title: string; desc: string; href: string };
 const left: Cap[] = [
   {
     icon: "traceability",
-    title: "Smart SMD Manufacturing & Traceability",
-    desc: "ERP, MES, and barcode-driven traceability support production visibility, quality tracking, and process improvement.",
+    title: "Project Records & Traceability Planning",
+    desc: "Project files, BOM revisions, inspection points, test requirements, and delivery records can be discussed for each PCBA / EMS scope.",
     href: routes.pcba,
   },
   {
     icon: "smt",
     title: "SMT Placement & Soldering",
-    desc: "High-speed SMT placement, leaded / lead-free reflow, nitrogen vacuum reflow, and wave soldering across a wide range of builds.",
-    href: routes.smtThtBga,
+    desc: "SMT, THT, mixed assembly, and soldering requirements are reviewed against the customer's files and project needs.",
+    href: routes.pcba,
   },
   {
     icon: "inspection",
     title: "SPI, AOI, FAI & X-Ray Inspection",
     desc: "Solder paste control, placement verification, and hidden-joint review with SPI, AOI, first article, and X-Ray inspection.",
-    href: routes.testingQualityControl,
+    href: routes.qualityTesting,
   },
 ];
 
@@ -33,19 +33,19 @@ const right: Cap[] = [
     icon: "test",
     title: "Electrical, ICT & Functional Testing",
     desc: "Electrical performance, ICT / FCT, insulation impedance, voltage withstand, and leakage testing planned to product needs.",
-    href: routes.electricalTesting,
+    href: routes.qualityTesting,
   },
   {
     icon: "coating",
     title: "Cleaning, Coating & Protection",
     desc: "Aqueous cleaning, conformal coating, glue filling, depaneling, and UV laser marking for project-specific protection.",
-    href: routes.engineeringSupport,
+    href: routes.qualityTesting,
   },
   {
     icon: "reliability",
     title: "Reliability & Environmental Test Support",
-    desc: "Thermal shock and programmable temperature / humidity testing for reliability validation or environmental stress review.",
-    href: routes.productReliabilityTesting,
+    desc: "Reliability or environmental validation can be discussed when the project requirements, standards, samples, and evidence boundary are confirmed.",
+    href: routes.qualityTesting,
   },
 ];
 

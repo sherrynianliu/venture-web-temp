@@ -3,8 +3,8 @@ import { pageData } from "@/components/venture-site/site-data";
 import { createPageMetadata } from "@/components/venture-site/pages/page-metadata";
 import { RoutePage } from "@/components/venture-site/pages/RoutePage";
 
-export const metadata: Metadata = createPageMetadata(pageData.about);
+export const metadata: Metadata = createPageMetadata(pageData.privacyPolicy);
 
-export default function AboutPage() {
-  return <RoutePage page={pageData.about} />;
+export default function PrivacyPolicyPage() {
+  return <RoutePage page={pageData.privacyPolicy} />;
 }

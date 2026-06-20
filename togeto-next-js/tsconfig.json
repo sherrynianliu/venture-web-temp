@@ -16,11 +16,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": [
         "./src/*"
@@ -29,12 +24,25 @@
         "./public/assets/*"
       ]
     },
-    "target": "ES2017"
+    "target": "ES2017",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "src/app/**/*.ts",
+    "src/app/**/*.tsx",
+    "src/components/venture-site/**/*.ts",
+    "src/components/venture-site/**/*.tsx",
+    "src/layouts/wrapper.tsx",
+    "src/utils/**/*.ts",
+    "src/utils/**/*.tsx",
+    "src/utils/**/*.mjs",
+    "src/views/home-6/**/*.ts",
+    "src/views/home-6/**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],

@@ -37,3 +37,7 @@
 .venture-site .site-header {
   top: 40px;
 }
+
+.venture-site .page-shell {
+  padding-top: calc(var(--header-h) + 74px);
+}
