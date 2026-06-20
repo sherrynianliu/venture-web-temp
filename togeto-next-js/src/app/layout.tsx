@@ -3,7 +3,6 @@ import type { CSSProperties, ReactNode } from 'react';
 import './globals.scss';
 import './(homes)/home-6/venture-exact.css';
 import './(homes)/home-6/venture-overrides.css';
-import StoreProvider from './store-provider';
 
 const ventureFontVariables = {
   '--it-ff-body':
@@ -26,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body suppressHydrationWarning={true} style={ventureFontVariables}>
-        <StoreProvider>{children}</StoreProvider>
+        {children}
       </body>
     </html>
   );
