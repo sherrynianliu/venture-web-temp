@@ -115,14 +115,30 @@ function Feature({ cap }: { cap: Cap }) {
   );
 }
 
-export function CapabilityEvidence() {
+type CapabilityEvidenceProps = {
+  eyebrow?: string;
+  title?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+};
+
+export function CapabilityEvidence({
+  eyebrow = "Capabilities",
+  title = "Production and quality support behind each PCBA / EMS project",
+  primaryLabel = "View Full Capability Matrix",
+  primaryHref = routes.qualityTesting,
+  secondaryLabel = "Request Project Review",
+  secondaryHref = routes.requestQuote,
+}: CapabilityEvidenceProps = {}) {
   return (
     <section className="cap" aria-labelledby="cap-title">
       <div className="cap__inner">
         <header className="cap__head">
-          <p className="cap__eyebrow">Capabilities</p>
+          <p className="cap__eyebrow">{eyebrow}</p>
           <h2 id="cap-title" className="cap__title">
-            Production and quality support behind each PCBA / EMS project
+            {title}
           </h2>
         </header>
 
@@ -152,9 +168,9 @@ export function CapabilityEvidence() {
         </div>
 
         <div className="cap__actions">
-          <CTAButton href={routes.qualityTesting}>View Full Capability Matrix</CTAButton>
-          <CTAButton href={routes.requestQuote} variant="secondary">
-            Request Project Review
+          <CTAButton href={primaryHref}>{primaryLabel}</CTAButton>
+          <CTAButton href={secondaryHref} variant="secondary">
+            {secondaryLabel}
           </CTAButton>
         </div>
       </div>

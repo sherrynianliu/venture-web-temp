@@ -4081,6 +4081,82 @@
   background: var(--card-white);
 }
 
+.venture-site .page-shell.page-shell--with-enhancements {
+  width: 100%;
+  max-width: none;
+  padding-bottom: 0;
+}
+
+.venture-site .stage3-main-wrap,
+.venture-site .stage3-tail-wrap {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.venture-site .stage3-tail-wrap {
+  padding-bottom: 92px;
+}
+
+.venture-site .stage3-page--tail {
+  display: block;
+}
+
+.venture-site .stage3-enhancements {
+  margin: clamp(28px, 5vw, 64px) 0;
+}
+
+.venture-site .stage3-enhancements > section,
+.venture-site .stage3-enhancements > .project-path-wrap {
+  margin-top: 0;
+}
+
+.venture-site .stage3-enhancements > section + section,
+.venture-site .stage3-enhancements > .project-path-wrap + section {
+  margin-top: 0;
+}
+
+.venture-site .stage3-enhancements .core-services,
+.venture-site .stage3-enhancements .cap,
+.venture-site .stage3-enhancements .home-faq,
+.venture-site .stage3-enhancements .home-blog {
+  padding-top: clamp(54px, 7vw, 76px);
+  padding-bottom: clamp(56px, 7vw, 78px);
+}
+
+.venture-site .stage3-enhancements .project-path-wrap {
+  padding: clamp(38px, 6vw, 68px) 0;
+  background: var(--card-white);
+}
+
+.venture-site .stage3-enhancements .project-path {
+  margin-top: 0;
+}
+
+.venture-site .stage3-enhancements .identity {
+  padding-top: clamp(50px, 7vw, 76px);
+  padding-bottom: clamp(50px, 7vw, 76px);
+}
+
+.venture-site .stage3-enhancements .factory {
+  padding-top: clamp(48px, 7vw, 70px);
+}
+
+.venture-site .stage3-enhancements .catalog {
+  margin: 0;
+}
+
+.venture-site .stage3-enhancements .final-cta {
+  margin: 0;
+}
+
+.venture-site .stage3-enhancements--rfq {
+  margin-bottom: 0;
+}
+
+.venture-site .stage3-enhancements--contact {
+  margin-bottom: clamp(34px, 5vw, 58px);
+}
+
 @media (max-width: 860px) {
   .venture-site .stage3-hero--with-visual {
     grid-template-columns: 1fr;
@@ -4102,6 +4178,10 @@
 
   .venture-site .stage3-facts {
     grid-template-columns: 1fr;
+  }
+
+  .venture-site .stage3-tail-wrap {
+    padding-bottom: 64px;
   }
 }
 
@@ -4515,6 +4595,37 @@
 
   .venture-site .identity__actions {
     gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .venture-site .brand-mark__logo {
+    height: 34px;
+  }
+
+  .venture-site .header-cta {
+    gap: 6px;
+    min-height: 36px;
+    padding: 8px 11px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .venture-site .header-cta__dot {
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+  }
+}
+
+@media (max-width: 390px) {
+  .venture-site .brand-mark__logo {
+    height: 32px;
+  }
+
+  .venture-site .header-cta {
+    padding-inline: 9px;
+    font-size: 0.74rem;
   }
 }
 

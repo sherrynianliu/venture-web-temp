@@ -296,6 +296,35 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
 - 已给所有首发内页配置首屏图片位：Services、PCBA、EMS、Component Sourcing、PCB Fabrication Support、Quality & Testing、About、Official Resources、Resources、Contact、Request a Quote、Insights、Privacy Policy、Terms、Sitemap、Thank You。
 - 新增 route contract test，确保 approved page data entries 都定义 `visual: pageVisuals.*`，防止后续新增页面漏掉图片位。
 
+## 首页组件复用增强
+
+用户第二轮视觉验收要求：在不大改的前提下，把设计师已经做好的首页漂亮组件迁移到合适内页，并使用 `design-taste-frontend` 做适配判断。
+
+本轮设计判断：
+
+- Redesign preserve，不重做首页，不推翻当前内页轻量骨架。
+- Design variance 4，motion 3，density 5。
+- 目标是让内页吸收首页视觉语言，但避免每一页都变成首页级 landing page。
+
+本次复用落点：
+
+- `/services`：复用 `CoreServicesBlock`，作为服务入口网格。
+- `/services/pcb-assembly-pcba`：复用 `ProjectPathStepper` 和 `CapabilityEvidence`，强化 PCBA 样板页的项目路径和能力证据。
+- `/services/ems-box-build`：复用 `EMSBoxBuildBlock`，下沉 EMS / Box Build 暗色流程模块。
+- `/quality-testing`：复用 `CapabilityEvidence`，并通过 props 调整 CTA，避免在 Quality 页出现自链接主按钮。
+- `/about`：复用 `VentureIdentityBlock` 和 `FactoryShowcase`，把品牌身份和工厂图带到公司页。
+- `/resources`：复用 `CatalogBanner` 和 `HomeFAQBlock`，让资源页更像真实资源入口。
+- `/request-a-quote`：复用 `ProjectPathStepper`，让 RFQ 动作页说明文件到项目交付路径。
+- `/contact`：复用 `HomeFinalCTA`，保持 Contact 页面同时有 Request a Quote 动作。
+
+工程实现：
+
+- 新增 `PageEnhancements`，按 `page.href` 条件插入增强模块，避免全站硬塞同一个区块。
+- `VenturePage` 拆成 main content、enhancements、tail content 三段，让首页组件保持原有全宽 section 质感。
+- `CapabilityEvidence` 增加轻量 props，用于不同页面复用时调整标题和 CTA。
+- CSS 只增加 `stage3-enhancements` wrapper 和移动 Header 微调，保留首页组件原始视觉。
+- 修正 390px 移动宽度下 logo 与 `Request a Quote` 按钮横向拥挤的问题。
+
 ## 验证记录
 
 最终本地验证在 `/Users/nianliu/Desktop/Zbot/GithubRepo/Zbot-Clients客户/venture-web-temp/togeto-next-js` 执行。
@@ -310,7 +339,15 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
   - Next output: 23 static pages generated.
   - Route table includes only the approved public pages plus `/_not-found`, metadata icons, and `/home-6` redirect page.
   - Note: build intentionally skips TypeScript validation in `next.config.mjs` for this shell-stage PR because the template's broader legacy TypeScript surface caused local type validation hangs. This should be tightened after demo routes/views are retired or isolated under a separate TS config.
-- Local production preview:
+- Component reuse pass verification:
+  - `npm run lint` -> pass.
+  - `node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolve-wow-constructor.test.mjs` -> 12 tests, 12 pass.
+  - `npm run build` -> pass, 23 static pages generated.
+  - DOM check confirmed enhancement modules on Services, PCBA, EMS, Quality, Resources, and Contact routes.
+  - Long PCBA screenshot confirmed `ProjectPathStepper` and `CapabilityEvidence` render after the lightweight page body.
+  - Mobile screenshot found Header crowding at 390px, then CSS was adjusted to shrink logo and CTA spacing on narrow screens.
+  - Latest preview restart after the final mobile Header adjustment was blocked by Codex escalation usage limit, so the final build is verified but not currently served on port 3000 from this thread.
+- Previous local production preview:
   - Command: `npm run start -- -p 3000`.
   - URL: `http://localhost:3000`.
 - Smoke checks:

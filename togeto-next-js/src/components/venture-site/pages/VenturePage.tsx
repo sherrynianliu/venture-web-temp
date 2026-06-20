@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import type { PageData, PageSection } from "@/components/venture-site/site-data";
+import { PageEnhancements } from "./PageEnhancements";
 
 function SectionItems({ section }: { section: PageSection }) {
   if (!section.items?.length) return null;
@@ -131,8 +132,8 @@ function RfqPlaceholder() {
 
 export function VenturePage({ page }: { page: PageData }) {
   return (
-    <main className="page-shell">
-      <div className="site-footer__inner">
+    <main className="page-shell page-shell--with-enhancements">
+      <div className="site-footer__inner stage3-main-wrap">
         <article className={`stage3-page stage3-page--${page.template}`}>
           <header className="stage3-hero stage3-hero--with-visual">
             <div className="stage3-hero__content">
@@ -176,7 +177,13 @@ export function VenturePage({ page }: { page: PageData }) {
           {page.sections.map((section, index) => (
             <PageSectionBlock key={`${section.title}-${index}`} section={section} index={index} />
           ))}
+        </article>
+      </div>
 
+      <PageEnhancements page={page} />
+
+      <div className="site-footer__inner stage3-tail-wrap">
+        <article className={`stage3-page stage3-page--tail stage3-page--${page.template}`}>
           {page.href === "/request-a-quote/" ? <RfqPlaceholder /> : null}
 
           <section className="stage3-related-section" aria-labelledby="related-title">
