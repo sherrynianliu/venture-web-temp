@@ -44,7 +44,7 @@ const right: Cap[] = [
   {
     icon: "reliability",
     title: "Reliability & Environmental Test Support",
-    desc: "Reliability or environmental validation can be discussed when the project requirements, standards, samples, and evidence boundary are confirmed.",
+    desc: "Reliability or environmental validation can be discussed when the project requirements, standards, samples, and acceptance criteria are confirmed.",
     href: routes.qualityTesting,
   },
 ];
@@ -127,7 +127,7 @@ type CapabilityEvidenceProps = {
 export function CapabilityEvidence({
   eyebrow = "Capabilities",
   title = "Production and quality support behind each PCBA / EMS project",
-  primaryLabel = "View Full Capability Matrix",
+  primaryLabel = "View Quality & Testing",
   primaryHref = routes.qualityTesting,
   secondaryLabel = "Request Project Review",
   secondaryHref = routes.requestQuote,

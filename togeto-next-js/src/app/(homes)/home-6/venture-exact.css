@@ -577,14 +577,14 @@
   line-height: 1;
 }
 
-.venture-site .hero h1 .hero__accent {
+.venture-site .hero__accent {
   display: block;
-  margin-top: 16px;
+  max-width: 780px;
+  margin: 0 0 20px;
   font-style: normal;
   font-weight: 500;
-  font-size: 0.62em;
+  font-size: clamp(1.18rem, 1.85vw, 1.72rem);
   line-height: 1.28;
-  letter-spacing: -0.012em;
   background: linear-gradient(90deg, #ffffff 0%, #ffffff 28%, #8ab1f2 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -644,7 +644,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .venture-site .hero__eyebrow,
-.venture-site .hero h1 .hero__accent,
+.venture-site .hero__accent,
 .venture-site .hero__rule,
 .venture-site .hero__lead,
 .venture-site .hero__actions {
@@ -787,8 +787,7 @@
 }
 
 /* ============================================================
-   PROJECT PATH STEPPER (replaces 3-card row)
-   Floats over hero/section boundary like Solvior template
+   PROJECT PATH STEPPER
    ============================================================ */
 
 .venture-site .project-path-wrap {
@@ -3889,6 +3888,22 @@
 .venture-site .stage3-hero {
   padding: clamp(32px, 5vw, 68px) 0 clamp(34px, 5vw, 72px);
   border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-plain-header {
+  padding: clamp(18px, 3vw, 30px) 0 24px;
+  border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-plain-header h1 {
+  max-width: 760px;
+  margin: 0;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.45rem);
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.14;
 }
 
 .venture-site .stage3-hero--with-visual {

@@ -57,8 +57,8 @@ export function Footer() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/venture-logo.png" alt="Venture Electronics" className="footer-logo" />
             <p className="footer-brand__desc">
-              China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner.
-              Public wording remains evidence-bounded until final facts are confirmed.
+              China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner supporting
+              PCBA, sourcing, testing, and box build discussions.
             </p>
           </div>
 
@@ -91,11 +91,6 @@ export function Footer() {
           </ul>
         </div>
 
-        <p className="footer-disclaimer">
-          This preview uses public-safe draft wording. Final website content should be completed
-          after Venture confirms capabilities, certifications, official channels, and
-          evidence-backed claims.
-        </p>
       </div>
     </footer>
   );

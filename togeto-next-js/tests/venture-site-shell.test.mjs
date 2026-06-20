@@ -126,9 +126,10 @@ test('approved public routes have route files', async () => {
 test('site data exposes only the approved public sitemap routes', async () => {
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
 
-  for (const route of publicRoutes) {
+  for (const route of publicRoutes.filter((route) => route !== '/thank-you/')) {
     assert.match(siteData, new RegExp(`href: ['"]${route.replace(/[/-]/g, '\\$&')}['"]`));
   }
+  assert.match(siteData, /thankYou: ['"]\/thank-you\/['"]/);
 
   for (const route of [
     '/engineering-support/',
@@ -140,6 +141,7 @@ test('site data exposes only the approved public sitemap routes', async () => {
   ]) {
     assert.doesNotMatch(siteData, new RegExp(route.replace(/[/-]/g, '\\$&')));
   }
+  assert.doesNotMatch(siteData, /\{ label: ['"]Thank You['"], href: ['"]\/thank-you\/['"] \}/);
 });
 
 test('approved page data entries define dedicated visual slots', async () => {
@@ -165,6 +167,77 @@ test('approved page data entries define dedicated visual slots', async () => {
   ]) {
     assert.match(siteData, new RegExp(`${key}: \\{[\\s\\S]*?visual: pageVisuals\\.`));
   }
+});
+
+test('approved Venture content does not expose internal implementation boundaries', async () => {
+  const files = await Promise.all([
+    readProjectFile('src/app/layout.tsx'),
+    readProjectFile('src/components/venture-site/site-data.ts'),
+    readProjectFile('src/components/venture-site/pages/VenturePage.tsx'),
+    readProjectFile('src/components/venture-site/site/Footer.tsx'),
+    readProjectFile('src/components/venture-home/home-six-content.tsx'),
+  ]);
+  const combined = files.join('\n');
+
+  for (const phrase of [
+    'Current placeholder boundary',
+    'RFQ form placeholder',
+    'Placeholder only',
+    'What is intentionally not expanded',
+    'Claim boundary',
+    'Public claim limits',
+    'Scope that stays out of this PR',
+    'Language to avoid',
+    'Evidence boundary',
+    'Publishing boundary',
+    'First-release service structure',
+    'First-release GEO site shell',
+    'Public-safe company facts',
+    'Launch-safe homepage order',
+    'unconfirmed asset modules hidden',
+    'public-safe draft wording',
+    'evidence-bounded',
+    'final facts are confirmed',
+  ]) {
+    assert.doesNotMatch(combined, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+});
+
+test('RFQ launch path is mailto-only and has no inactive visual form', async () => {
+  const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+
+  assert.match(page, /mailto:info@venture-mfg\.com/);
+  assert.match(siteData, /cta: \{ label: ['"]Email info@venture-mfg\.com['"], href: ['"]mailto:info@venture-mfg\.com['"] \}/);
+  assert.doesNotMatch(page, /<form className=["']contact-form["']/);
+  assert.doesNotMatch(page, /type=["']button["'][\s\S]*Placeholder only/);
+});
+
+test('legal and utility pages use plain headers with no related link block', async () => {
+  const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+
+  assert.match(page, /stage3-plain-header/);
+  assert.match(page, /showHeroHeader = page\.showHeroHeader !== false/);
+
+  for (const key of ['privacyPolicy', 'terms', 'sitemap', 'thankYou']) {
+    assert.match(
+      siteData,
+      new RegExp(`${key}: \\{[\\s\\S]*?showHeroHeader: false,[\\s\\S]*?showHeroVisual: false,[\\s\\S]*?showRelatedLinks: false,`)
+    );
+  }
+});
+
+test('unconfirmed homepage asset modules are not part of the live homepage order', async () => {
+  const home = await readProjectFile('src/components/venture-home/home-six-content.tsx');
+  const catalog = await readProjectFile('src/components/venture-site/home/CatalogBanner.tsx');
+  const factory = await readProjectFile('src/components/venture-site/home/FactoryShowcase.tsx');
+  const blog = await readProjectFile('src/components/venture-site/home/HomeResourcesTeaser.tsx');
+
+  assert.doesNotMatch(home, /<CatalogBanner|<FactoryShowcase|<HomeResourcesTeaser/);
+  assert.match(catalog, /return null/);
+  assert.match(factory, /return null/);
+  assert.match(blog, /return null/);
 });
 
 test('demo template routes are redirected away from public access', async () => {

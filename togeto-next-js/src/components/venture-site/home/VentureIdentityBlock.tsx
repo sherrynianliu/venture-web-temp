@@ -25,12 +25,12 @@ export function VentureIdentityBlock() {
           <p className="identity__eyebrow">Who Venture Electronics is</p>
           <h2 id="venture-identity-title" className="identity__title">
             A PCBA-first manufacturing partner under the{" "}
-            <span className="identity__accent">Venture Electronics</span> mother brand.
+            <span className="identity__accent">Venture Electronics</span> company brand.
           </h2>
           <p className="identity__lead">
-            Venture Electronics is the mother brand for Venture&apos;s PCBA, EMS, box build, and
-            component sourcing, with sourcing coordination, DFM / BOM review, testing and quality
-            planning, human project ownership, and small-to-medium volume support.
+            Venture Electronics supports PCBA, EMS, box build, and component sourcing discussions,
+            with sourcing coordination, DFM / BOM review, testing and quality planning, human
+            project ownership, and small-to-medium volume support.
           </p>
         </div>
 

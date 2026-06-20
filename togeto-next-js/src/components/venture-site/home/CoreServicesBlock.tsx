@@ -19,12 +19,6 @@ const services: Svc[] = [
     tag: { label: "Primary" },
   },
   {
-    label: "Turnkey PCB Assembly",
-    href: routes.pcba,
-    description: "Full-process delivery, files to tested boards.",
-    image: "/hero-assembly-robots.jpg",
-  },
-  {
     label: "EMS & Box Build",
     href: routes.emsBoxBuild,
     description: "Final assembly, packaging, and box build.",
@@ -34,19 +28,13 @@ const services: Svc[] = [
   {
     label: "Component Sourcing & BOM Review",
     href: routes.componentSourcingBomDfmReview,
-    description: "Supply-chain and BOM review support.",
+    description: "Sourcing risk, alternatives, and DFM review.",
     image: "/hero-circuit-globe.jpg",
   },
   {
-    label: "Testing & Quality Control",
-    href: routes.qualityTesting,
-    description: "Quality and testing across workflows.",
-    image: "/identity-smt-floor.jpg",
-  },
-  {
-    label: "PCB Fabrication",
+    label: "PCB Fabrication Support",
     href: routes.pcbFabricationSupport,
-    description: "Bare-board manufacturing support.",
+    description: "Bare-board coordination for PCBA projects.",
     image: "/identity-pcb-closeup.jpg",
   },
 ];
@@ -70,7 +58,7 @@ export function CoreServicesBlock() {
             Where to start your <span className="accent">PCBA or EMS</span> project
           </h2>
           <p className="core-services__sub">
-            PCB Assembly / PCBA is the primary, turnkey-first entry. Choose the service that fits your project.
+            PCB Assembly / PCBA is the primary entry. Choose the service path that fits your project scope.
           </p>
         </div>
 

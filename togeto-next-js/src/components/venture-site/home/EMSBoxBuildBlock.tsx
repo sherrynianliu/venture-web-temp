@@ -92,8 +92,8 @@ export function EMSBoxBuildBlock() {
           </div>
 
           <p className="dark-panel__note">
-            EMS & Box Build appears as a strategic capability, while turnkey PCB Assembly / PCBA
-            remains the primary homepage inquiry entry.
+            EMS & Box Build can extend an assembled-board project into final assembly, packaging,
+            testing discussion, and delivery support when the project scope requires it.
           </p>
           <div className="section-actions">
             <CTAButton href={routes.emsBoxBuild}>View EMS & Box Build</CTAButton>

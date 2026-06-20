@@ -11,7 +11,7 @@ const slides = [
     id: "pcba",
     bg: "/hero-pcba-smt.jpg",
     bgClass: "hero__bg--pcba",
-    accent: "Turnkey PCB Assembly / PCBA and EMS Support for Electronics Projects",
+    accent: "Turnkey PCB Assembly / PCBA and EMS support for electronics projects.",
     keywords: [
       "China-based manufacturing partner",
       "Turnkey-first PCB Assembly / PCBA",
@@ -22,13 +22,13 @@ const slides = [
       "Testing",
     ],
     primary: { label: "Request a Quote", href: routes.requestQuote },
-    secondary: { label: "Explore Turnkey PCBA", href: routes.pcba },
+    secondary: { label: "Explore PCBA", href: routes.pcba },
   },
   {
     id: "ems",
     bg: "/hero-ems-factory.jpg",
     bgClass: "hero__bg--ems",
-    accent: "EMS & Box Build, From Assembled Boards to Finished Products",
+    accent: "EMS & Box Build support from assembled boards to finished products.",
     keywords: [
       "EMS & Box Build",
       "Final assembly",
@@ -89,13 +89,14 @@ export function HomeHero() {
         </p>
 
         <h1 id="home-hero-title">
-          Venture Electronics <br />
-          <span key={slide.id} className="hero__accent">
-            {slide.accent}
-          </span>
+          Venture Electronics PCB Assembly, PCBA and EMS Manufacturing Support
         </h1>
 
         <div className="hero__rule" aria-hidden="true" />
+
+        <p key={`accent-${slide.id}`} className="hero__accent">
+          {slide.accent}
+        </p>
 
         <p key={`lead-${slide.id}`} className="hero__lead hero__lead--keywords">
           {slide.keywords.map((kw, i) => (
@@ -111,7 +112,10 @@ export function HomeHero() {
         </p>
 
         <div key={`actions-${slide.id}`} className="hero__actions">
-          <CTAButton href={slide.secondary.href}>{slide.secondary.label}</CTAButton>
+          <CTAButton href={slide.primary.href}>{slide.primary.label}</CTAButton>
+          <CTAButton href={slide.secondary.href} variant="secondary">
+            {slide.secondary.label}
+          </CTAButton>
         </div>
       </div>
 

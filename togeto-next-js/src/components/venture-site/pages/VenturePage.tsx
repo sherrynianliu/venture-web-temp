@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
-import type { PageData, PageSection } from "@/components/venture-site/site-data";
+import { routes, type PageData, type PageSection } from "@/components/venture-site/site-data";
 import { PageEnhancements } from "./PageEnhancements";
 
 function SectionItems({ section }: { section: PageSection }) {
@@ -79,100 +79,99 @@ function PageSectionBlock({ section, index }: { section: PageSection; index: num
   );
 }
 
-function RfqPlaceholder() {
+function RfqMailtoPanel() {
   return (
-    <div className="stage3-panel stage3-panel--quiet" aria-labelledby="rfq-placeholder-title">
-      <h2 id="rfq-placeholder-title">RFQ form placeholder</h2>
+    <div className="stage3-panel stage3-panel--quiet" aria-labelledby="rfq-mailto-title">
+      <h2 id="rfq-mailto-title">Send your RFQ package by email</h2>
       <p>
-        The public form is intentionally not connected to CRM, email automation, uploads, or a
-        database in this PR.
+        Email Gerber or ODB++, BOM, CPL, drawings, quantity, testing needs, and schedule details to
+        the Venture Electronics team for project review.
       </p>
-      <form className="contact-form" aria-label="Request a quote visual placeholder">
-        <div className="form-grid">
-          <div className="field">
-            <label htmlFor="rfq-name">Name</label>
-            <input id="rfq-name" name="name" placeholder="Your name" type="text" />
-          </div>
-          <div className="field">
-            <label htmlFor="rfq-email">Email</label>
-            <input id="rfq-email" name="email" placeholder="name@company.com" type="email" />
-          </div>
-          <div className="field">
-            <label htmlFor="rfq-company">Company</label>
-            <input id="rfq-company" name="company" placeholder="Company name" type="text" />
-          </div>
-          <div className="field">
-            <label htmlFor="rfq-service">Project type</label>
-            <select id="rfq-service" name="service" defaultValue="">
-              <option value="" disabled>
-                Select project type
-              </option>
-              <option>PCB Assembly / PCBA</option>
-              <option>EMS & Box Build</option>
-              <option>Component Sourcing / BOM / DFM</option>
-              <option>PCB Fabrication Support</option>
-            </select>
-          </div>
-        </div>
-        <div className="field">
-          <label htmlFor="rfq-message">Project notes</label>
-          <textarea
-            id="rfq-message"
-            name="message"
-            placeholder="Board files, BOM status, quantity, testing requirements, and target schedule."
-          />
-        </div>
-        <button className="subscribe__btn" type="button">
-          Placeholder only
-        </button>
-      </form>
+      <div className="stage3-actions">
+        <CTAButton href="mailto:info@venture-mfg.com?subject=Venture%20Electronics%20RFQ">
+          Email info@venture-mfg.com
+        </CTAButton>
+        <CTAButton href={routes.contact} variant="secondary">
+          Contact first
+        </CTAButton>
+      </div>
+      <p>
+        For sensitive files, NDA discussion, or large attachments, start by email and ask for the
+        preferred transfer method.
+      </p>
     </div>
   );
 }
 
+function PageHero({ page, showHeroVisual }: { page: PageData; showHeroVisual: boolean }) {
+  return (
+    <header className={`stage3-hero${showHeroVisual ? " stage3-hero--with-visual" : ""}`}>
+      <div className="stage3-hero__content">
+        <h1>{page.title}</h1>
+        <p className="stage3-role">{page.role}</p>
+        <p className="stage3-direct-answer">{page.summary}</p>
+
+        {page.directAnswer?.length ? (
+          <div className="stage3-answer">
+            {page.directAnswer.map((answer) => (
+              <p key={answer}>{answer}</p>
+            ))}
+          </div>
+        ) : null}
+
+        {(page.cta || page.secondaryCta) ? (
+          <div className="stage3-actions">
+            {page.cta ? <CTAButton href={page.cta.href}>{page.cta.label}</CTAButton> : null}
+            {page.secondaryCta ? (
+              <CTAButton href={page.secondaryCta.href} variant="secondary">
+                {page.secondaryCta.label}
+              </CTAButton>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+
+      {showHeroVisual ? (
+        <figure className="stage3-visual">
+          <Image
+            src={page.visual.src}
+            alt={page.visual.alt}
+            width={720}
+            height={860}
+            sizes="(max-width: 860px) 100vw, 38vw"
+            priority={page.href === routes.pcba}
+          />
+          {page.visual.caption ? <figcaption>{page.visual.caption}</figcaption> : null}
+        </figure>
+      ) : null}
+    </header>
+  );
+}
+
+function PlainPageHeader({ page }: { page: PageData }) {
+  return (
+    <header className="stage3-plain-header">
+      <h1>{page.title}</h1>
+      <p className="stage3-role">{page.role}</p>
+      <p className="stage3-direct-answer">{page.summary}</p>
+    </header>
+  );
+}
+
 export function VenturePage({ page }: { page: PageData }) {
+  const showHeroHeader = page.showHeroHeader !== false;
+  const showHeroVisual = page.showHeroVisual !== false;
+  const showRelatedLinks = page.showRelatedLinks !== false && page.relatedLinks.length > 0;
+
   return (
     <main className="page-shell page-shell--with-enhancements">
       <div className="site-footer__inner stage3-main-wrap">
         <article className={`stage3-page stage3-page--${page.template}`}>
-          <header className="stage3-hero stage3-hero--with-visual">
-            <div className="stage3-hero__content">
-              <h1>{page.title}</h1>
-              <p className="stage3-role">{page.role}</p>
-              <p className="stage3-direct-answer">{page.summary}</p>
-
-              {page.directAnswer?.length ? (
-                <div className="stage3-answer">
-                  {page.directAnswer.map((answer) => (
-                    <p key={answer}>{answer}</p>
-                  ))}
-                </div>
-              ) : null}
-
-              {(page.cta || page.secondaryCta) ? (
-                <div className="stage3-actions">
-                  {page.cta ? <CTAButton href={page.cta.href}>{page.cta.label}</CTAButton> : null}
-                  {page.secondaryCta ? (
-                    <CTAButton href={page.secondaryCta.href} variant="secondary">
-                      {page.secondaryCta.label}
-                    </CTAButton>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-
-            <figure className="stage3-visual">
-              <Image
-                src={page.visual.src}
-                alt={page.visual.alt}
-                width={720}
-                height={860}
-                sizes="(max-width: 860px) 100vw, 38vw"
-                priority={page.href === "/services/pcb-assembly-pcba/"}
-              />
-              {page.visual.caption ? <figcaption>{page.visual.caption}</figcaption> : null}
-            </figure>
-          </header>
+          {showHeroHeader ? (
+            <PageHero page={page} showHeroVisual={showHeroVisual} />
+          ) : (
+            <PlainPageHeader page={page} />
+          )}
 
           {page.sections.map((section, index) => (
             <PageSectionBlock key={`${section.title}-${index}`} section={section} index={index} />
@@ -184,24 +183,19 @@ export function VenturePage({ page }: { page: PageData }) {
 
       <div className="site-footer__inner stage3-tail-wrap">
         <article className={`stage3-page stage3-page--tail stage3-page--${page.template}`}>
-          {page.href === "/request-a-quote/" ? <RfqPlaceholder /> : null}
+          {page.href === routes.requestQuote ? <RfqMailtoPanel /> : null}
 
-          <section className="stage3-related-section" aria-labelledby="related-title">
-            <h2 id="related-title">Related pages</h2>
-            <div className="stage3-related">
-              {page.relatedLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {page.placeholderNote ? (
-            <aside className="stage3-note" aria-label="Placeholder note">
-              <h2>Current placeholder boundary</h2>
-              <p>{page.placeholderNote}</p>
-            </aside>
+          {showRelatedLinks ? (
+            <section className="stage3-related-section" aria-labelledby="related-title">
+              <h2 id="related-title">Related pages</h2>
+              <div className="stage3-related">
+                {page.relatedLinks.map((link) => (
+                  <Link key={link.href} href={link.href}>
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </section>
           ) : null}
         </article>
       </div>

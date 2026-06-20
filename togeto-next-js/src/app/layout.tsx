@@ -15,7 +15,7 @@ const ventureFontVariables = {
 export const metadata: Metadata = {
   title: 'Venture Electronics | PCB Assembly, PCBA & EMS Manufacturing Partner',
   description:
-    'Venture Electronics is a China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner. First-release GEO site shell for services, quality, resources, and RFQ review.',
+    'Venture Electronics is a China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner supporting PCBA, sourcing, testing, box build, and RFQ review.',
 };
 
 export default function RootLayout({
