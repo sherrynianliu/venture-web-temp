@@ -16,6 +16,7 @@ const publicRoutes = [
   '/about/',
   '/official-resources/',
   '/resources/',
+  '/contact/',
   '/request-a-quote/',
   '/insights/',
   '/privacy-policy/',
@@ -35,6 +36,7 @@ const routeFiles = [
   'src/app/about/page.tsx',
   'src/app/official-resources/page.tsx',
   'src/app/resources/page.tsx',
+  'src/app/contact/page.tsx',
   'src/app/request-a-quote/page.tsx',
   'src/app/insights/page.tsx',
   'src/app/privacy-policy/page.tsx',
@@ -70,7 +72,6 @@ const disabledDemoRoutes = [
   '/price',
   '/testimonial',
   '/faq',
-  '/contact',
   '/blog',
   '/blog-left-sidebar',
   '/blog-right-sidebar',
@@ -84,7 +85,6 @@ const disabledDemoRouteFiles = [
   'src/app/(blog)/blog-left-sidebar/page.tsx',
   'src/app/(blog)/blog/page.tsx',
   'src/app/(blog)/blog-right-sidebar/page.tsx',
-  'src/app/contact/page.tsx',
   'src/app/(portfolio)/portfolio-details/[id]/page.tsx',
   'src/app/(portfolio)/portfolio/page.tsx',
   'src/app/faq/page.tsx',
@@ -133,13 +133,37 @@ test('site data exposes only the approved public sitemap routes', async () => {
   for (const route of [
     '/engineering-support/',
     '/industries/',
-    '/contact/',
     '/resources/blog/',
     '/resources/faq/',
     '/brand/venture-electronics-vs-venture-pcb-pcba/',
     '/services/pcb-fabrication/',
   ]) {
     assert.doesNotMatch(siteData, new RegExp(route.replace(/[/-]/g, '\\$&')));
+  }
+});
+
+test('approved page data entries define dedicated visual slots', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+
+  for (const key of [
+    'services',
+    'pcba',
+    'emsBoxBuild',
+    'componentSourcingBomDfmReview',
+    'pcbFabricationSupport',
+    'qualityTesting',
+    'about',
+    'officialResources',
+    'resources',
+    'contact',
+    'requestQuote',
+    'insights',
+    'privacyPolicy',
+    'terms',
+    'sitemap',
+    'thankYou',
+  ]) {
+    assert.match(siteData, new RegExp(`${key}: \\{[\\s\\S]*?visual: pageVisuals\\.`));
   }
 });
 

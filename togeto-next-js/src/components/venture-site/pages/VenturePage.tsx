@@ -1,14 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import type { PageData, PageSection } from "@/components/venture-site/site-data";
-
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true">
-      <path d="m3.5 8 3 3 6-6" />
-    </svg>
-  );
-}
 
 function SectionItems({ section }: { section: PageSection }) {
   if (!section.items?.length) return null;
@@ -31,9 +24,7 @@ function SectionItems({ section }: { section: PageSection }) {
       <ul className="stage3-checklist">
         {section.items.map((item) => (
           <li key={item}>
-            <span className="stage3-checklist__mark">
-              <CheckIcon />
-            </span>
+            <span className="stage3-checklist__mark" aria-hidden="true" />
             <span>{item}</span>
           </li>
         ))}
@@ -77,8 +68,6 @@ function PageSectionBlock({ section, index }: { section: PageSection; index: num
       aria-labelledby={`section-${index}`}
     >
       <div className="stage3-section__head">
-        <span className="stage3-section__number">{String(index + 1).padStart(2, "0")}</span>
-        {section.label ? <span className="stage3-section__type">{section.label}</span> : null}
         <h2 id={`section-${index}`}>{section.title}</h2>
       </div>
       <div className="stage3-section__body">
@@ -145,30 +134,43 @@ export function VenturePage({ page }: { page: PageData }) {
     <main className="page-shell">
       <div className="site-footer__inner">
         <article className={`stage3-page stage3-page--${page.template}`}>
-          <header className="stage3-hero">
-            <p className="stage3-kicker">{page.eyebrow}</p>
-            <h1>{page.title}</h1>
-            <p className="stage3-role">{page.role}</p>
-            <p className="stage3-direct-answer">{page.summary}</p>
+          <header className="stage3-hero stage3-hero--with-visual">
+            <div className="stage3-hero__content">
+              <h1>{page.title}</h1>
+              <p className="stage3-role">{page.role}</p>
+              <p className="stage3-direct-answer">{page.summary}</p>
 
-            {page.directAnswer?.length ? (
-              <div className="stage3-answer">
-                {page.directAnswer.map((answer) => (
-                  <p key={answer}>{answer}</p>
-                ))}
-              </div>
-            ) : null}
+              {page.directAnswer?.length ? (
+                <div className="stage3-answer">
+                  {page.directAnswer.map((answer) => (
+                    <p key={answer}>{answer}</p>
+                  ))}
+                </div>
+              ) : null}
 
-            {(page.cta || page.secondaryCta) ? (
-              <div className="stage3-actions">
-                {page.cta ? <CTAButton href={page.cta.href}>{page.cta.label}</CTAButton> : null}
-                {page.secondaryCta ? (
-                  <CTAButton href={page.secondaryCta.href} variant="secondary">
-                    {page.secondaryCta.label}
-                  </CTAButton>
-                ) : null}
-              </div>
-            ) : null}
+              {(page.cta || page.secondaryCta) ? (
+                <div className="stage3-actions">
+                  {page.cta ? <CTAButton href={page.cta.href}>{page.cta.label}</CTAButton> : null}
+                  {page.secondaryCta ? (
+                    <CTAButton href={page.secondaryCta.href} variant="secondary">
+                      {page.secondaryCta.label}
+                    </CTAButton>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
+            <figure className="stage3-visual">
+              <Image
+                src={page.visual.src}
+                alt={page.visual.alt}
+                width={720}
+                height={860}
+                sizes="(max-width: 860px) 100vw, 38vw"
+                priority={page.href === "/services/pcb-assembly-pcba/"}
+              />
+              {page.visual.caption ? <figcaption>{page.visual.caption}</figcaption> : null}
+            </figure>
           </header>
 
           {page.sections.map((section, index) => (
@@ -177,7 +179,7 @@ export function VenturePage({ page }: { page: PageData }) {
 
           {page.href === "/request-a-quote/" ? <RfqPlaceholder /> : null}
 
-          <section className="stage3-panel stage3-panel--questions" aria-labelledby="related-title">
+          <section className="stage3-related-section" aria-labelledby="related-title">
             <h2 id="related-title">Related pages</h2>
             <div className="stage3-related">
               {page.relatedLinks.map((link) => (
@@ -189,7 +191,7 @@ export function VenturePage({ page }: { page: PageData }) {
           </section>
 
           {page.placeholderNote ? (
-            <aside className="stage3-cta" aria-label="Placeholder note">
+            <aside className="stage3-note" aria-label="Placeholder note">
               <h2>Current placeholder boundary</h2>
               <p>{page.placeholderNote}</p>
             </aside>

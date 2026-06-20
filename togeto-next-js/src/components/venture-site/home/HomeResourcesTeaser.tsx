@@ -32,7 +32,7 @@ export function HomeResourcesTeaser() {
             Our latest blog
           </h2>
           <p className="home-blog__lead">
-            Guides and insights on PCBA quoting, turnkey assembly, sourcing, testing, and EMS — to
+            Guides and insights on PCBA quoting, turnkey assembly, sourcing, testing, and EMS, to
             help you prepare a clearer RFQ.
           </p>
           <Link href={routes.insights} className="home-blog__cta">

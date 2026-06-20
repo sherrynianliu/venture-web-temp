@@ -43,7 +43,7 @@ export function Header({ variant = "glass" }: HeaderProps) {
           <Image
             className="brand-mark__logo"
             src={solid ? "/venture-logo-color.png" : "/venture-logo.png"}
-            alt="Venture Electronics — PCBA · EMS · Box Build"
+            alt="Venture Electronics, PCBA, EMS, Box Build"
             width={233}
             height={66}
             priority

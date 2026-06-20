@@ -30,7 +30,6 @@ const disabledDemoRoutes = [
   '/price',
   '/testimonial',
   '/faq',
-  '/contact',
   '/blog',
   '/blog-left-sidebar',
   '/blog-right-sidebar',

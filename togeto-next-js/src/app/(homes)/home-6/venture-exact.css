@@ -3871,6 +3871,240 @@
   resize: vertical;
 }
 
+/* Stage 3 lean page pass: inner pages should read like a manufacturing
+   website content system, not a stack of generated cards. */
+.venture-site .stage3-page {
+  display: block;
+}
+
+.venture-site .stage3-hero,
+.venture-site .stage3-section,
+.venture-site .stage3-related-section,
+.venture-site .stage3-note {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.venture-site .stage3-hero {
+  padding: clamp(32px, 5vw, 68px) 0 clamp(34px, 5vw, 72px);
+  border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-hero--with-visual {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.54fr);
+  gap: clamp(34px, 5vw, 74px);
+  align-items: end;
+}
+
+.venture-site .stage3-hero__content {
+  min-width: 0;
+}
+
+.venture-site .stage3-hero--with-visual h1 {
+  max-width: 760px;
+  font-size: clamp(2rem, 3.55vw, 3.36rem);
+}
+
+.venture-site .stage3-visual {
+  margin: 0;
+  align-self: stretch;
+}
+
+.venture-site .stage3-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  max-height: 560px;
+  object-fit: cover;
+  border: 1px solid var(--line-gray);
+  border-radius: 12px;
+}
+
+.venture-site .stage3-visual figcaption {
+  max-width: 460px;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.venture-site .stage3-role {
+  color: var(--stage3-accent);
+  font-weight: 600;
+}
+
+.venture-site .stage3-direct-answer {
+  max-width: 760px;
+}
+
+.venture-site .stage3-answer {
+  max-width: 820px;
+  margin-top: 28px;
+}
+
+.venture-site .stage3-section {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 5vw, 72px);
+  padding: clamp(38px, 6vw, 74px) 0;
+  border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-section--featured {
+  border-color: var(--line-gray);
+  box-shadow: none;
+}
+
+.venture-site .stage3-section h2,
+.venture-site .stage3-related-section h2,
+.venture-site .stage3-note h2 {
+  max-width: 520px;
+}
+
+.venture-site .stage3-related-section h2 {
+  margin: 0;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.62rem);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.18;
+}
+
+.venture-site .stage3-section__body > p {
+  max-width: 760px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #243047;
+  font-weight: 500;
+  line-height: 1.64;
+}
+
+.venture-site .stage3-list,
+.venture-site .stage3-proof,
+.venture-site .stage3-steps,
+.venture-site .stage3-checklist,
+.venture-site .stage3-facts {
+  gap: 0;
+  margin-top: 22px;
+}
+
+.venture-site .stage3-list li,
+.venture-site .stage3-proof li,
+.venture-site .stage3-steps li,
+.venture-site .stage3-checklist li,
+.venture-site .stage3-facts li {
+  border: 0;
+  border-top: 1px solid var(--line-gray);
+  border-radius: 0;
+  background: transparent;
+  padding: 15px 0;
+  color: #243047;
+  font-weight: 500;
+}
+
+.venture-site .stage3-proof li {
+  border-left: 0;
+}
+
+.venture-site .stage3-steps li {
+  align-items: flex-start;
+}
+
+.venture-site .stage3-steps__index {
+  min-width: 36px;
+}
+
+.venture-site .stage3-checklist li {
+  gap: 0;
+}
+
+.venture-site .stage3-checklist__mark {
+  display: none;
+}
+
+.venture-site .stage3-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 48px);
+}
+
+.venture-site .stage3-related-section {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 5vw, 72px);
+  padding: clamp(34px, 5vw, 58px) 0;
+  border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 4px 0 0;
+}
+
+.venture-site .stage3-related a {
+  border: 0;
+  border-bottom: 1px solid rgba(42, 101, 255, 0.34);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 4px;
+  color: var(--tech-blue);
+}
+
+.venture-site .stage3-note {
+  padding: 28px 0 0;
+}
+
+.venture-site .stage3-note h2 {
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.venture-site .stage3-note p {
+  max-width: 820px;
+  margin-top: 10px;
+  color: var(--text-muted);
+}
+
+.venture-site .stage3-panel--quiet {
+  margin-top: clamp(28px, 5vw, 54px);
+  border: 1px solid var(--line-gray);
+  border-radius: 12px;
+  background: var(--card-white);
+}
+
+@media (max-width: 860px) {
+  .venture-site .stage3-hero--with-visual {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .venture-site .stage3-visual img {
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 16 / 10;
+  }
+
+  .venture-site .stage3-section,
+  .venture-site .stage3-related-section {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 34px 0;
+  }
+
+  .venture-site .stage3-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
 .venture-site .site-footer {
   background: var(--deep-navy);
   color: white;

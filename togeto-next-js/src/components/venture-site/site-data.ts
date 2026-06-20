@@ -22,11 +22,18 @@ export type PageSection = {
   featured?: boolean;
 };
 
+export type PageVisual = {
+  src: string;
+  alt: string;
+  caption?: string;
+};
+
 export type PageData = SiteLink & {
   eyebrow: string;
   title: string;
   role: string;
   summary: string;
+  visual: PageVisual;
   directAnswer?: string[];
   template: "service-conversion" | "strategic-service" | "supporting-capability" | "quality-trust" | "brand-authority" | "resource" | "contact-rfq" | "legal";
   sections: PageSection[];
@@ -48,6 +55,7 @@ export const routes = {
   about: "/about/",
   officialResources: "/official-resources/",
   resources: "/resources/",
+  contact: "/contact/",
   requestQuote: "/request-a-quote/",
   insights: "/insights/",
   privacyPolicy: "/privacy-policy/",
@@ -70,6 +78,7 @@ export const sitemapLinks: SiteLink[] = [
   { label: "About Venture Electronics", href: "/about/" },
   { label: "Official Resources", href: "/official-resources/" },
   { label: "Resources", href: "/resources/" },
+  { label: "Contact", href: "/contact/" },
   { label: "Request a Quote", href: "/request-a-quote/" },
   { label: "Insights", href: "/insights/" },
   { label: "Privacy Policy", href: "/privacy-policy/" },
@@ -130,7 +139,7 @@ export const navItems: NavItem[] = [
   { label: "Quality & Testing", href: routes.qualityTesting },
   { label: "About", href: routes.about, children: aboutLinks },
   { label: "Resources", href: routes.resources, children: resourceLinks },
-  { label: "Request a Quote", href: routes.requestQuote },
+  { label: "Contact", href: routes.contact },
 ];
 
 export const footerGroups: { title: string; links: SiteLink[] }[] = [
@@ -152,7 +161,8 @@ export const footerGroups: { title: string; links: SiteLink[] }[] = [
     links: [
       { label: "About Venture Electronics", href: routes.about },
       { label: "Brand & Official Resources", href: routes.officialResources },
-      { label: "Contact / Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
+      { label: "Request a Quote", href: routes.requestQuote },
     ],
   },
   {
@@ -195,16 +205,95 @@ const qualityFlow = [
   "Packing & Logistics",
 ];
 
+const pageVisuals = {
+  services: {
+    src: "/hero-circuit-globe.jpg",
+    alt: "Electronics manufacturing service overview",
+    caption: "Service overview across PCB assembly, EMS, sourcing, and fabrication support.",
+  },
+  pcba: {
+    src: "/hero-pcba-smt.jpg",
+    alt: "SMT PCB assembly line for PCBA projects",
+    caption: "PCB assembly visual for turnkey-first electronics manufacturing projects.",
+  },
+  ems: {
+    src: "/hero-ems-factory.jpg",
+    alt: "EMS production floor for box build projects",
+    caption: "EMS production visual for assembly, testing, packaging, and delivery support.",
+  },
+  sourcing: {
+    src: "/identity-pcb-closeup.jpg",
+    alt: "PCB and component detail for BOM review",
+    caption: "Component and PCB detail for BOM review and sourcing discussion.",
+  },
+  fabrication: {
+    src: "/factory-3.jpg",
+    alt: "PCB fabrication and assembly coordination detail",
+    caption: "Board-level visual for fabrication-to-assembly coordination.",
+  },
+  quality: {
+    src: "/capabilities-machine.jpg",
+    alt: "Testing and inspection equipment for PCBA quality review",
+    caption: "Inspection and testing visual for quality requirement discussions.",
+  },
+  about: {
+    src: "/identity-smt-floor.jpg",
+    alt: "Venture Electronics manufacturing floor",
+    caption: "Manufacturing floor visual for Venture company context.",
+  },
+  officialResources: {
+    src: "/venture-catalog.webp",
+    alt: "Venture Electronics official resource preview",
+    caption: "Official resources visual for brand and domain clarification.",
+  },
+  resources: {
+    src: "/faq-smt-line.jpg",
+    alt: "SMT line used as buyer resource visual",
+    caption: "Buyer resource visual for RFQ preparation and project planning.",
+  },
+  contact: {
+    src: "/factory-4.jpg",
+    alt: "Assembled board inspection for Venture contact page",
+    caption: "Contact visual for Venture Electronics inquiry channels.",
+  },
+  requestQuote: {
+    src: "/factory-1.jpg",
+    alt: "Assembled board inspection before RFQ review",
+    caption: "Inspection visual for preparing a PCBA or EMS quote request.",
+  },
+  insights: {
+    src: "/hero-assembly-robots.jpg",
+    alt: "Electronics assembly automation for future insights",
+    caption: "Assembly visual for future technical guides and buyer resources.",
+  },
+  legal: {
+    src: "/factory-5.jpg",
+    alt: "Automated assembly equipment used as legal page visual context",
+    caption: "Manufacturing context visual for utility pages.",
+  },
+  sitemap: {
+    src: "/hero-circuit-globe.jpg",
+    alt: "Circuit globe visual for sitemap overview",
+    caption: "Site structure visual for the first-release Venture route map.",
+  },
+  thankYou: {
+    src: "/factory-2.jpg",
+    alt: "SMT assembly line used for submission confirmation page",
+    caption: "Production-line visual for future contact confirmation flow.",
+  },
+} satisfies Record<string, PageVisual>;
+
 export const pageData = {
   services: {
     label: "Services",
     href: routes.services,
     eyebrow: "Services overview",
     title: "PCB Assembly, EMS, sourcing, and fabrication support in one clear service path.",
-    role: "Services route page aligned to the approved sitemap.",
+    role: "Service overview for PCBA-first manufacturing inquiries.",
     summary:
       "This page explains the first-release service hierarchy. PCBA is the main buyer entry, EMS & Box Build is the broader manufacturing support layer, and sourcing, DFM, testing, and PCB fabrication remain supporting capabilities.",
     template: "service-conversion",
+    visual: pageVisuals.services,
     sections: [
       {
         title: "First-release service structure",
@@ -231,11 +320,12 @@ export const pageData = {
   pcba: {
     label: "PCB Assembly / PCBA",
     href: routes.pcba,
-    eyebrow: "Sample service page",
+    eyebrow: "PCB Assembly / PCBA",
     title: "PCB Assembly / PCBA for turnkey-first electronics manufacturing projects.",
-    role: "Primary conversion page and visual sample for the first review.",
+    role: "Turnkey PCBA, SMT, through-hole, sourcing, and testing coordination.",
     summary:
-      "This sample page shows how a PCBA service page can organize turnkey delivery, RFQ files, assembly scope, testing discussion, and claim boundaries without turning every process term into a separate route.",
+      "This page organizes turnkey delivery, RFQ files, assembly scope, testing discussion, and claim boundaries without turning every process term into a separate route.",
+    visual: pageVisuals.pcba,
     directAnswer: [
       "Use PCB Assembly as the buyer-readable service label and keep PCBA as the industry abbreviation.",
       "Use Turnkey PCBA as a delivery mode covering PCB fabrication coordination, component sourcing, assembly, testing discussion, and delivery support when the project scope confirms it.",
@@ -277,19 +367,20 @@ export const pageData = {
       { label: "Quality & Testing", href: routes.qualityTesting },
       { label: "EMS & Box Build", href: routes.emsBoxBuild },
     ],
-    cta: { label: "Request PCBA Review", href: routes.requestQuote },
+    cta: { label: "Request a Quote", href: routes.requestQuote },
     secondaryCta: { label: "View Services", href: routes.services },
-    placeholderNote: "PCBA page is the first visual sample. Copy is intentionally partial and public-safe.",
+    placeholderNote: "Draft PCBA copy is intentionally partial and public-safe until final capabilities and evidence are confirmed.",
   },
   emsBoxBuild: {
     label: "EMS & Box Build",
     href: routes.emsBoxBuild,
     eyebrow: "Strategic service",
     title: "EMS & Box Build extends PCBA into broader project manufacturing support.",
-    role: "Higher-level service page skeleton.",
+    role: "EMS and box-build support for projects that extend beyond board assembly.",
     summary:
       "EMS and Box Build should describe project-based support around PCBA, enclosures, cable or wire harness discussion, functional testing, packaging, and delivery requirements.",
     template: "strategic-service",
+    visual: pageVisuals.ems,
     sections: [
       {
         title: "Scope to discuss by project",
@@ -314,7 +405,7 @@ export const pageData = {
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
       { label: "Quality & Testing", href: routes.qualityTesting },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     cta: { label: "Discuss EMS Scope", href: routes.requestQuote },
     placeholderNote: defaultPlaceholderNote,
@@ -324,10 +415,11 @@ export const pageData = {
     href: routes.componentSourcingBomDfmReview,
     eyebrow: "Supporting capability",
     title: "Component sourcing, BOM risk review, and DFM feedback for PCBA projects.",
-    role: "Supply-chain and engineering support page skeleton.",
+    role: "BOM review, sourcing risk, and DFM/DFA support for turnkey PCBA.",
     summary:
       "This page should show how sourcing and engineering review reduce RFQ risk before assembly, without promising universal inventory or unilateral substitutions.",
     template: "supporting-capability",
+    visual: pageVisuals.sourcing,
     sections: [
       {
         title: "What this support covers",
@@ -351,7 +443,7 @@ export const pageData = {
     ],
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
       { label: "Resources", href: routes.resources },
     ],
     cta: { label: "Send BOM for Review", href: routes.requestQuote },
@@ -362,10 +454,11 @@ export const pageData = {
     href: routes.pcbFabricationSupport,
     eyebrow: "Supporting capability",
     title: "PCB fabrication support for PCBA and turnkey assembly workflows.",
-    role: "Bare-board support page skeleton.",
+    role: "Bare-board coordination support for assembly-ready PCB projects.",
     summary:
       "PCB fabrication is explained as a supporting capability for PCB Assembly and Turnkey PCBA, not as a collection of old material, stack-up, or design-layout long-tail pages.",
     template: "supporting-capability",
+    visual: pageVisuals.fabrication,
     sections: [
       {
         title: "Inputs to collect",
@@ -401,10 +494,11 @@ export const pageData = {
     href: routes.qualityTesting,
     eyebrow: "Quality page",
     title: "Quality and testing flow for PCBA and EMS projects.",
-    role: "Single quality page skeleton, not a test subdirectory.",
+    role: "Quality and testing discussion point for PCBA and EMS project planning.",
     summary:
       "The first release keeps quality and testing on one page. It explains inspection, electrical or functional testing, reliability discussions, and packing/logistics without overclaiming coverage.",
     template: "quality-trust",
+    visual: pageVisuals.quality,
     sections: [
       {
         title: "6-step quality and testing flow",
@@ -434,7 +528,7 @@ export const pageData = {
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
       { label: "EMS & Box Build", href: routes.emsBoxBuild },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     cta: { label: "Share Testing Requirements", href: routes.requestQuote },
     placeholderNote: defaultPlaceholderNote,
@@ -444,10 +538,11 @@ export const pageData = {
     href: routes.about,
     eyebrow: "Company",
     title: "Venture Electronics is a China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner.",
-    role: "Company overview page skeleton.",
+    role: "Company context for Venture Electronics and its manufacturing focus.",
     summary:
       "About should read like a normal company page. It confirms basic identity and project fit, then links to official resources for brand and domain clarification.",
     template: "brand-authority",
+    visual: pageVisuals.about,
     sections: [
       {
         title: "Public-safe company facts",
@@ -475,7 +570,7 @@ export const pageData = {
     relatedLinks: [
       { label: "Official Resources", href: routes.officialResources },
       { label: "Services", href: routes.services },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     cta: { label: "View Services", href: routes.services },
     secondaryCta: { label: "Official Resources", href: routes.officialResources },
@@ -486,10 +581,11 @@ export const pageData = {
     href: routes.officialResources,
     eyebrow: "Brand and official resources",
     title: "Official Venture Electronics resources and domain relationship.",
-    role: "Brand and official resources page skeleton.",
+    role: "Official channels, domain context, and source-of-truth links.",
     summary:
       "This page clarifies Venture Electronics, venture-mfg.com, the in-progress GEO site, and the legacy PCBA-focused asset so buyers and AI systems do not treat them as conflicting entities.",
     template: "brand-authority",
+    visual: pageVisuals.officialResources,
     sections: [
       {
         title: "Current public relationship",
@@ -513,7 +609,7 @@ export const pageData = {
       { label: "Resources", href: routes.resources },
       { label: "Sitemap", href: routes.sitemap },
     ],
-    cta: { label: "Request a Quote", href: routes.requestQuote },
+    cta: { label: "Contact", href: routes.contact },
     placeholderNote: defaultPlaceholderNote,
   },
   resources: {
@@ -521,10 +617,11 @@ export const pageData = {
     href: routes.resources,
     eyebrow: "Resources",
     title: "Buyer FAQ, quote checklist, downloads, and content entry.",
-    role: "Resources hub skeleton.",
+    role: "Buyer resources for RFQ preparation and project planning.",
     summary:
       "Resources should help buyers prepare better RFQs. Blog and long-form content will live in Insights rather than an old archive migration.",
     template: "resource",
+    visual: pageVisuals.resources,
     sections: [
       {
         title: "First-release resources",
@@ -550,21 +647,60 @@ export const pageData = {
     relatedLinks: [
       { label: "Insights", href: routes.insights },
       { label: "Official Resources", href: routes.officialResources },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     cta: { label: "View Insights", href: routes.insights },
     secondaryCta: { label: "Request a Quote", href: routes.requestQuote },
+    placeholderNote: defaultPlaceholderNote,
+  },
+  contact: {
+    label: "Contact",
+    href: routes.contact,
+    eyebrow: "Contact",
+    title: "Contact Venture Electronics.",
+    role: "Confirmed inquiry channels and company contact details.",
+    summary:
+      "Use this page to reach Venture Electronics or confirm the right inquiry path before preparing a full PCBA, EMS, sourcing, or fabrication RFQ.",
+    template: "contact-rfq",
+    visual: pageVisuals.contact,
+    sections: [
+      {
+        title: "Confirmed contact channels",
+        items: [
+          "Email: info@venture-mfg.com.",
+          "Phone: +86 755 8529 6692.",
+          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, Guangdong, China.",
+        ],
+        kind: "facts",
+        featured: true,
+      },
+      {
+        title: "When to use Request a Quote",
+        body:
+          "Use the RFQ action when you are ready to share project files, quantities, testing requirements, and schedule expectations for review.",
+        items: quoteChecklist,
+        kind: "checklist",
+      },
+    ],
+    relatedLinks: [
+      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Services", href: routes.services },
+      { label: "Resources", href: routes.resources },
+    ],
+    cta: { label: "Request a Quote", href: routes.requestQuote },
+    secondaryCta: { label: "Email info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
     placeholderNote: defaultPlaceholderNote,
   },
   requestQuote: {
     label: "Request a Quote",
     href: routes.requestQuote,
     eyebrow: "RFQ",
-    title: "Request a PCBA, EMS, sourcing, or fabrication review.",
-    role: "RFQ page skeleton without CRM integration.",
+    title: "Request a PCBA, EMS, sourcing, or fabrication quote.",
+    role: "RFQ action page for PCBA, EMS, sourcing, and fabrication inquiries.",
     summary:
       "This page defines the RFQ path and file expectations. The form is a visual placeholder only in this PR; formal submission workflow remains future scope.",
     template: "contact-rfq",
+    visual: pageVisuals.requestQuote,
     sections: [
       {
         title: "What to prepare",
@@ -583,9 +719,9 @@ export const pageData = {
       },
     ],
     relatedLinks: [
+      { label: "Contact", href: routes.contact },
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
-      { label: "Thank You", href: routes.thankYou },
     ],
     cta: { label: "Email info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
     placeholderNote: "No CRM, upload workflow, email automation, or Supabase integration is included in this PR.",
@@ -595,10 +731,11 @@ export const pageData = {
     href: routes.insights,
     eyebrow: "Insights",
     title: "Future blog and insight hub for PCBA, turnkey assembly, sourcing, and EMS topics.",
-    role: "Content update entry skeleton.",
+    role: "Future content hub for technical guides and buyer education.",
     summary:
       "Insights is the future weekly content entry. This first PR creates the route and sample structure only; it does not scrape, migrate, or rewrite old blog content.",
     template: "resource",
+    visual: pageVisuals.insights,
     sections: [
       {
         title: "Initial content lanes",
@@ -633,11 +770,12 @@ export const pageData = {
     label: "Privacy Policy",
     href: routes.privacyPolicy,
     eyebrow: "Legal",
-    title: "Privacy Policy placeholder.",
-    role: "Utility page skeleton.",
+    title: "Privacy Policy.",
+    role: "Legal utility page awaiting final client-reviewed policy language.",
     summary:
       "This route exists for launch readiness and visual review. Final legal language should be reviewed by the client before publication.",
     template: "legal",
+    visual: pageVisuals.legal,
     sections: [
       {
         title: "Current placeholder coverage",
@@ -652,7 +790,7 @@ export const pageData = {
     relatedLinks: [
       { label: "Terms of Use", href: routes.terms },
       { label: "Sitemap", href: routes.sitemap },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     placeholderNote: "Legal copy is placeholder only and not final legal advice.",
   },
@@ -660,11 +798,12 @@ export const pageData = {
     label: "Terms",
     href: routes.terms,
     eyebrow: "Legal",
-    title: "Terms of Use placeholder.",
-    role: "Utility page skeleton.",
+    title: "Terms of Use.",
+    role: "Legal utility page awaiting final client-reviewed terms language.",
     summary:
       "This route exists for launch readiness and visual review. Final legal terms should be reviewed by the client before publication.",
     template: "legal",
+    visual: pageVisuals.legal,
     sections: [
       {
         title: "Current placeholder coverage",
@@ -679,7 +818,7 @@ export const pageData = {
     relatedLinks: [
       { label: "Privacy Policy", href: routes.privacyPolicy },
       { label: "Sitemap", href: routes.sitemap },
-      { label: "Request a Quote", href: routes.requestQuote },
+      { label: "Contact", href: routes.contact },
     ],
     placeholderNote: "Legal copy is placeholder only and not final legal advice.",
   },
@@ -691,6 +830,7 @@ export const pageData = {
     role: "Utility page listing the approved public route set.",
     summary: "This sitemap lists only the routes included in the first-round lean site shell.",
     template: "resource",
+    visual: pageVisuals.sitemap,
     sections: [
       {
         title: "Public route list",
@@ -711,10 +851,11 @@ export const pageData = {
     href: routes.thankYou,
     eyebrow: "Confirmation",
     title: "Thank you.",
-    role: "Noindex post-submit utility page skeleton.",
+    role: "Post-submit confirmation page reserved for future form integration.",
     summary:
       "This page is reserved for future RFQ or contact submission confirmation. It is not part of the primary navigation.",
     template: "contact-rfq",
+    visual: pageVisuals.thankYou,
     sections: [
       {
         title: "Future behavior",

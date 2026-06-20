@@ -28,7 +28,7 @@ const slides = [
     id: "ems",
     bg: "/hero-ems-factory.jpg",
     bgClass: "hero__bg--ems",
-    accent: "EMS & Box Build — From Assembled Boards to Finished Products",
+    accent: "EMS & Box Build, From Assembled Boards to Finished Products",
     keywords: [
       "EMS & Box Build",
       "Final assembly",

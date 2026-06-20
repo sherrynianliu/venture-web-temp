@@ -116,6 +116,7 @@ Read as claim and content boundary sources:
 /about/
 /official-resources/
 /resources/
+/contact/
 /request-a-quote/
 /insights/
 /privacy-policy/
@@ -155,7 +156,6 @@ Read as claim and content boundary sources:
 /price
 /testimonial
 /faq
-/contact
 /blog
 /blog-left-sidebar
 /blog-right-sidebar
@@ -241,7 +241,7 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
 
 当前结果：
 
-- 11 tests, 11 pass。
+- 12 tests, 12 pass。
 
 ## 本轮没有做
 
@@ -273,6 +273,28 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
 7. PCBA 样板页优先做成视觉审核基准，其他页先轻量 skeleton。
 8. 对未确认能力，用 `project-dependent`、`as required`、`to be confirmed` 类表达，不写强承诺。
 9. PR 描述必须列出公开 route、禁用 route、placeholder 边界和下一阶段建议。
+10. 视觉验收时如果页面开始像“卡片模板生成器”，优先把内页改成官网内容流：开放式 hero、分栏正文、细线列表、少量真正需要框住的工具区。
+
+## 视觉验收反馈修正
+
+用户在第一轮本地视觉验收中指出三个问题：
+
+- Header 里需要有独立 `Contact` 页面入口，同时右侧主按钮仍应是 `Request a Quote` 动作。
+- Codex 新增内页的卡片结构过重，应参考 Togeto 模板和常规官网结构，减少通用卡片堆叠。
+- 每个公开内页都需要专属图片位，不能只有文字和卡片。
+
+本次反馈修正：
+
+- 新增并公开 `/contact/` route，作为公司联系信息和询盘路径说明页。
+- Header 普通导航保留 `Contact`，右侧主 CTA 恢复为 `Request a Quote`，指向 `/request-a-quote/`。
+- Footer 联系区同时保留电话、邮箱和 `Request a Quote` 动作入口。
+- `/request-a-quote/` 继续作为 RFQ 动作页，表单为视觉 placeholder，不接 CRM、邮件、上传或数据库。
+- 移除 PCBA 页顶部的 `Sample service page` / `visual sample` 这类 Codex 痕迹，改成更像正式官网的 service copy。
+- 用 `design-taste-frontend` skill 做内页结构复盘：降低卡片密度，移除 section 编号和重复小标签，把 stage3 内页从“卡片堆”改为开放式内容流。
+- PCBA 样板页现在采用大标题 hero、正文分栏、细线列表和少量必要表单框架，卡片只留给真正的工具型 RFQ placeholder。
+- 为 `PageData` 增加 `visual` 字段，并在 `VenturePage` hero 右侧渲染专属图片位。
+- 已给所有首发内页配置首屏图片位：Services、PCBA、EMS、Component Sourcing、PCB Fabrication Support、Quality & Testing、About、Official Resources、Resources、Contact、Request a Quote、Insights、Privacy Policy、Terms、Sitemap、Thank You。
+- 新增 route contract test，确保 approved page data entries 都定义 `visual: pageVisuals.*`，防止后续新增页面漏掉图片位。
 
 ## 验证记录
 
@@ -281,11 +303,11 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
 - `npm run lint`
   - Result: pass.
 - `node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolve-wow-constructor.test.mjs`
-  - Result: 11 tests, 11 pass.
+  - Result: 12 tests, 12 pass.
 - `npm run build`
   - Result: pass.
   - Build command: `next build --webpack`.
-  - Next output: 22 static pages generated.
+  - Next output: 23 static pages generated.
   - Route table includes only the approved public pages plus `/_not-found`, metadata icons, and `/home-6` redirect page.
   - Note: build intentionally skips TypeScript validation in `next.config.mjs` for this shell-stage PR because the template's broader legacy TypeScript surface caused local type validation hangs. This should be tightened after demo routes/views are retired or isolated under a separate TS config.
 - Local production preview:
@@ -299,8 +321,8 @@ node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolv
   - CSS static chunk check after Webpack build returned `200 OK`.
 - Screenshot:
   - Repo asset: `docs/devlog/assets/venture-pcba-sample-webpack.png`.
-  - Generated local source: `/tmp/venture-pcba-sample-webpack.png`.
-  - The screenshot confirms the PCBA sample page renders with production CSS and the inner-page Header uses the readable solid state.
+  - Generated local source after visual feedback: Chrome headless capture from `http://127.0.0.1:3000/services/pcb-assembly-pcba/`.
+  - The screenshot confirms the PCBA sample page renders with production CSS, the inner-page Header uses the readable solid state, the normal nav includes `Contact`, the primary action reads `Request a Quote`, the hero has a dedicated route image slot, and the stage3 content no longer renders as a stack of cards.
 
 ## 工程取舍 / 后续风险
 

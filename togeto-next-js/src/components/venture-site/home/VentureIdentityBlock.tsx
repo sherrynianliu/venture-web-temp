@@ -29,7 +29,7 @@ export function VentureIdentityBlock() {
           </h2>
           <p className="identity__lead">
             Venture Electronics is the mother brand for Venture&apos;s PCBA, EMS, box build, and
-            component sourcing — with sourcing coordination, DFM / BOM review, testing and quality
+            component sourcing, with sourcing coordination, DFM / BOM review, testing and quality
             planning, human project ownership, and small-to-medium volume support.
           </p>
         </div>

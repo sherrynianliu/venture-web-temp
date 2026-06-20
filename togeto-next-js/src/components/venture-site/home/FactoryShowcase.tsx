@@ -2,7 +2,7 @@ import Image from "next/image";
 
 type FactoryImage = { src: string; alt: string };
 
-// Placeholder slots — drop the real factory photos into public/factory-1…5
+// Placeholder slots: drop the real factory photos into public/factory-1...5.
 // (keep the same filenames) and they appear here automatically.
 const images: FactoryImage[] = [
   { src: "/factory-1.jpg", alt: "Venture EMS production floor" },
@@ -22,7 +22,7 @@ export function FactoryShowcase() {
             Venture Electronics and our <span className="accent">EMS factory</span>
           </h2>
           <p className="factory__lead">
-            A look inside the PCBA and EMS production environment — surface-mount, through-hole,
+            A look inside the PCBA and EMS production environment, surface-mount, through-hole,
             and BGA assembly, in-line testing, and box build supporting turnkey electronics
             projects.
           </p>

@@ -12,7 +12,7 @@ export function CatalogBanner() {
             PCB &amp; Assembly Catalog
           </h2>
           <p className="catalog__desc">
-            Get the PCB &amp; Assembly catalog online today — one reference covering Venture&apos;s
+            Get the PCB &amp; Assembly catalog online today, one reference covering Venture&apos;s
             PCBA, EMS, component sourcing, and testing capabilities.
           </p>
           <Link href={routes.resources} className="catalog__btn">
