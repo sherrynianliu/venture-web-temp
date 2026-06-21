@@ -63,8 +63,8 @@ export function HomeFAQBlock() {
 
           <div className="home-faq__media">
             <Image
-              src="/faq-smt-line.jpg"
-              alt="SMT production line equipment for buyer resource context"
+              src="/assets/img/venture-old-site/pcba-testing/venture-electronics-pcba-testing-manual-visual-inspection-of-pcb.png"
+              alt="Manual PCB inspection used for buyer resource context"
               className="home-faq__img"
               width={1200}
               height={675}

@@ -16,7 +16,7 @@ const services: Svc[] = [
     href: routes.pcba,
     description:
       "Assembled boards using SMT, through-hole or mixed assembly, with delivery-model, BOM, inspection and test-scope review.",
-    image: "/hero-pcba-smt.jpg",
+    image: "/assets/img/venture-old-site/smt-assembly/venture-electronics-smt-assembly-high-volume-pcb-assembly-line-1.jpg",
     tag: { label: "Primary" },
   },
   {
@@ -24,7 +24,7 @@ const services: Svc[] = [
     href: routes.emsBoxBuild,
     description:
       "Project-based support when approved PCBAs extend into final assembly, cable or harness, mechanical, functional-check, labeling or packaging needs.",
-    image: "/hero-ems-factory.jpg",
+    image: "/assets/img/venture-old-site/box-build/venture-electronics-box-build-ems-box-build-assembly-2.jpg",
     tag: { label: "Box build", variant: "ems" },
   },
   {
@@ -32,14 +32,14 @@ const services: Svc[] = [
     href: routes.componentSourcingBomDfmReview,
     description:
       "BOM completeness, availability, lifecycle, MOQ risk, customer-approved alternatives and manufacturability questions before production.",
-    image: "/identity-smt-floor.jpg",
+    image: "/assets/img/venture-old-site/communication-equipment/venture-electronics-communication-equipment-rf-pcb-4.png",
   },
   {
     label: "PCB Fabrication Support",
     href: routes.pcbFabricationSupport,
     description:
       "Bare-board file, stack-up, material, finish and assembly-readiness coordination for PCB Assembly or Turnkey PCBA projects.",
-    image: "/identity-pcb-closeup.jpg",
+    image: "/assets/img/venture-old-site/pcb-fabrication/venture-electronics-pcb-fabrication-12-layer-pcb-stackup-2.webp",
   },
 ];
 

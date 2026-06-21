@@ -9,7 +9,7 @@ const ROTATE_MS = 7000;
 const slides = [
   {
     id: "pcba",
-    bg: "/hero-pcba-smt.jpg",
+    bg: "/assets/img/venture-old-site/smt-assembly/venture-electronics-smt-assembly-high-volume-pcb-assembly-line-1.jpg",
     bgClass: "hero__bg--pcba",
     supportingLine:
       "Turnkey PCB Assembly can connect board fabrication support, approved component sourcing, assembly, inspection and project-specific testing within one reviewed scope.",
@@ -18,7 +18,7 @@ const slides = [
   },
   {
     id: "ems",
-    bg: "/hero-ems-factory.jpg",
+    bg: "/assets/img/venture-old-site/box-build/venture-electronics-box-build-ems-box-build-assembly-3.jpg",
     bgClass: "hero__bg--ems",
     supportingLine:
       "EMS and Box Build discussion applies when a PCBA project extends into enclosure, cable, mechanical, system-check, labeling or packaging requirements.",

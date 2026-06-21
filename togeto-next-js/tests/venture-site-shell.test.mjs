@@ -3,7 +3,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { createRequire } from 'node:module';
 import { access, readFile } from 'node:fs/promises';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { constants } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
@@ -244,17 +244,52 @@ test('live Venture image slots use buyer-relevant production visuals', async () 
   const coreServices = await readProjectFile('src/components/venture-site/home/CoreServicesBlock.tsx');
   const capability = await readProjectFile('src/components/venture-site/home/CapabilityEvidence.tsx');
   const faq = await readProjectFile('src/components/venture-site/home/HomeFAQBlock.tsx');
-  const combined = `${siteData}\n${coreServices}\n${capability}\n${faq}`;
+  const homeHero = await readProjectFile('src/components/venture-site/home/HomeHero.tsx');
+  const sourceCss = await readProjectFile('src/app/(homes)/home-6/venture-exact.css');
+  const publicCss = await readProjectFile('public/venture-static/venture-exact.css');
+  const combined = `${siteData}\n${coreServices}\n${capability}\n${faq}\n${homeHero}\n${sourceCss}\n${publicCss}`;
 
   assert.doesNotMatch(coreServices, /hero-circuit-globe/);
-  assert.match(siteData, /services: \{\s+src: ["']\/identity-smt-floor\.jpg["']/);
-  assert.match(coreServices, /image: ["']\/identity-smt-floor\.jpg["']/);
-  assert.match(coreServices, /image: ["']\/identity-pcb-closeup\.jpg["']/);
-  assert.doesNotMatch(coreServices, /image: ["']\/factory-4\.jpg["']/);
-  assert.match(combined, /SMT production line equipment for buyer resource context/);
+  assert.match(siteData, /services: \{\s+src: ["']\/assets\/img\/venture-old-site\/factory\/venture-electronics-factory-china-pcba-factory-1\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/smt-assembly\/venture-electronics-smt-assembly-high-volume-pcb-assembly-line-1\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/box-build\/venture-electronics-box-build-ems-box-build-assembly-2\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/communication-equipment\/venture-electronics-communication-equipment-rf-pcb-4\.png["']/);
+  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/pcb-fabrication\/venture-electronics-pcb-fabrication-12-layer-pcb-stackup-2\.webp["']/);
+  assert.match(combined, /Manual PCB inspection used for buyer resource context/);
+  assert.doesNotMatch(combined, /\/(?:hero-pcba-smt|hero-ems-factory|identity-smt-floor|identity-pcb-closeup|factory-[0-9]|capabilities-machine|faq-smt-line|venture-catalog)\.(?:jpg|png|webp)/);
   assert.doesNotMatch(combined, /our factory/i);
   assert.doesNotMatch(combined, /our EMS factory/i);
   assert.doesNotMatch(combined, /Venture SMT placement and assembly equipment/);
+});
+
+test('public old-site image pool excludes images not approved for direct publication', () => {
+  const imageRoot = path.join(rootPath, 'public/assets/img/venture-old-site');
+  const publicImages = readdirSync(imageRoot, { recursive: true })
+    .map(String)
+    .filter((name) => /\.(?:jpe?g|png|webp)$/i.test(name));
+  const manifest = publicImages.join('\n');
+
+  assert.equal(publicImages.length, 34);
+  assert.doesNotMatch(manifest, /consumer-electronics\//);
+  assert.doesNotMatch(manifest, /customer-visit\//);
+  assert.doesNotMatch(manifest, /production-team/);
+  assert.doesNotMatch(manifest, /iot-smart-devices\//);
+  assert.doesNotMatch(
+    manifest,
+    /energy-power-electronics\/venture-electronics-energy-power-electronics-pcb-reverse-engineering\.jpg/
+  );
+  assert.doesNotMatch(
+    manifest,
+    /engineering-support\/venture-electronics-engineering-support-one-piece-lid-high-performance\.png/
+  );
+  assert.doesNotMatch(
+    manifest,
+    /reliability-testing\/venture-electronics-reliability-testing-inverter-pcb-[56]\.jpg/
+  );
+  assert.doesNotMatch(
+    manifest,
+    /smt-assembly\/venture-electronics-smt-assembly-high-volume-pcb-assembly-1\.jpg/
+  );
 });
 
 test('canonical domain signals use the approved Venture public identity', async () => {
