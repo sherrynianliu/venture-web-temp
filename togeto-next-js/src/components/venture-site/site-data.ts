@@ -1,7 +1,7 @@
-export type SiteLink = {
-  label: string;
-  href: string;
-};
+import { routes, sitemapLinks, type SiteLink } from "./site-routes";
+
+export { routes, sitemapLinks };
+export type { SiteLink };
 
 export type NavItem = SiteLink & {
   children?: NavItem[];
@@ -46,46 +46,6 @@ export type PageData = SiteLink & {
   showRelatedLinks?: boolean;
   noIndex?: boolean;
 };
-
-export const routes = {
-  home: "/",
-  services: "/services/",
-  pcba: "/services/pcb-assembly-pcba/",
-  emsBoxBuild: "/services/ems-box-build/",
-  componentSourcingBomDfmReview: "/services/component-sourcing-bom-dfm-review/",
-  pcbFabricationSupport: "/services/pcb-fabrication-support/",
-  qualityTesting: "/quality-testing/",
-  about: "/about/",
-  officialResources: "/official-resources/",
-  resources: "/resources/",
-  contact: "/contact/",
-  requestQuote: "/request-a-quote/",
-  privacyPolicy: "/privacy-policy/",
-  terms: "/terms/",
-  sitemap: "/sitemap/",
-  thankYou: "/thank-you/",
-} as const;
-
-export const sitemapLinks: SiteLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services/" },
-  { label: "PCB Assembly / PCBA", href: "/services/pcb-assembly-pcba/" },
-  { label: "EMS & Box Build", href: "/services/ems-box-build/" },
-  {
-    label: "Component Sourcing, BOM & DFM Review",
-    href: "/services/component-sourcing-bom-dfm-review/",
-  },
-  { label: "PCB Fabrication Support", href: "/services/pcb-fabrication-support/" },
-  { label: "Quality & Testing", href: "/quality-testing/" },
-  { label: "About Venture Electronics", href: "/about/" },
-  { label: "Official Resources", href: "/official-resources/" },
-  { label: "Resources", href: "/resources/" },
-  { label: "Contact", href: "/contact/" },
-  { label: "Request a Quote", href: "/request-a-quote/" },
-  { label: "Privacy Policy", href: "/privacy-policy/" },
-  { label: "Terms", href: "/terms/" },
-  { label: "Sitemap", href: "/sitemap/" },
-];
 
 export const serviceHierarchy: ServiceItem[] = [
   {
@@ -647,14 +607,23 @@ export const pageData = {
       {
         title: "Domain relationship and confirmed contact route",
         items: [
-          "venture-mfg.com is the current main website for company, services, resources and inquiries.",
-          "venture-pcba.com is a legacy PCBA-focused web asset connected to Venture Electronics; it should not be treated as a separate company.",
+          "venture-mfg.com is the canonical main website for company information, service pages, buyer resources and inquiries.",
+          "venture-pcba.com is a legacy PCBA-focused vertical asset connected to Venture Electronics; it should not be treated as a separate company or the current main website.",
           "Email: info@venture-mfg.com.",
           "Telephone: +86 755 8529 6692.",
           "Fax: +86 755 2397 7408.",
           "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
         ],
+        links: [
+          { label: "Open venture-mfg.com", href: "https://www.venture-mfg.com/" },
+          { label: "Open venture-pcba.com", href: "https://www.venture-pcba.com/" },
+        ],
         kind: "facts",
+      },
+      {
+        title: "How Venture handles other domains",
+        body:
+          "Only the domains and contact channels listed above should be treated as current public sources for Venture Electronics. If you encounter another Venture-related domain, confirm its role with Venture before citing it as an official website or sending project files through it.",
       },
       {
         title: "How to verify official information",

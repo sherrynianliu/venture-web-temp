@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
+import path from 'node:path';
+import vm from 'node:vm';
+import { createRequire } from 'node:module';
 import { access, readFile } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import { constants } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
+import ts from 'typescript';
 
 const root = new URL('../', import.meta.url);
+const rootPath = fileURLToPath(root);
+const nodeRequire = createRequire(import.meta.url);
+const tsModuleCache = new Map();
 
 const publicRoutes = [
   '/',
@@ -26,6 +35,8 @@ const publicRoutes = [
 
 const routeFiles = [
   'src/app/page.tsx',
+  'src/app/robots.ts',
+  'src/app/sitemap.ts',
   'src/app/services/page.tsx',
   'src/app/services/pcb-assembly-pcba/page.tsx',
   'src/app/services/ems-box-build/page.tsx',
@@ -115,6 +126,66 @@ async function readProjectFile(path) {
   return readFile(new URL(path, root), 'utf8');
 }
 
+function resolveSourceFile(filename) {
+  if (path.extname(filename) && existsSync(filename)) return filename;
+
+  for (const suffix of ['.ts', '.tsx', '.js', '.jsx', '/index.ts', '/index.tsx']) {
+    const candidate = `${filename}${suffix}`;
+    if (existsSync(candidate)) return candidate;
+  }
+
+  throw new Error(`Unable to resolve module ${filename}`);
+}
+
+function resolveTsRequest(request, parentFilename) {
+  if (request.startsWith('@/')) {
+    return path.join(rootPath, 'src', request.slice(2));
+  }
+
+  if (request.startsWith('.')) {
+    return path.resolve(path.dirname(parentFilename), request);
+  }
+
+  return null;
+}
+
+function loadProjectTsModule(projectPath) {
+  return loadTsModuleFile(fileURLToPath(new URL(projectPath, root)));
+}
+
+function loadTsModuleFile(filename) {
+  const resolvedFilename = resolveSourceFile(filename);
+  const cachedModule = tsModuleCache.get(resolvedFilename);
+  if (cachedModule) return cachedModule.exports;
+
+  const source = readFileSync(resolvedFilename, 'utf8');
+  const output = ts.transpileModule(source, {
+    compilerOptions: {
+      esModuleInterop: true,
+      jsx: ts.JsxEmit.ReactJSX,
+      module: ts.ModuleKind.CommonJS,
+      moduleResolution: ts.ModuleResolutionKind.NodeJs,
+      target: ts.ScriptTarget.ES2020,
+    },
+    fileName: resolvedFilename,
+  }).outputText;
+
+  const module = { exports: {} };
+  tsModuleCache.set(resolvedFilename, module);
+
+  const localRequire = (request) => {
+    const localPath = resolveTsRequest(request, resolvedFilename);
+    return localPath ? loadTsModuleFile(localPath) : nodeRequire(request);
+  };
+  const wrapper = vm.runInThisContext(
+    `(function(exports, require, module, __filename, __dirname) {\n${output}\n})`,
+    { filename: resolvedFilename },
+  );
+
+  wrapper(module.exports, localRequire, module, resolvedFilename, path.dirname(resolvedFilename));
+  return module.exports;
+}
+
 test('approved public routes have route files', async () => {
   await Promise.all(
     routeFiles.map((path) => access(new URL(path, root), constants.R_OK)),
@@ -123,11 +194,13 @@ test('approved public routes have route files', async () => {
 
 test('site data exposes only the approved public sitemap routes', async () => {
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const siteRoutes = await readProjectFile('src/components/venture-site/site-routes.ts');
+  const routeData = `${siteData}\n${siteRoutes}`;
 
   for (const route of publicRoutes.filter((route) => route !== '/thank-you/')) {
-    assert.match(siteData, new RegExp(`href: ['"]${route.replace(/[/-]/g, '\\$&')}['"]`));
+    assert.match(routeData, new RegExp(`href: ['"]${route.replace(/[/-]/g, '\\$&')}['"]`));
   }
-  assert.match(siteData, /thankYou: ['"]\/thank-you\/['"]/);
+  assert.match(routeData, /thankYou: ['"]\/thank-you\/['"]/);
 
   for (const route of [
     '/engineering-support/',
@@ -137,9 +210,9 @@ test('site data exposes only the approved public sitemap routes', async () => {
     '/brand/venture-electronics-vs-venture-pcb-pcba/',
     '/services/pcb-fabrication/',
   ]) {
-    assert.doesNotMatch(siteData, new RegExp(route.replace(/[/-]/g, '\\$&')));
+    assert.doesNotMatch(routeData, new RegExp(route.replace(/[/-]/g, '\\$&')));
   }
-  assert.doesNotMatch(siteData, /\{ label: ['"]Thank You['"], href: ['"]\/thank-you\/['"] \}/);
+  assert.doesNotMatch(routeData, /\{ label: ['"]Thank You['"], href: ['"]\/thank-you\/['"] \}/);
 });
 
 test('approved page data entries define dedicated visual slots', async () => {
@@ -163,6 +236,87 @@ test('approved page data entries define dedicated visual slots', async () => {
     'thankYou',
   ]) {
     assert.match(siteData, new RegExp(`${key}: \\{[\\s\\S]*?visual: pageVisuals\\.`));
+  }
+});
+
+test('canonical domain signals use the approved Venture public identity', async () => {
+  const layout = await readProjectFile('src/app/layout.tsx');
+  const home = await readProjectFile('src/app/page.tsx');
+  const metadata = await readProjectFile('src/components/venture-site/pages/page-metadata.ts');
+  const sitemapRoute = await readProjectFile('src/app/sitemap.ts');
+  const robotsRoute = await readProjectFile('src/app/robots.ts');
+
+  assert.match(layout, /metadataBase: siteBaseUrl/);
+  assert.match(layout, /url: 'https:\/\/www\.venture-mfg\.com\/'/);
+  assert.doesNotMatch(layout, /sameAs/);
+  assert.doesNotMatch(layout, /contactPoint/);
+  assert.doesNotMatch(layout, /faxNumber/);
+  assert.match(layout, /'@id': 'https:\/\/www\.venture-mfg\.com\/#organization'/);
+  assert.match(home, /canonical: routes\.home/);
+  assert.match(metadata, /canonical: page\.href/);
+  assert.match(sitemapRoute, /sitemapLinks\.map/);
+  assert.match(sitemapRoute, /https:\/\/www\.venture-mfg\.com/);
+  assert.match(robotsRoute, /disallow: \['\/thank-you\/'\]/);
+  assert.match(robotsRoute, /sitemap: `\$\{siteBaseUrl\}\/sitemap\.xml`/);
+});
+
+test('metadata routes return the approved indexable URL set', () => {
+  const { default: sitemap } = loadProjectTsModule('src/app/sitemap.ts');
+  const { default: robots } = loadProjectTsModule('src/app/robots.ts');
+  const { pageData, sitemapLinks } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+
+  const expectedUrls = sitemapLinks.map((link) =>
+    new URL(link.href, 'https://www.venture-mfg.com').toString(),
+  );
+  const actualUrls = sitemap().map((entry) => entry.url);
+  const robotsOutput = robots();
+
+  assert.deepEqual(actualUrls, expectedUrls);
+  assert.ok(actualUrls.every((url) => url.startsWith('https://www.venture-mfg.com/')));
+  assert.ok(actualUrls.every((url) => !url.includes('/thank-you/')));
+  assert.ok(actualUrls.every((url) => !url.includes('venture-pcba.com')));
+  assert.deepEqual(robotsOutput.rules, {
+    userAgent: '*',
+    allow: '/',
+    disallow: ['/thank-you/'],
+  });
+  assert.equal(robotsOutput.sitemap, 'https://www.venture-mfg.com/sitemap.xml');
+  assert.equal(pageData.thankYou.noIndex, true);
+  assert.equal(pageData.thankYou.showRelatedLinks, false);
+});
+
+test('public Venture domain outputs exclude unapproved domain candidates', async () => {
+  const publicFiles = await Promise.all([
+    readProjectFile('src/app/layout.tsx'),
+    readProjectFile('src/app/page.tsx'),
+    readProjectFile('src/app/robots.ts'),
+    readProjectFile('src/app/sitemap.ts'),
+    readProjectFile('src/components/venture-site/site-routes.ts'),
+    readProjectFile('src/components/venture-site/site-data.ts'),
+    readProjectFile('src/components/venture-site/home/BrandAuthorityTeaser.tsx'),
+    readProjectFile('src/components/venture-site/site/Footer.tsx'),
+    readProjectFile('src/components/social/social-box.tsx'),
+  ]);
+  const combined = publicFiles.join('\n');
+
+  assert.match(combined, /venture-mfg\.com/);
+  assert.match(combined, /venture-pcba\.com/);
+
+  for (const forbidden of [
+    'support@venture-mfg.com',
+    'venturepcba.com',
+    'venture-pcb.com',
+    'ventureems.com',
+    'venture-ems.com',
+    'venturepcb.com',
+    'pcb-supplier.com',
+    'v-cst.com',
+    'uni-venture.com',
+    'venturegroup-mfg.net',
+    'venturegroup-mfg.com',
+    'vk.com/venturepcb',
+  ]) {
+    assert.doesNotMatch(combined, new RegExp(forbidden.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 });
 
