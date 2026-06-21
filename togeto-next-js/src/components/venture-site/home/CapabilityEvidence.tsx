@@ -152,7 +152,7 @@ export function CapabilityEvidence({
           <div className="cap__media">
             <Image
               src="/capabilities-machine.jpg"
-              alt="Venture SMT placement and assembly equipment"
+              alt="SMT placement and assembly equipment used for quality planning context"
               className="cap__media-img"
               width={768}
               height={960}

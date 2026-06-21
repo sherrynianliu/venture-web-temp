@@ -32,7 +32,7 @@ const services: Svc[] = [
     href: routes.componentSourcingBomDfmReview,
     description:
       "BOM completeness, availability, lifecycle, MOQ risk, customer-approved alternatives and manufacturability questions before production.",
-    image: "/hero-circuit-globe.jpg",
+    image: "/identity-smt-floor.jpg",
   },
   {
     label: "PCB Fabrication Support",

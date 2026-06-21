@@ -239,6 +239,24 @@ test('approved page data entries define dedicated visual slots', async () => {
   }
 });
 
+test('live Venture image slots use buyer-relevant production visuals', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const coreServices = await readProjectFile('src/components/venture-site/home/CoreServicesBlock.tsx');
+  const capability = await readProjectFile('src/components/venture-site/home/CapabilityEvidence.tsx');
+  const faq = await readProjectFile('src/components/venture-site/home/HomeFAQBlock.tsx');
+  const combined = `${siteData}\n${coreServices}\n${capability}\n${faq}`;
+
+  assert.doesNotMatch(coreServices, /hero-circuit-globe/);
+  assert.match(siteData, /services: \{\s+src: ["']\/identity-smt-floor\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/identity-smt-floor\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/identity-pcb-closeup\.jpg["']/);
+  assert.doesNotMatch(coreServices, /image: ["']\/factory-4\.jpg["']/);
+  assert.match(combined, /SMT production line equipment for buyer resource context/);
+  assert.doesNotMatch(combined, /our factory/i);
+  assert.doesNotMatch(combined, /our EMS factory/i);
+  assert.doesNotMatch(combined, /Venture SMT placement and assembly equipment/);
+});
+
 test('canonical domain signals use the approved Venture public identity', async () => {
   const layout = await readProjectFile('src/app/layout.tsx');
   const home = await readProjectFile('src/app/page.tsx');

@@ -163,9 +163,9 @@ const qualityFlow = [
 
 const pageVisuals = {
   services: {
-    src: "/hero-circuit-globe.jpg",
-    alt: "Electronics manufacturing service overview",
-    caption: "Service overview across PCB assembly, EMS, sourcing, and fabrication support.",
+    src: "/identity-smt-floor.jpg",
+    alt: "SMT production floor used for electronics manufacturing service context",
+    caption: "Manufacturing-service context across PCB assembly, EMS, sourcing, and fabrication support.",
   },
   pcba: {
     src: "/hero-pcba-smt.jpg",
@@ -174,8 +174,8 @@ const pageVisuals = {
   },
   ems: {
     src: "/hero-ems-factory.jpg",
-    alt: "EMS production floor for box build projects",
-    caption: "EMS production visual for assembly, testing, packaging, and delivery support.",
+    alt: "Electronics production floor for EMS and box build project discussion",
+    caption: "Production-floor context for assembly, testing, packaging, and delivery support.",
   },
   sourcing: {
     src: "/identity-pcb-closeup.jpg",
@@ -183,19 +183,19 @@ const pageVisuals = {
     caption: "Component and PCB detail for BOM review and sourcing discussion.",
   },
   fabrication: {
-    src: "/factory-3.jpg",
+    src: "/factory-4.jpg",
     alt: "PCB fabrication and assembly coordination detail",
     caption: "Board-level visual for fabrication-to-assembly coordination.",
   },
   quality: {
     src: "/capabilities-machine.jpg",
-    alt: "Testing and inspection equipment for PCBA quality review",
-    caption: "Inspection and testing visual for quality requirement discussions.",
+    alt: "Production equipment used for PCBA quality planning context",
+    caption: "Equipment context for quality and testing requirement discussions.",
   },
   about: {
     src: "/identity-smt-floor.jpg",
-    alt: "Venture Electronics manufacturing floor",
-    caption: "Manufacturing floor visual for Venture company context.",
+    alt: "Electronics manufacturing floor used for Venture company context",
+    caption: "Manufacturing-floor context for Venture company and project-fit information.",
   },
   officialResources: {
     src: "/venture-catalog.webp",
@@ -208,14 +208,14 @@ const pageVisuals = {
     caption: "Buyer resource visual for RFQ preparation and project planning.",
   },
   contact: {
-    src: "/factory-4.jpg",
-    alt: "Assembled board inspection for Venture contact page",
-    caption: "Contact visual for Venture Electronics inquiry channels.",
+    src: "/factory-2.jpg",
+    alt: "SMT production floor used for Venture contact context",
+    caption: "Production-floor context for Venture Electronics inquiry channels.",
   },
   requestQuote: {
     src: "/factory-1.jpg",
-    alt: "Assembled board inspection before RFQ review",
-    caption: "Inspection visual for preparing a PCBA or EMS quote request.",
+    alt: "SMT production line used for RFQ preparation context",
+    caption: "Production-line context for preparing a PCBA or EMS quote request.",
   },
   legal: {
     src: "/factory-5.jpg",
@@ -223,9 +223,9 @@ const pageVisuals = {
     caption: "Manufacturing context visual for utility pages.",
   },
   sitemap: {
-    src: "/hero-circuit-globe.jpg",
-    alt: "Circuit globe visual for sitemap overview",
-    caption: "Site structure visual for the Venture route map.",
+    src: "/identity-pcb-closeup.jpg",
+    alt: "PCB detail used for sitemap context",
+    caption: "Board-level visual context for the Venture route map.",
   },
   thankYou: {
     src: "/factory-2.jpg",

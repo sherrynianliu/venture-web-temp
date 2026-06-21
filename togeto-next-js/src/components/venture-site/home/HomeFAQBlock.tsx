@@ -64,7 +64,7 @@ export function HomeFAQBlock() {
           <div className="home-faq__media">
             <Image
               src="/faq-smt-line.jpg"
-              alt="Illustration of a PCB assembly / SMT production line"
+              alt="SMT production line equipment for buyer resource context"
               className="home-faq__img"
               width={1200}
               height={675}
