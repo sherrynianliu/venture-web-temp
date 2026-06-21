@@ -4,6 +4,8 @@
 
 Apply the reviewed old-site image set to the live Venture GEO site after the 50 downloaded images were moved into this repo.
 
+Follow-up correction: large hero and page-visual slots were later restored to the previous higher-resolution public images because several old-site images were too small for those placements. See `docs/devlog/2026-06-21-venture-image-resolution-correction.md`.
+
 Source archive:
 
 - `togeto-next-js/_incoming/old-site-curated-source-images/`

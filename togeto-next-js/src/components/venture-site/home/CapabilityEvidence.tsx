@@ -151,8 +151,8 @@ export function CapabilityEvidence({
 
           <div className="cap__media">
             <Image
-              src="/assets/img/venture-old-site/pcba-testing/venture-electronics-pcba-testing-aoi-pcb-inspection.png"
-              alt="AOI inspection equipment used for PCBA quality planning context"
+              src="/capabilities-machine.jpg"
+              alt="SMT placement and assembly equipment used for quality planning context"
               className="cap__media-img"
               width={768}
               height={960}

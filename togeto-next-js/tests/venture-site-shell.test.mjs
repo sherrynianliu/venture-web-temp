@@ -250,13 +250,18 @@ test('live Venture image slots use buyer-relevant production visuals', async () 
   const combined = `${siteData}\n${coreServices}\n${capability}\n${faq}\n${homeHero}\n${sourceCss}\n${publicCss}`;
 
   assert.doesNotMatch(coreServices, /hero-circuit-globe/);
-  assert.match(siteData, /services: \{\s+src: ["']\/assets\/img\/venture-old-site\/factory\/venture-electronics-factory-china-pcba-factory-1\.jpg["']/);
-  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/smt-assembly\/venture-electronics-smt-assembly-high-volume-pcb-assembly-line-1\.jpg["']/);
-  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/box-build\/venture-electronics-box-build-ems-box-build-assembly-2\.jpg["']/);
-  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/communication-equipment\/venture-electronics-communication-equipment-rf-pcb-4\.png["']/);
-  assert.match(coreServices, /image: ["']\/assets\/img\/venture-old-site\/pcb-fabrication\/venture-electronics-pcb-fabrication-12-layer-pcb-stackup-2\.webp["']/);
-  assert.match(combined, /Manual PCB inspection used for buyer resource context/);
-  assert.doesNotMatch(combined, /\/(?:hero-pcba-smt|hero-ems-factory|identity-smt-floor|identity-pcb-closeup|factory-[0-9]|capabilities-machine|faq-smt-line|venture-catalog)\.(?:jpg|png|webp)/);
+  assert.match(homeHero, /bg: ["']\/hero-pcba-smt\.jpg["']/);
+  assert.match(homeHero, /bg: ["']\/hero-ems-factory\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/hero-pcba-smt\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/hero-ems-factory\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/identity-smt-floor\.jpg["']/);
+  assert.match(coreServices, /image: ["']\/identity-pcb-closeup\.jpg["']/);
+  assert.match(siteData, /pcba: \{\s+src: ["']\/hero-pcba-smt\.jpg["']/);
+  assert.match(siteData, /fabrication: \{\s+src: ["']\/factory-4\.jpg["']/);
+  assert.match(capability, /src=["']\/capabilities-machine\.jpg["']/);
+  assert.match(faq, /src=["']\/faq-smt-line\.jpg["']/);
+  assert.match(sourceCss, /background-image: url\(["']\/hero-pcba-smt\.jpg["']\)/);
+  assert.match(publicCss, /background-image: url\(["']\/hero-pcba-smt\.jpg["']\)/);
   assert.doesNotMatch(combined, /our factory/i);
   assert.doesNotMatch(combined, /our EMS factory/i);
   assert.doesNotMatch(combined, /Venture SMT placement and assembly equipment/);
