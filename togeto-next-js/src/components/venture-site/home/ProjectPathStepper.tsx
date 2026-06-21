@@ -15,16 +15,16 @@ type Step = {
 const steps: Step[] = [
   {
     index: "01",
-    label: "Review project files / RFQ",
-    description: "Gerber, BOM, CPL, Assembly drawing, quantity & testing requirements.",
+    label: "Share project files and requirements",
+    description: "Gerber or ODB++, BOM, CPL, assembly drawing, quantity and test requirements.",
     href: routes.requestQuote,
     icon: "design",
-    tag: "Day 0",
+    tag: "Files",
   },
   {
     index: "02",
-    label: "BOM Review & Component Sourcing",
-    description: "Sourcing, MOQ & lifecycle checks.",
+    label: "Review BOM, sourcing and DFM risks",
+    description: "Identify missing data, lifecycle, MOQ, alternative-part and manufacturability questions.",
     href: routes.componentSourcingBomDfmReview,
     icon: "bom",
     tag: "BOM",
@@ -32,35 +32,35 @@ const steps: Step[] = [
   },
   {
     index: "03",
-    label: "PCB Fabrication",
-    description: "Bare-board fabrication coordination when scope requires it.",
+    label: "Coordinate PCB fabrication when included",
+    description: "Confirm stack-up, material, finish, panelization and downstream assembly needs.",
     href: routes.pcbFabricationSupport,
     icon: "fabrication",
     tag: "Boards",
   },
   {
     index: "04",
-    label: "PCB Assembly / PCBA",
-    description: "SMT · THT · BGA on PCBA line.",
+    label: "Prepare and complete PCB Assembly / PCBA",
+    description: "Define SMT, through-hole or mixed assembly and the relevant process checks.",
     href: routes.pcba,
     icon: "pcba",
     tag: "PCBA",
   },
   {
     index: "05",
-    label: "Testing & Quality Control",
-    description: "AOI · ICT · functional · reliability.",
+    label: "Apply the agreed inspection or testing scope",
+    description: "Confirm fixtures, firmware, test steps, standards and acceptance criteria.",
     href: routes.qualityTesting,
     icon: "test",
     tag: "QC",
   },
   {
     index: "06",
-    label: "EMS / Box Build / Delivery Support",
-    description: "Assembly, packaging & logistics.",
+    label: "Extend into EMS, packaging or delivery when included",
+    description: "Review enclosure, harness, mechanical, labeling and packaging requirements.",
     href: routes.emsBoxBuild,
     icon: "box",
-    tag: "Premium",
+    tag: "EMS",
     variant: "featured",
   },
 ];
@@ -132,7 +132,7 @@ export function ProjectPathStepper() {
           <div className="project-path__title-block">
             <p className="project-path__eyebrow">Typical project path</p>
             <h2 className="project-path__title" id="project-path-title">
-              From design files to <em>finished assemblies</em> with one accountable partner.
+              How does a Venture Electronics project move from files to <em>finished assemblies</em>?
             </h2>
           </div>
         </header>

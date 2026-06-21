@@ -1,0 +1,106 @@
+{
+  "revision": "2026-06-20-r2",
+  "templateHeadSha": "b7a10516cced88842b3b9c0bc157b6af318a189c",
+  "status": "pass-with-gates",
+  "checks": {
+    "expectedFiles": {
+      "passed": true,
+      "expected": [
+        "00_sitewide-content-rules.md",
+        "01_home.md",
+        "02_services-overview.md",
+        "03_pcb-assembly-pcba.md",
+        "04_ems-box-build.md",
+        "05_component-sourcing-bom-dfm-review.md",
+        "06_pcb-fabrication-support.md",
+        "07_quality-testing.md",
+        "08_about.md",
+        "09_official-resources.md",
+        "10_resources.md",
+        "11_contact.md",
+        "12_request-a-quote.md",
+        "13_insights.md",
+        "14_privacy-policy.md",
+        "15_terms.md",
+        "16_sitemap.md",
+        "17_thank-you.md"
+      ],
+      "actual": [
+        "00_sitewide-content-rules.md",
+        "01_home.md",
+        "02_services-overview.md",
+        "03_pcb-assembly-pcba.md",
+        "04_ems-box-build.md",
+        "05_component-sourcing-bom-dfm-review.md",
+        "06_pcb-fabrication-support.md",
+        "07_quality-testing.md",
+        "08_about.md",
+        "09_official-resources.md",
+        "10_resources.md",
+        "11_contact.md",
+        "12_request-a-quote.md",
+        "13_insights.md",
+        "14_privacy-policy.md",
+        "15_terms.md",
+        "16_sitemap.md",
+        "17_thank-you.md"
+      ]
+    },
+    "uniqueRoutes": {
+      "passed": true,
+      "count": 17
+    },
+    "uniqueCanonicals": {
+      "passed": true,
+      "count": 17
+    },
+    "reviewedNotFrozen": {
+      "passed": true
+    },
+    "heldRoutes": {
+      "passed": true,
+      "held": {
+        "13_insights.md": "hold",
+        "17_thank-you.md": "hold"
+      }
+    },
+    "regionContractsAndMetadata": {
+      "passed": true,
+      "missing": {}
+    },
+    "noInternalPlanningHeadingsInPublicCopy": {
+      "passed": true,
+      "hits": {}
+    },
+    "oneDocumentH1": {
+      "passed": true,
+      "bad": {}
+    },
+    "uniqueSeoTitles": {
+      "passed": true,
+      "count": 17
+    },
+    "uniqueMetaDescriptions": {
+      "passed": true,
+      "count": 17
+    },
+    "rfqMailtoOnly": {
+      "passed": true
+    },
+    "manifestHashes": {
+      "passed": true,
+      "errors": [],
+      "count": 18
+    },
+    "allAutomatedChecksPassed": {
+      "passed": true
+    }
+  },
+  "warnings": [
+    "Production domain and canonical base still require human confirmation.",
+    "Browser visual QA is not complete for the current PR.",
+    "Privacy Policy and Terms require client or legal review.",
+    "About, Services, RFQ, Quality and Insights need the template fixes listed in TEMPLATE_SECTION_REVIEW.md.",
+    "Images, downloads and certificate wording remain conditional."
+  ]
+}

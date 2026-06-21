@@ -4,6 +4,10 @@ import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes, type PageData, type PageSection } from "@/components/venture-site/site-data";
 import { PageEnhancements } from "./PageEnhancements";
 
+function isExternalHref(href: string) {
+  return href.startsWith("http://") || href.startsWith("https://") || href.startsWith("mailto:");
+}
+
 function SectionItems({ section }: { section: PageSection }) {
   if (!section.items?.length) return null;
 
@@ -62,6 +66,31 @@ function SectionItems({ section }: { section: PageSection }) {
   );
 }
 
+function SectionLinks({ section }: { section: PageSection }) {
+  if (!section.links?.length) return null;
+
+  return (
+    <div className="stage3-section-links">
+      {section.links.map((link) =>
+        isExternalHref(link.href) ? (
+          <a
+            key={link.href}
+            href={link.href}
+            target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+          >
+            {link.label}
+          </a>
+        ) : (
+          <Link key={link.href} href={link.href}>
+            {link.label}
+          </Link>
+        ),
+      )}
+    </div>
+  );
+}
+
 function PageSectionBlock({ section, index }: { section: PageSection; index: number }) {
   return (
     <section
@@ -74,6 +103,7 @@ function PageSectionBlock({ section, index }: { section: PageSection; index: num
       <div className="stage3-section__body">
         {section.body ? <p>{section.body}</p> : null}
         <SectionItems section={section} />
+        <SectionLinks section={section} />
       </div>
     </section>
   );

@@ -8,11 +8,12 @@ export function HomeFinalCTA() {
       <div className="final-cta__inner">
         <div className="final-cta__text">
           <h2 id="home-final-cta-title" className="final-cta__title">
-            Prepare your PCBA or EMS RFQ
+            Prepare your PCB Assembly or EMS project for review.
           </h2>
           <p className="final-cta__desc">
-            Share Gerber, BOM, CPL, assembly drawings, quantity, and testing requirements so the
-            Venture team can review the project scope.
+            Share the available Gerber or ODB++, BOM, CPL, assembly drawings, quantity and testing
+            requirements so Venture Electronics can identify missing inputs and discuss the
+            appropriate manufacturing scope.
           </p>
         </div>
         <div className="subscribe" aria-label="Request a Venture Electronics quote">

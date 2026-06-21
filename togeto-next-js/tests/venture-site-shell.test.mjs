@@ -18,7 +18,6 @@ const publicRoutes = [
   '/resources/',
   '/contact/',
   '/request-a-quote/',
-  '/insights/',
   '/privacy-policy/',
   '/terms/',
   '/sitemap/',
@@ -38,7 +37,6 @@ const routeFiles = [
   'src/app/resources/page.tsx',
   'src/app/contact/page.tsx',
   'src/app/request-a-quote/page.tsx',
-  'src/app/insights/page.tsx',
   'src/app/privacy-policy/page.tsx',
   'src/app/terms/page.tsx',
   'src/app/sitemap/page.tsx',
@@ -159,7 +157,6 @@ test('approved page data entries define dedicated visual slots', async () => {
     'resources',
     'contact',
     'requestQuote',
-    'insights',
     'privacyPolicy',
     'terms',
     'sitemap',
@@ -208,7 +205,8 @@ test('RFQ launch path is mailto-only and has no inactive visual form', async () 
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
 
   assert.match(page, /mailto:info@venture-mfg\.com/);
-  assert.match(siteData, /cta: \{ label: ['"]Email info@venture-mfg\.com['"], href: ['"]mailto:info@venture-mfg\.com['"] \}/);
+  assert.match(page, /Email info@venture-mfg\.com/);
+  assert.match(siteData, /cta: \{ label: ['"]Email RFQ Files['"], href: ['"]mailto:info@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ['"] \}/);
   assert.doesNotMatch(page, /<form className=["']contact-form["']/);
   assert.doesNotMatch(page, /type=["']button["'][\s\S]*Placeholder only/);
 });

@@ -1,11 +1,9 @@
-import SocialBox from '../social/social-box';
-
 const TopBarArea = () => {
   return (
     <div className="it-header-top-area it-header-top-ptb black-bg">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-xl-8 col-lg-7 col-md-6 col-sm-6">
+          <div className="col-12">
             <div className="it-header-top-list-box">
               <ul>
                 <li className="d-none d-lg-inline-block">
@@ -46,20 +44,6 @@ const TopBarArea = () => {
                   </span>
                 </li>
               </ul>
-            </div>
-          </div>
-          <div className="col-xl-4 col-lg-5 col-md-6 col-sm-6 d-none d-sm-block">
-            <div className="it-header-top-right d-flex align-items-center justify-content-end">
-              <div className="it-header-top-contact d-none d-md-block mr-30">
-                <a href="#">Help</a>
-                <span>/</span>
-                <a href="#">support</a>
-                <span>/</span>
-                <a href="#">contact</a>
-              </div>
-              <div className="it-header-top-social-box">
-                <SocialBox />
-              </div>
             </div>
           </div>
         </div>

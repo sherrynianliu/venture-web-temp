@@ -10,20 +10,20 @@ type Cap = { icon: CapIcon; title: string; desc: string; href: string };
 const left: Cap[] = [
   {
     icon: "traceability",
-    title: "Project Records & Traceability Planning",
-    desc: "Project files, BOM revisions, inspection points, test requirements, and delivery records can be discussed for each PCBA / EMS scope.",
+    title: "Files and Revision Alignment",
+    desc: "Keep Gerber, BOM, CPL, drawings and test requirements on the approved revision before quotation and production review.",
     href: routes.pcba,
   },
   {
     icon: "smt",
-    title: "SMT Placement & Soldering",
-    desc: "SMT, THT, mixed assembly, and soldering requirements are reviewed against the customer's files and project needs.",
+    title: "Assembly-process Planning",
+    desc: "Review SMT, through-hole, mixed assembly, polarity and special-handling requirements against the project files.",
     href: routes.pcba,
   },
   {
     icon: "inspection",
-    title: "SPI, AOI, FAI & X-Ray Inspection",
-    desc: "Solder paste control, placement verification, and hidden-joint review with SPI, AOI, first article, and X-Ray inspection.",
+    title: "Inspection Checkpoints",
+    desc: "Discuss FAI, SPI, AOI, visual inspection or X-ray where the board and package risks support them.",
     href: routes.qualityTesting,
   },
 ];
@@ -31,20 +31,20 @@ const left: Cap[] = [
 const right: Cap[] = [
   {
     icon: "test",
-    title: "Electrical, ICT & Functional Testing",
-    desc: "Electrical performance, ICT / FCT, insulation impedance, voltage withstand, and leakage testing planned to product needs.",
+    title: "Electrical or Functional Checks",
+    desc: "Define ICT, FCT or product-specific tests from the available test plan, fixtures, firmware and acceptance criteria.",
     href: routes.qualityTesting,
   },
   {
     icon: "coating",
-    title: "Cleaning, Coating & Protection",
-    desc: "Aqueous cleaning, conformal coating, glue filling, depaneling, and UV laser marking for project-specific protection.",
+    title: "BOM and Approved Alternatives",
+    desc: "Record sourcing restrictions and customer approval before any candidate substitution is used.",
     href: routes.qualityTesting,
   },
   {
     icon: "reliability",
-    title: "Reliability & Environmental Test Support",
-    desc: "Reliability or environmental validation can be discussed when the project requirements, standards, samples, and acceptance criteria are confirmed.",
+    title: "Records and Reliability Requirements",
+    desc: "Confirm required reports, traceability depth, samples, standards and any external-laboratory role before the scope is finalized.",
     href: routes.qualityTesting,
   },
 ];
@@ -125,8 +125,8 @@ type CapabilityEvidenceProps = {
 };
 
 export function CapabilityEvidence({
-  eyebrow = "Capabilities",
-  title = "Production and quality support behind each PCBA / EMS project",
+  eyebrow = "Project readiness and quality planning",
+  title = "What quality and testing information should be defined before production?",
   primaryLabel = "View Quality & Testing",
   primaryHref = routes.qualityTesting,
   secondaryLabel = "Request Project Review",

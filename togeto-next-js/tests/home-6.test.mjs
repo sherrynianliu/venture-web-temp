@@ -24,13 +24,13 @@ test('home 06 redirects to the canonical root home page', async () => {
   assert.doesNotMatch(page, /HomeSixMain/);
 });
 
-test('home 06 keeps the current template shell and effects', async () => {
+test('home 06 keeps the Venture shell components', async () => {
   const view = await readProjectFile('src/views/home-6/home-6.tsx');
 
-  assert.match(view, /<Wrapper>/);
   assert.match(view, /<Header/);
+  assert.match(view, /<TopBarArea/);
+  assert.match(view, /<HomeSixContent/);
   assert.match(view, /<Footer/);
-  assert.match(view, /useGsapAnimations/);
-  assert.match(view, /fadeAnimation/);
-  assert.match(view, /splitAnimation/);
+  assert.match(view, /className=["']venture-site["']/);
+  assert.doesNotMatch(view, /<Wrapper>/);
 });

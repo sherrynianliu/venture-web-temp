@@ -18,6 +18,7 @@ export type PageSection = {
   title: string;
   body?: string;
   items?: string[];
+  links?: SiteLink[];
   kind?: "list" | "steps" | "checklist" | "facts" | "proof";
   featured?: boolean;
 };
@@ -59,7 +60,6 @@ export const routes = {
   resources: "/resources/",
   contact: "/contact/",
   requestQuote: "/request-a-quote/",
-  insights: "/insights/",
   privacyPolicy: "/privacy-policy/",
   terms: "/terms/",
   sitemap: "/sitemap/",
@@ -82,7 +82,6 @@ export const sitemapLinks: SiteLink[] = [
   { label: "Resources", href: "/resources/" },
   { label: "Contact", href: "/contact/" },
   { label: "Request a Quote", href: "/request-a-quote/" },
-  { label: "Insights", href: "/insights/" },
   { label: "Privacy Policy", href: "/privacy-policy/" },
   { label: "Terms", href: "/terms/" },
   { label: "Sitemap", href: "/sitemap/" },
@@ -126,7 +125,6 @@ const aboutLinks: NavItem[] = [
 
 const resourceLinks: NavItem[] = [
   { label: "Resources / FAQ", href: routes.resources },
-  { label: "Insights", href: routes.insights },
   { label: "Official Resources", href: routes.officialResources },
 ];
 
@@ -171,7 +169,6 @@ export const footerGroups: { title: string; links: SiteLink[] }[] = [
     links: [
       { label: "FAQ", href: routes.resources },
       { label: "RFQ Preparation", href: routes.requestQuote },
-      { label: "Insights", href: routes.insights },
       { label: "Official Resources", href: routes.officialResources },
     ],
   },
@@ -190,17 +187,18 @@ const quoteChecklist = [
   "BOM with MPN, manufacturer, quantity, and substitution rules",
   "CPL / Pick-and-Place data",
   "Assembly drawing and polarity notes",
-  "Quantity, target schedule, and packaging needs",
+  "Quantity and target schedule",
   "Testing plan, firmware, fixture, or acceptance criteria when available",
+  "Packaging, labeling, delivery destination, and required shipping documents",
 ];
 
 const qualityFlow = [
-  "Test Plan & Quality Requirements",
-  "PCBA In-process Inspection",
-  "PCBA Electrical / Functional Testing",
-  "Box Build order: System-level Functional Testing",
-  "Reliability Testing Capabilities, as required",
-  "Packing & Logistics",
+  "Test plan and quality requirements: confirm standards, methods, samples, fixtures, firmware, records and acceptance criteria.",
+  "PCBA in-process inspection: apply relevant incoming, first-article, solder-paste, optical, visual or hidden-joint checks.",
+  "PCBA electrical or functional testing: use the agreed board-level method where test points, fixtures, software and criteria are available.",
+  "System-level functional testing for Box Build: check the assembled system according to approved mechanical, harness, firmware and functional requirements.",
+  "Reliability testing as required: confirm conditions, samples, standards, acceptance thresholds and any external-laboratory boundary.",
+  "Packing and logistics review: confirm labels, ESD or moisture handling, packaging, records and shipment requirements.",
 ];
 
 const pageVisuals = {
@@ -259,11 +257,6 @@ const pageVisuals = {
     alt: "Assembled board inspection before RFQ review",
     caption: "Inspection visual for preparing a PCBA or EMS quote request.",
   },
-  insights: {
-    src: "/hero-assembly-robots.jpg",
-    alt: "Electronics assembly automation for technical insights",
-    caption: "Assembly visual for technical guides and buyer resources.",
-  },
   legal: {
     src: "/factory-5.jpg",
     alt: "Automated assembly equipment used as legal page visual context",
@@ -286,77 +279,97 @@ export const pageData = {
     label: "Services",
     href: routes.services,
     eyebrow: "Services overview",
-    title: "PCB Assembly, EMS, sourcing, and fabrication support in one clear service path.",
+    title: "Choose the right PCB Assembly, EMS or manufacturing-support path.",
     role: "Service overview for PCBA-first manufacturing inquiries.",
     summary:
-      "Use this page to choose the right starting point for a PCB Assembly, EMS, sourcing, DFM, testing, or PCB fabrication support inquiry.",
+      "PCB Assembly / PCBA is the primary service entry. EMS & Box Build applies when a project extends beyond an assembled board, while sourcing, BOM, DFM and PCB fabrication support help prepare the project for manufacturing review.",
     template: "service-conversion",
     visual: pageVisuals.services,
     sections: [
       {
-        title: "Service selection matrix",
-        body:
-          "PCB Assembly / PCBA is the main service entry. EMS & Box Build applies when a board-level project extends into final assembly, while sourcing, DFM review, quality, and fabrication support help prepare the project for manufacturing review.",
-        items: serviceHierarchy.map((service) => `${service.label}: ${service.description}`),
-        kind: "list",
+        title: "How do Venture Electronics services connect within one project?",
+        items: [
+          "Start with the intended deliverable. An assembled board begins with PCB Assembly / PCBA; a more complete module or product may require EMS & Box Build.",
+          "Define the files and supply model. Gerber, BOM, CPL, drawings, quantities and sourcing responsibilities shape the quotation.",
+          "Resolve engineering and supply-chain questions. BOM review, approved alternatives, DFM/DFA and fabrication inputs should be settled before production.",
+          "Confirm inspection, testing and delivery requirements. The quotation should state the agreed checks, records, packaging and delivery scope.",
+        ],
+        kind: "steps",
         featured: true,
       },
       {
-        title: "How the service pages connect",
+        title: "What should buyers prepare before selecting a final service scope?",
+        body:
+          "The file set does not need to be perfect before the first conversation, but missing information may limit quotation accuracy or require follow-up.",
         items: [
-          "Start with PCB Assembly / PCBA when the core need is assembled boards.",
-          "Use EMS & Box Build when the project includes enclosure, harness, packaging, or system-level assembly discussion.",
-          "Use sourcing, BOM, DFM, fabrication, and testing pages to prepare clearer files and acceptance requirements before quoting.",
+          "Gerber or ODB++ files",
+          "BOM with MPN, manufacturer, quantity and substitution rules",
+          "CPL / pick-and-place data",
+          "Assembly drawings, polarity notes and mechanical requirements",
+          "Quantity and target schedule",
+          "Test plan, fixture, firmware, golden sample or acceptance criteria when available",
+          "Packaging, labeling and delivery requirements",
         ],
-        kind: "steps",
+        kind: "checklist",
       },
     ],
     relatedLinks: serviceHierarchy,
     cta: { label: "Request a Quote", href: routes.requestQuote },
+    secondaryCta: { label: "Explore PCB Assembly / PCBA", href: routes.pcba },
   },
   pcba: {
     label: "PCB Assembly / PCBA",
     href: routes.pcba,
     eyebrow: "PCB Assembly / PCBA",
-    title: "PCB Assembly / PCBA for turnkey-first electronics manufacturing projects.",
-    role: "Turnkey PCBA, SMT, through-hole, sourcing, and testing coordination.",
+    title: "PCB Assembly / PCBA with turnkey project coordination.",
+    role: "From approved board files and BOM data to assembled boards, inspection and project-specific testing.",
     summary:
-      "This page organizes delivery models, RFQ files, assembly scope, and testing discussion for buyers preparing a PCBA project.",
+      "Venture Electronics supports SMT, through-hole and mixed PCB Assembly projects. Depending on the quotation, Turnkey PCBA may also coordinate PCB fabrication support, component sourcing, BOM and DFM review, inspection, testing, packaging and delivery requirements.",
     visual: pageVisuals.pcba,
     directAnswer: [
-      "Use PCB Assembly as the buyer-readable service label and keep PCBA as the industry abbreviation.",
-      "Use Turnkey PCBA as a delivery mode covering PCB fabrication coordination, component sourcing, assembly, testing discussion, and delivery support when the project scope confirms it.",
+      "PCB Assembly is the buyer-readable service name; PCBA is the common abbreviation for the assembled circuit board and its manufacturing process.",
+      "Turnkey PCBA is a delivery model, not a competing first-level service.",
     ],
     template: "service-conversion",
     sections: [
       {
         label: "Primary flow",
-        title: "Delivery models for PCBA projects",
+        title: "Which PCB Assembly delivery model fits your project?",
         body:
-          "Turnkey PCBA can coordinate PCB fabrication, BOM review, component sourcing, assembly, testing discussion, packaging, and delivery support under one project scope when the files and requirements are confirmed.",
+          "In every model, BOM revisions, alternative parts, test coverage and acceptance criteria remain controlled by the approved project documents.",
         items: [
-          "SMT, THT, mixed assembly, BGA, prototype, and low-volume needs can be reviewed against the board files and BOM.",
-          "Component substitutions require customer approval before procurement or assembly proceeds.",
-          "Testing coverage depends on the product structure, fixture, firmware, and acceptance criteria.",
+          "Consigned assembly: the buyer supplies some or all components; assembly, incoming-material responsibilities, shortages, inspection and agreed testing are discussed.",
+          "Partial turnkey: the buyer supplies designated or critical items; selected PCB or component coordination plus assembly and agreed checks are discussed.",
+          "Full-turnkey discussion: approved design files and purchasing rules can support PCB fabrication support, BOM review, sourcing, assembly, project-specific testing, packaging and delivery coordination.",
         ],
         kind: "proof",
         featured: true,
       },
       {
-        label: "RFQ inputs",
-        title: "Quote file checklist",
-        items: quoteChecklist,
-        kind: "checklist",
-      },
-      {
-        label: "Assembly and testing",
-        title: "Scope confirmed during quote review",
+        title: "What PCB Assembly methods and project types can be reviewed?",
         items: [
-          "Assembly process and inspection checkpoints are reviewed against Gerber or ODB++, BOM, CPL, drawings, and polarity notes.",
-          "Testing scope is confirmed from customer-provided fixtures, firmware, test steps, standards, and acceptance criteria.",
-          "Packaging, labeling, and delivery requirements should be included when they affect handling or project records.",
+          "SMT assembly for surface-mount components and reflow workflows.",
+          "Through-hole assembly for connectors, power components or parts requiring wave, selective or manual soldering discussion.",
+          "Mixed SMT and through-hole assembly.",
+          "Prototype and low-volume projects for engineering validation or staged production planning.",
+          "BGA, LED, flex-board or other special assembly requirements reviewed from current files.",
         ],
         kind: "list",
+      },
+      {
+        label: "RFQ inputs",
+        title: "RFQ checklist for PCB Assembly / PCBA",
+        items: [
+          "Gerber or ODB++ files",
+          "BOM with designators, quantity, MPN, manufacturer and substitution restrictions",
+          "CPL / XY / pick-and-place data",
+          "Assembly drawing with polarity, connector and special-process notes",
+          "Quantity and target schedule",
+          "Test plan, firmware, fixture information, golden sample or acceptance criteria when available",
+          "Programming, coating, marking, packaging or label requirements when applicable",
+          "Delivery destination and required shipping documents",
+        ],
+        kind: "checklist",
       },
     ],
     relatedLinks: [
@@ -364,38 +377,55 @@ export const pageData = {
       { label: "Quality & Testing", href: routes.qualityTesting },
       { label: "EMS & Box Build", href: routes.emsBoxBuild },
     ],
-    cta: { label: "Request a Quote", href: routes.requestQuote },
-    secondaryCta: { label: "View Services", href: routes.services },
+    cta: { label: "Request a PCB Assembly Quote", href: routes.requestQuote },
+    secondaryCta: { label: "View RFQ Checklist", href: routes.resources },
   },
   emsBoxBuild: {
     label: "EMS & Box Build",
     href: routes.emsBoxBuild,
     eyebrow: "Strategic service",
-    title: "EMS & Box Build extends PCBA into broader project manufacturing support.",
+    title: "EMS & Box Build support for projects that extend beyond the PCBA.",
     role: "EMS and box-build support for projects that extend beyond board assembly.",
     summary:
-      "EMS and Box Build covers project-based support around PCBA, enclosures, cable or wire harness discussion, functional testing, packaging, and delivery requirements.",
+      "EMS Manufacturing describes a broader electronics-manufacturing scope around an assembled board. Box Build is a specific integration path that may combine approved PCBAs with enclosure, cable or harness, mechanical parts, system checks, labeling, packaging and delivery requirements.",
     template: "strategic-service",
     visual: pageVisuals.ems,
     sections: [
       {
-        title: "Scope to discuss by project",
+        title: "What can an EMS or Box Build scope include?",
         items: [
-          "PCBA integration with enclosure, cabinet, connectors, wire harness, or mechanical parts.",
-          "System-level functional testing when the customer provides test steps and acceptance criteria.",
-          "Packaging, labeling, serial number, and logistics requirements when confirmed in the RFQ.",
+          "PCBA integration with enclosure, cabinet, connectors or mechanical components.",
+          "Cable or harness discussion when drawings, connector specifications, routing and inspection requirements are available.",
+          "System-level checks based on customer procedures, fixtures, firmware and acceptance criteria.",
+          "Identification and packaging such as labels, serial numbers, packaging materials, accessories and shipment preparation when included in the quotation.",
         ],
         kind: "list",
         featured: true,
       },
       {
-        title: "Project fit and required inputs",
+        title: "Required inputs for EMS or Box Build review",
         items: [
-          "System-level assembly scope is confirmed from drawings, mechanical requirements, harness details, test steps, and acceptance criteria.",
-          "Software, RF, safety, retail packaging, and fulfillment requirements should be stated clearly so Venture can confirm whether they fit the project.",
-          "Cable or harness work can be discussed when drawings, connector requirements, and inspection expectations are provided.",
+          "Approved PCBA files and board revision.",
+          "Complete system BOM, including electronic, cable, mechanical and packaging items.",
+          "Enclosure and mechanical drawings.",
+          "Cable or harness drawings and connector requirements.",
+          "Assembly sequence, torque or fastening notes where applicable.",
+          "Firmware, configuration or programming requirements.",
+          "System-level test steps, fixtures, samples and acceptance criteria.",
+          "Label, serial-number, packaging and delivery instructions.",
         ],
         kind: "checklist",
+      },
+      {
+        title: "What should be stabilized before an EMS project repeats?",
+        items: [
+          "Scope clarification: define the product form, PCBA status, enclosure, harness, test and packaging needs.",
+          "Engineering review: identify electronic, mechanical, cable and test-interface risks.",
+          "BOM and supply review: check availability, lifecycle, MOQ and approved alternatives across the system BOM.",
+          "Prototype or pilot build: verify assembly order, fixtures, functional checks, labels and packaging.",
+          "Repeat-production preparation: freeze approved revisions, material rules, assembly instructions, test requirements and records.",
+        ],
+        kind: "steps",
       },
     ],
     relatedLinks: [
@@ -403,7 +433,8 @@ export const pageData = {
       { label: "Quality & Testing", href: routes.qualityTesting },
       { label: "Contact", href: routes.contact },
     ],
-    cta: { label: "Discuss EMS Scope", href: routes.requestQuote },
+    cta: { label: "Discuss an EMS Project", href: routes.requestQuote },
+    secondaryCta: { label: "View PCB Assembly / PCBA", href: routes.pcba },
   },
   componentSourcingBomDfmReview: {
     label: "Component Sourcing, BOM & DFM Review",
@@ -496,36 +527,49 @@ export const pageData = {
     label: "Quality & Testing",
     href: routes.qualityTesting,
     eyebrow: "Quality page",
-    title: "Quality and testing flow for PCBA and EMS projects.",
+    title: "Inspection and testing planned around each PCBA or EMS project.",
     role: "Quality and testing discussion point for PCBA and EMS project planning.",
     summary:
-      "This page explains inspection, electrical or functional testing, reliability discussions, and packing or logistics review for PCBA and EMS projects.",
+      "Quality planning should define what is checked, when it is checked, which method applies and what record or acceptance criterion is expected. The appropriate combination depends on the BOM, board design, product function, fixture, firmware and buyer requirements.",
     template: "quality-trust",
     visual: pageVisuals.quality,
     sections: [
       {
         title: "6-step quality and testing flow",
+        body:
+          "A board-only PCBA project may move from board-level testing directly to packing; a Box Build project may continue through system-level checks.",
         items: qualityFlow,
         kind: "steps",
         featured: true,
       },
       {
-        title: "Testing methods to describe as project-dependent",
+        title: "Test-scope inputs",
         items: [
-          "IQC, FAI, SPI, AOI, X-ray, visual inspection, ICT, FCT, and PCBA functional testing.",
-          "Box Build system-level checks when mechanical, harness, firmware, and acceptance criteria are supplied.",
-          "Reliability testing discussion only when project requirements and evidence support it.",
-        ],
-        kind: "list",
-      },
-      {
-        title: "How testing scope is confirmed",
-        items: [
-          "Electrical or functional tests depend on the product structure, firmware, fixtures, standards, and customer acceptance criteria.",
-          "Reliability or environmental tests are reviewed when the project defines the method, sample needs, and acceptance threshold.",
-          "Inspection and records can be discussed during quote review so the expected deliverables are clear before production.",
+          "Product and board revision.",
+          "Gerber or ODB++, BOM, CPL and assembly drawings.",
+          "Test plan and acceptance criteria.",
+          "Firmware, software or programming requirements.",
+          "Fixture or interface information.",
+          "Golden sample or reference unit when applicable.",
+          "Sampling or full-test expectation.",
+          "Required report, photo or data fields.",
+          "Applicable standards and required third-party involvement.",
         ],
         kind: "checklist",
+      },
+      {
+        title: "Records and traceability requirements",
+        body:
+          "Project-level records may include file revision, BOM revision, material decisions, production batch, inspection result, test result, rework or deviation decision and shipment record. Higher traceability depth, such as unit serial numbers, barcode links, key-part batches or exported test data, must be confirmed by project.",
+      },
+      {
+        title: "Reliability or environmental testing",
+        items: [
+          "Define the applicable standard, conditions, sample quantity and duration.",
+          "Confirm fixtures, pass or fail criteria and report expectations.",
+          "State whether Venture performs, coordinates or only prepares samples for an external laboratory.",
+        ],
+        kind: "list",
       },
     ],
     relatedLinks: [
@@ -534,6 +578,7 @@ export const pageData = {
       { label: "Contact", href: routes.contact },
     ],
     cta: { label: "Share Testing Requirements", href: routes.requestQuote },
+    secondaryCta: { label: "View PCB Assembly / PCBA", href: routes.pcba },
   },
   about: {
     label: "About Venture Electronics",
@@ -581,7 +626,7 @@ export const pageData = {
     label: "Official Resources",
     href: routes.officialResources,
     eyebrow: "Brand and official resources",
-    title: "Official Venture Electronics resources and domain relationship.",
+    title: "Official Venture Electronics brand, website and contact information.",
     role: "Official channels, domain context, and source-of-truth links.",
     summary:
       "This page clarifies Venture Electronics, venture-mfg.com, the legacy PCBA-focused asset, and the confirmed inquiry path so buyers can identify the right source of information.",
@@ -589,20 +634,43 @@ export const pageData = {
     visual: pageVisuals.officialResources,
     sections: [
       {
-        title: "Current public relationship",
+        title: "Brand and entity source of truth",
         items: [
-          "venture-mfg.com is the current official main site.",
-          "venture-pcba.com is a legacy PCBA-focused asset connected to Venture Electronics history.",
-          "info@venture-mfg.com is the confirmed inquiry email for current buyer communication.",
-          "Use the contact page when you need to verify the right channel before sharing project files.",
+          "Primary brand: Venture Electronics.",
+          "English entity: Venture Electronics Technology Ltd.",
+          "Chinese entity: Wei Chi Technology Co., Ltd.",
+          "Main service positioning: PCB Manufacturing, PCB Assembly and EMS Manufacturing partner.",
         ],
         kind: "facts",
         featured: true,
       },
       {
-        title: "Why this page exists",
+        title: "Domain relationship and confirmed contact route",
+        items: [
+          "venture-mfg.com is the current main website for company, services, resources and inquiries.",
+          "venture-pcba.com is a legacy PCBA-focused web asset connected to Venture Electronics; it should not be treated as a separate company.",
+          "Email: info@venture-mfg.com.",
+          "Telephone: +86 755 8529 6692.",
+          "Fax: +86 755 2397 7408.",
+          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
+        ],
+        kind: "facts",
+      },
+      {
+        title: "How to verify official information",
+        items: [
+          "Use the current main website and the email domain shown on this page.",
+          "Check whether a service claim appears consistently on the relevant service page.",
+          "Ask Venture to confirm the current channel before sharing sensitive files.",
+          "Review certificate wording, entity name and scope before relying on a certificate for a regulated or project-specific requirement.",
+          "Use the Request a Quote page for the current RFQ file and email route.",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "Channels that should be confirmed before use",
         body:
-          "Multiple Venture-related domains can be useful when their roles are explicit. They become risky when buyers cannot tell which page, email, or channel is current.",
+          "Before sharing sensitive project files through a new channel, confirm the current account, file-transfer method, entity name and document version with Venture Electronics by email or phone.",
       },
     ],
     relatedLinks: [
@@ -610,47 +678,89 @@ export const pageData = {
       { label: "Resources", href: routes.resources },
       { label: "Sitemap", href: routes.sitemap },
     ],
-    cta: { label: "Contact", href: routes.contact },
+    cta: { label: "Contact Venture Electronics", href: routes.contact },
+    secondaryCta: { label: "Request a Quote", href: routes.requestQuote },
   },
   resources: {
     label: "Resources",
     href: routes.resources,
-    eyebrow: "Resources",
-    title: "Buyer FAQ and RFQ preparation resources.",
+    eyebrow: "Buyer resources",
+    title: "Prepare a clearer PCB Assembly, Turnkey PCBA or EMS inquiry.",
     role: "Buyer resources for RFQ preparation and project planning.",
     summary:
-      "Resources help buyers prepare clearer PCBA, EMS, sourcing, fabrication, and testing inquiries before sending files for quote review.",
+      "A useful RFQ identifies the current design files, BOM, quantity, delivery needs, sourcing restrictions, test requirements and customer-approval points. These resources help buyers organize that information before emailing Venture Electronics.",
     template: "resource",
     visual: pageVisuals.resources,
     sections: [
       {
-        title: "RFQ preparation essentials",
+        title: "Core RFQ files",
         items: [
-          "Gerber or ODB++ files, BOM, CPL, and assembly drawings.",
-          "Quantity, target schedule, packaging needs, and delivery expectations.",
-          "Testing requirements, firmware, fixtures, standards, or acceptance criteria when available.",
-          "Sourcing restrictions, approved alternatives, and no-substitution parts.",
+          "Gerber or ODB++",
+          "BOM with designators, MPN, manufacturer, quantity and substitution restrictions",
+          "CPL / XY / pick-and-place data",
+          "Assembly drawing and polarity notes",
         ],
         kind: "checklist",
         featured: true,
       },
       {
-        title: "Where to go next",
+        title: "Project requirements to include",
         items: [
-          "Use Request a Quote when your project files are ready.",
-          "Use Contact for general questions or channel verification.",
-          "Use Insights for buyer education and technical planning topics.",
+          "Quantity and target schedule",
+          "PCB fabrication requirements when applicable",
+          "Consigned, partial-turnkey or full-turnkey expectation",
+          "Test plan, firmware, fixture, golden sample or acceptance criteria",
+          "Programming, coating, marking, label, packaging or delivery requirements",
+          "NDA or file-transfer requirements",
         ],
-        kind: "list",
+        kind: "checklist",
+      },
+      {
+        title: "Additional EMS / Box Build information",
+        items: [
+          "System BOM",
+          "Enclosure and mechanical drawings",
+          "Cable or harness drawings",
+          "Assembly instructions",
+          "System-level test procedure",
+          "Packaging and accessories list",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "Buyer FAQ",
+        items: [
+          "What is the minimum information needed to start an RFQ? Gerber or ODB++, BOM, quantity and contact details are a useful starting point. CPL, drawings, testing and packaging information improve the quotation and engineering review.",
+          "Do I need a complete test plan before contacting Venture? No. Share the test information already available and identify what remains open. A clearer test plan may still be required before final quotation or production.",
+          "Can I request an NDA before sharing files? An NDA can be discussed by email. The signing entity, document version, scope and process should be confirmed before sensitive files are transferred.",
+          "Does Venture have one standard MOQ? MOQ is reviewed from the board, BOM, material status, setup, project type and quantity. The website does not state one universal quantity rule.",
+          "Can alternative components be proposed? Yes, availability or lifecycle risks may lead to candidate alternatives. Any alternative must be approved by the customer before use.",
+        ],
+        kind: "proof",
+      },
+      {
+        title: "Approved catalog downloads",
+        body:
+          "These English catalog files are linked from the official Venture Electronics catalog page and can be used as current buyer reference downloads.",
+        links: [
+          {
+            label: "(EN) Venture Electronics EMS Catalog PDF",
+            href: "https://www.venture-mfg.com/wp-content/uploads/2023/09/EN-Venture-Electronics-EMS-Catalog-2023-09-new-1.pdf",
+          },
+          {
+            label: "(EN) Venture Electronics PCB Solution PDF",
+            href: "https://www.venture-mfg.com/wp-content/uploads/2023/09/EN-Venture-Electronics-PCB-Solution-09-1.pdf",
+          },
+        ],
       },
     ],
     relatedLinks: [
-      { label: "Insights", href: routes.insights },
       { label: "Official Resources", href: routes.officialResources },
       { label: "Contact", href: routes.contact },
+      { label: "Request a Quote", href: routes.requestQuote },
     ],
-    cta: { label: "View Insights", href: routes.insights },
-    secondaryCta: { label: "Request a Quote", href: routes.requestQuote },
+    cta: { label: "Request a Quote", href: routes.requestQuote },
+    secondaryCta: { label: "Contact Venture Electronics", href: routes.contact },
   },
   contact: {
     label: "Contact",
@@ -659,7 +769,7 @@ export const pageData = {
     title: "Contact Venture Electronics.",
     role: "Confirmed inquiry channels and company contact details.",
     summary:
-      "Use this page to reach Venture Electronics or confirm the right inquiry path before preparing a full PCBA, EMS, sourcing, or fabrication RFQ.",
+      "Use Contact for company questions, official-channel verification and early project discussion. Use Request a Quote when Gerber, BOM, CPL, drawings, quantity or testing requirements are ready to send.",
     template: "contact-rfq",
     visual: pageVisuals.contact,
     sections: [
@@ -668,7 +778,9 @@ export const pageData = {
         items: [
           "Email: info@venture-mfg.com.",
           "Phone: +86 755 8529 6692.",
-          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, Guangdong, China.",
+          "Fax: +86 755 2397 7408.",
+          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
+          "Current main website: venture-mfg.com.",
         ],
         kind: "facts",
         featured: true,
@@ -680,7 +792,7 @@ export const pageData = {
         items: [
           "Verify official Venture Electronics contact information.",
           "Ask whether a project type fits before sending detailed files.",
-          "Use the RFQ page for file checklist, NDA, large-file, and quote-preparation guidance.",
+          "Ask which files or requirements are needed for an early PCB Assembly, EMS, sourcing or fabrication discussion.",
         ],
         kind: "list",
       },
@@ -690,25 +802,41 @@ export const pageData = {
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
     ],
-    cta: { label: "Request a Quote", href: routes.requestQuote },
-    secondaryCta: { label: "Email info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
+    cta: { label: "Email Venture Electronics", href: "mailto:info@venture-mfg.com" },
+    secondaryCta: { label: "Request a Quote", href: routes.requestQuote },
+    showRelatedLinks: false,
   },
   requestQuote: {
     label: "Request a Quote",
     href: routes.requestQuote,
     eyebrow: "RFQ",
-    title: "Request a PCBA, EMS, sourcing, or fabrication quote.",
+    title: "Request a PCB Assembly, EMS, sourcing or fabrication quote.",
     role: "RFQ action page for PCBA, EMS, sourcing, and fabrication inquiries.",
     summary:
-      "Use this page to prepare project files and send a PCBA, EMS, sourcing, or fabrication quote request by email.",
+      "Email the project files and requirements to info@venture-mfg.com. Venture Electronics reviews the available information, identifies missing inputs and confirms the quotation scope before procurement or production begins.",
     template: "contact-rfq",
     visual: pageVisuals.requestQuote,
     sections: [
       {
-        title: "What to prepare",
+        title: "Core RFQ files",
         items: quoteChecklist,
         kind: "checklist",
         featured: true,
+      },
+      {
+        title: "Project-type additions",
+        items: [
+          "PCB Assembly / Turnkey PCBA: state whether the project is consigned, partial-turnkey or full-turnkey; include special packages, programming, coating, marking and test expectations.",
+          "EMS & Box Build: add the system BOM, enclosure and mechanical drawings, cable or harness details, assembly instructions, system-test method, labels, accessories and packaging requirements.",
+          "Component Sourcing / BOM / DFM: identify no-substitution parts, approved-vendor rules, lifecycle or availability concerns, compliance requirements and the review output needed.",
+          "PCB Fabrication Support: add the stack-up, material, thickness, copper, impedance, surface finish, panelization, hole or via requirements and downstream assembly constraints.",
+        ],
+        kind: "list",
+      },
+      {
+        title: "Email, NDA and large files",
+        body:
+          "Recommended email subject: RFQ - [Company] - [Project Name]. Include company, contact person, project type, quantity, target schedule and delivery destination. For sensitive files, NDA discussion or large attachments, start by email and ask for the preferred transfer method before sending the full package. RFQ communication is handled by email, so please wait for the Venture team to confirm receipt and next steps.",
       },
       {
         title: "Confirmed contact route",
@@ -734,46 +862,9 @@ export const pageData = {
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
     ],
-    cta: { label: "Email info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
-  },
-  insights: {
-    label: "Insights",
-    href: routes.insights,
-    eyebrow: "Insights",
-    title: "Insights for PCBA, turnkey assembly, sourcing, and EMS planning.",
-    role: "Technical guides and buyer education for PCBA and EMS planning.",
-    summary:
-      "Insights collects practical buyer education for PCBA quote preparation, turnkey assembly, sourcing, testing, and EMS planning.",
-    template: "resource",
-    visual: pageVisuals.insights,
-    sections: [
-      {
-        title: "Buyer education topics",
-        items: [
-          "PCBA quote preparation and checklist articles.",
-          "Turnkey PCBA, sourcing, BOM risk, and DFM topics.",
-          "EMS and Box Build planning guides.",
-          "Quality and testing explainers tied to project requirements.",
-        ],
-        kind: "list",
-        featured: true,
-      },
-      {
-        title: "How insights support RFQ planning",
-        items: [
-          "Help buyers prepare clearer files before requesting a quote.",
-          "Explain tradeoffs such as turnkey versus consigned assembly.",
-          "Point readers back to the relevant service page or RFQ checklist.",
-        ],
-        kind: "steps",
-      },
-    ],
-    relatedLinks: [
-      { label: "Resources", href: routes.resources },
-      { label: "PCB Assembly / PCBA", href: routes.pcba },
-      { label: "Official Resources", href: routes.officialResources },
-    ],
-    cta: { label: "Open Resources", href: routes.resources },
+    cta: { label: "Email RFQ Files", href: "mailto:info@venture-mfg.com?subject=Venture%20Electronics%20RFQ" },
+    secondaryCta: { label: "Contact First", href: routes.contact },
+    showRelatedLinks: false,
   },
   privacyPolicy: {
     label: "Privacy Policy",
@@ -861,16 +952,15 @@ export const pageData = {
     label: "Sitemap",
     href: routes.sitemap,
     eyebrow: "Sitemap",
-    title: "HTML Sitemap.",
+    title: "HTML Sitemap",
     role: "Utility page listing public Venture Electronics website pages.",
-    summary: "Use this page to find Venture Electronics service, quality, resource, contact, and legal pages.",
+    summary: "Use this directory to find the current public Venture Electronics website pages.",
     template: "resource",
     visual: pageVisuals.sitemap,
     sections: [
       {
         title: "Public route list",
-        items: sitemapLinks.map((link) => `${link.label} - ${link.href}`),
-        kind: "list",
+        links: sitemapLinks,
         featured: true,
       },
     ],
@@ -883,28 +973,24 @@ export const pageData = {
     label: "Thank You",
     href: routes.thankYou,
     eyebrow: "Confirmation",
-    title: "Thank you.",
+    title: "Continue your Venture Electronics inquiry.",
     role: "Private confirmation route.",
     summary:
-      "This confirmation route is not part of the public navigation.",
+      "The current RFQ process uses email. Open Request a Quote for the file checklist and the confirmed info@venture-mfg.com inquiry route.",
     template: "contact-rfq",
     visual: pageVisuals.thankYou,
     sections: [
       {
-        title: "Confirmation options",
-        items: [
-          "Return to the homepage.",
-          "Review service pages.",
-          "Open RFQ preparation resources.",
+        title: "Current RFQ route",
+        body:
+          "No website form submission is active in this release, so this route stays hidden and noindex until a real form workflow exists.",
+        links: [
+          { label: "Open Request a Quote", href: routes.requestQuote },
+          { label: "Return Home", href: routes.home },
         ],
-        kind: "steps",
       },
     ],
-    relatedLinks: [
-      { label: "Home", href: routes.home },
-      { label: "Services", href: routes.services },
-      { label: "Resources", href: routes.resources },
-    ],
+    relatedLinks: [],
     noIndex: true,
     showHeroHeader: false,
     showHeroVisual: false,

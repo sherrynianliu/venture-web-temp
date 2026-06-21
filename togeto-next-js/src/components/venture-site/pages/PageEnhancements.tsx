@@ -45,8 +45,8 @@ export function PageEnhancements({ page }: PageEnhancementsProps) {
     return (
       <div className="stage3-enhancements stage3-enhancements--quality">
         <CapabilityEvidence
-          eyebrow="Quality support"
-          title="Inspection and testing checkpoints around PCBA and EMS projects"
+          eyebrow="Project readiness and quality planning"
+          title="What quality and testing information should be defined before production?"
           primaryLabel="Send Testing Requirements"
           primaryHref={routes.requestQuote}
           secondaryLabel="View PCBA Service"
@@ -68,14 +68,6 @@ export function PageEnhancements({ page }: PageEnhancementsProps) {
     return (
       <div className="stage3-enhancements stage3-enhancements--resources">
         <HomeFAQBlock />
-      </div>
-    );
-  }
-
-  if (page.href === routes.requestQuote) {
-    return (
-      <div className="stage3-enhancements stage3-enhancements--rfq">
-        <ProjectPathStepper />
       </div>
     );
   }

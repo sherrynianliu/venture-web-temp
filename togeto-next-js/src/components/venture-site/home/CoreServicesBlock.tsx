@@ -14,27 +14,31 @@ const services: Svc[] = [
   {
     label: "PCB Assembly / PCBA",
     href: routes.pcba,
-    description: "Assembled boards with BOM review and testing.",
+    description:
+      "Assembled boards using SMT, through-hole or mixed assembly, with delivery-model, BOM, inspection and test-scope review.",
     image: "/hero-pcba-smt.jpg",
     tag: { label: "Primary" },
   },
   {
     label: "EMS & Box Build",
     href: routes.emsBoxBuild,
-    description: "Final assembly, packaging, and box build.",
+    description:
+      "Project-based support when approved PCBAs extend into final assembly, cable or harness, mechanical, functional-check, labeling or packaging needs.",
     image: "/hero-ems-factory.jpg",
     tag: { label: "Box build", variant: "ems" },
   },
   {
     label: "Component Sourcing & BOM Review",
     href: routes.componentSourcingBomDfmReview,
-    description: "Sourcing risk, alternatives, and DFM review.",
+    description:
+      "BOM completeness, availability, lifecycle, MOQ risk, customer-approved alternatives and manufacturability questions before production.",
     image: "/hero-circuit-globe.jpg",
   },
   {
     label: "PCB Fabrication Support",
     href: routes.pcbFabricationSupport,
-    description: "Bare-board coordination for PCBA projects.",
+    description:
+      "Bare-board file, stack-up, material, finish and assembly-readiness coordination for PCB Assembly or Turnkey PCBA projects.",
     image: "/identity-pcb-closeup.jpg",
   },
 ];
@@ -50,15 +54,15 @@ function ArrowIcon() {
 
 export function CoreServicesBlock() {
   return (
-    <section className="core-services" aria-labelledby="core-services-title">
+    <section id="core-services" className="core-services" aria-labelledby="core-services-title">
       <div className="core-services__inner">
         <div className="core-services__head">
           <p className="core-services__eyebrow">Core services</p>
           <h2 id="core-services-title" className="core-services__title">
-            Where to start your <span className="accent">PCBA or EMS</span> project
+            Which Venture Electronics service fits your project?
           </h2>
           <p className="core-services__sub">
-            PCB Assembly / PCBA is the primary entry. Choose the service path that fits your project scope.
+            Start with the deliverable you need. The four service routes below explain the primary board-level service, the broader system-level path and the engineering or supply-chain support around them.
           </p>
         </div>
 
@@ -71,7 +75,7 @@ export function CoreServicesBlock() {
                   src={svc.image}
                   alt=""
                   fill
-                  sizes="(max-width: 700px) calc(100vw - 48px), (max-width: 1080px) 31vw, 185px"
+                  sizes="(max-width: 680px) calc(100vw - 48px), (max-width: 1080px) 46vw, 25vw"
                 />
                 {svc.tag ? (
                   <span
