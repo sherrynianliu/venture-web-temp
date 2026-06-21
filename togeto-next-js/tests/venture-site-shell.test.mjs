@@ -297,6 +297,86 @@ test('public old-site image pool excludes images not approved for direct publica
   );
 });
 
+test('real factory and process images are scoped to evidence slots only', async () => {
+  const manifestSource = await readProjectFile('src/components/venture-site/image-manifest.ts');
+  const auditManifestSource = await readProjectFile('src/components/venture-site/image-audit-manifest.ts');
+  const venturePage = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const identityBlock = await readProjectFile('src/components/venture-site/home/VentureIdentityBlock.tsx');
+  const sourceCss = await readProjectFile('src/app/(homes)/home-6/venture-exact.css');
+  const publicCss = await readProjectFile('public/venture-static/venture-exact.css');
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const { ventureImages } = loadProjectTsModule('src/components/venture-site/image-manifest.ts');
+
+  assert.equal(Object.keys(ventureImages).length, 9);
+  assert.ok(
+    Object.values(ventureImages).every((image) =>
+      image.src.startsWith('/assets/img/venture-real/') && image.maxDisplayCssPx <= 720
+    )
+  );
+  assert.match(venturePage, /<EvidenceImageBlock/);
+  assert.match(identityBlock, /ventureImages\.factoryVisit05/);
+  assert.match(identityBlock, /600px/);
+  assert.match(sourceCss, /\.venture-site \.stage3-evidence-images/);
+  assert.match(sourceCss, /\.venture-site \.identity__media \{[\s\S]*?max-width: 600px/);
+  assert.match(sourceCss, /max-width: min\(var\(--evidence-max, 640px\), 100%\)/);
+  assert.equal(sourceCss, publicCss);
+
+  assert.deepEqual(pageData.pcba.evidenceImages, [
+    {
+      title: 'PCB Assembly process context',
+      images: ['smtPickAndPlace', 'waveSoldering'],
+      afterSectionIndex: 1,
+    },
+  ]);
+  assert.deepEqual(pageData.emsBoxBuild.evidenceImages, [
+    {
+      title: 'EMS and Box Build process context',
+      images: ['boxBuildAssembly', 'finishedProductFunctionTest'],
+      afterSectionIndex: 0,
+    },
+  ]);
+  assert.deepEqual(pageData.qualityTesting.evidenceImages, [
+    {
+      title: 'Inspection and testing process context',
+      images: ['firstArticleInspection', 'aoiInspection'],
+      afterSectionIndex: 0,
+    },
+  ]);
+  assert.deepEqual(pageData.about.evidenceImages, [
+    {
+      title: 'Factory visit and production review context',
+      images: ['factoryVisit03', 'factoryVisit04'],
+      afterSectionIndex: 1,
+    },
+  ]);
+
+  for (const key of [
+    'services',
+    'componentSourcingBomDfmReview',
+    'pcbFabricationSupport',
+    'officialResources',
+    'resources',
+    'contact',
+    'requestQuote',
+    'privacyPolicy',
+    'terms',
+    'sitemap',
+    'thankYou',
+  ]) {
+    assert.equal(pageData[key].evidenceImages, undefined, `${key} should not render evidence images`);
+  }
+
+  assert.doesNotMatch(
+    manifestSource,
+    /sourceUrl|sourcePage|ownershipStatus|allowedSlots|client-confirmation|legacy-site-source/i
+  );
+  assert.match(auditManifestSource, /sourceUrl/);
+  assert.match(auditManifestSource, /ownershipStatus/);
+  assert.match(auditManifestSource, /client-confirmation-required/);
+  assert.match(auditManifestSource, /legacy-site-source-client-confirmation-required/);
+  assert.doesNotMatch(manifestSource, /Confirm people-image|facility ownership before publication/i);
+});
+
 test('canonical domain signals use the approved Venture public identity', async () => {
   const layout = await readProjectFile('src/app/layout.tsx');
   const home = await readProjectFile('src/app/page.tsx');

@@ -1,4 +1,5 @@
 import { routes, sitemapLinks, type SiteLink } from "./site-routes";
+import type { VentureImageId } from "./image-manifest";
 
 export { routes, sitemapLinks };
 export type { SiteLink };
@@ -29,6 +30,12 @@ export type PageVisual = {
   caption?: string;
 };
 
+export type PageEvidenceImageGroup = {
+  title: string;
+  images: VentureImageId[];
+  afterSectionIndex: number;
+};
+
 export type PageData = SiteLink & {
   eyebrow: string;
   title: string;
@@ -38,6 +45,7 @@ export type PageData = SiteLink & {
   directAnswer?: string[];
   template: "service-conversion" | "strategic-service" | "supporting-capability" | "quality-trust" | "brand-authority" | "resource" | "contact-rfq" | "legal";
   sections: PageSection[];
+  evidenceImages?: PageEvidenceImageGroup[];
   relatedLinks: SiteLink[];
   cta?: SiteLink;
   secondaryCta?: SiteLink;
@@ -332,6 +340,13 @@ export const pageData = {
         kind: "checklist",
       },
     ],
+    evidenceImages: [
+      {
+        title: "PCB Assembly process context",
+        images: ["smtPickAndPlace", "waveSoldering"],
+        afterSectionIndex: 1,
+      },
+    ],
     relatedLinks: [
       { label: "Component Sourcing, BOM & DFM Review", href: routes.componentSourcingBomDfmReview },
       { label: "Quality & Testing", href: routes.qualityTesting },
@@ -386,6 +401,13 @@ export const pageData = {
           "Repeat-production preparation: freeze approved revisions, material rules, assembly instructions, test requirements and records.",
         ],
         kind: "steps",
+      },
+    ],
+    evidenceImages: [
+      {
+        title: "EMS and Box Build process context",
+        images: ["boxBuildAssembly", "finishedProductFunctionTest"],
+        afterSectionIndex: 0,
       },
     ],
     relatedLinks: [
@@ -532,6 +554,13 @@ export const pageData = {
         kind: "list",
       },
     ],
+    evidenceImages: [
+      {
+        title: "Inspection and testing process context",
+        images: ["firstArticleInspection", "aoiInspection"],
+        afterSectionIndex: 0,
+      },
+    ],
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
       { label: "EMS & Box Build", href: routes.emsBoxBuild },
@@ -572,6 +601,13 @@ export const pageData = {
           "Clarify official channels through venture-mfg.com and the confirmed inquiry email.",
         ],
         kind: "steps",
+      },
+    ],
+    evidenceImages: [
+      {
+        title: "Factory visit and production review context",
+        images: ["factoryVisit03", "factoryVisit04"],
+        afterSectionIndex: 1,
       },
     ],
     relatedLinks: [

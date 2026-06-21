@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes, type PageData, type PageSection } from "@/components/venture-site/site-data";
+import { EvidenceImageBlock } from "./EvidenceImageBlock";
 import { PageEnhancements } from "./PageEnhancements";
 
 function isExternalHref(href: string) {
@@ -192,6 +194,7 @@ export function VenturePage({ page }: { page: PageData }) {
   const showHeroHeader = page.showHeroHeader !== false;
   const showHeroVisual = page.showHeroVisual !== false;
   const showRelatedLinks = page.showRelatedLinks !== false && page.relatedLinks.length > 0;
+  const evidenceImages = page.evidenceImages ?? [];
 
   return (
     <main className="page-shell page-shell--with-enhancements">
@@ -204,7 +207,14 @@ export function VenturePage({ page }: { page: PageData }) {
           )}
 
           {page.sections.map((section, index) => (
-            <PageSectionBlock key={`${section.title}-${index}`} section={section} index={index} />
+            <Fragment key={`${section.title}-${index}`}>
+              <PageSectionBlock section={section} index={index} />
+              {evidenceImages
+                .filter((group) => group.afterSectionIndex === index)
+                .map((group) => (
+                  <EvidenceImageBlock key={group.title} title={group.title} images={group.images} />
+                ))}
+            </Fragment>
           ))}
         </article>
       </div>

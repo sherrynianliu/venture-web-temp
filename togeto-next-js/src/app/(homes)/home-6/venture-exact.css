@@ -1045,13 +1045,12 @@
   align-self: start;
   height: auto;
   width: 100%;
+  max-width: 600px;
+  margin: 0;
   background-color: var(--industrial-navy);
-  background-image:
-    linear-gradient(160deg, rgba(11, 20, 36, 0.16) 0%, rgba(11, 20, 36, 0.44) 100%),
-    url("/identity-smt-floor.jpg");
-  background-size: cover;
-  background-position: center;
   filter: drop-shadow(0 24px 50px rgba(17, 24, 34, 0.22));
+  overflow: hidden;
+  justify-self: start;
   clip-path: polygon(
     0 0,
     100% 0,
@@ -1060,6 +1059,20 @@
     var(--notch-x) 100%,
     0 100%
   );
+}
+
+.venture-site .identity__media::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  background: linear-gradient(160deg, rgba(11, 20, 36, 0.04) 0%, rgba(11, 20, 36, 0.32) 100%);
+  pointer-events: none;
+}
+
+.venture-site .identity__media-img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .venture-site .identity__media-chip {
@@ -3552,6 +3565,54 @@
   box-shadow: inset 4px 0 0 var(--stage3-accent);
 }
 
+.venture-site .stage3-evidence-images {
+  display: grid;
+  gap: 18px;
+  padding: 0 0 clamp(28px, 4vw, 46px);
+  border-bottom: 1px solid var(--line-gray);
+}
+
+.venture-site .stage3-evidence-images h3 {
+  margin: 0;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.32rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.venture-site .stage3-evidence-images__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 28px);
+  align-items: start;
+  max-width: 1120px;
+}
+
+.venture-site .stage3-evidence-image {
+  width: 100%;
+  max-width: min(var(--evidence-max, 640px), 100%);
+  margin: 0;
+}
+
+.venture-site .stage3-evidence-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-gray);
+  border-radius: 10px;
+  background: var(--card-white);
+}
+
+.venture-site .stage3-evidence-image figcaption {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 /* direct-answer — emphasized lead lines */
 .venture-site .stage3-answer {
   display: grid;
@@ -4079,6 +4140,18 @@
     grid-template-columns: 1fr;
     gap: 18px;
     padding: 34px 0;
+  }
+
+  .venture-site .stage3-evidence-images {
+    padding-bottom: 34px;
+  }
+
+  .venture-site .stage3-evidence-images__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .venture-site .stage3-evidence-image {
+    max-width: 100%;
   }
 
   .venture-site .stage3-facts {

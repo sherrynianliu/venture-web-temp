@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { ventureImages } from "@/components/venture-site/image-manifest";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes } from "@/components/venture-site/site-data";
 
@@ -11,15 +13,24 @@ const identityFeatures = [
 ];
 
 export function VentureIdentityBlock() {
+  const identityImage = ventureImages.factoryVisit05;
+
   return (
     <section className="identity" aria-labelledby="venture-identity-title">
       <div className="identity__inner">
-        <div className="identity__media" aria-hidden="true">
+        <figure className="identity__media">
+          <Image
+            className="identity__media-img"
+            src={identityImage.src}
+            alt={identityImage.alt}
+            fill
+            sizes="(max-width: 900px) calc(100vw - 48px), 600px"
+          />
           <span className="identity__media-chip">
             <span className="identity__media-chip-dot" />
-            PCBA · EMS · Box build
+            Factory visit context
           </span>
-        </div>
+        </figure>
 
         <div className="identity__content">
           <p className="identity__eyebrow">Who Venture Electronics is</p>
