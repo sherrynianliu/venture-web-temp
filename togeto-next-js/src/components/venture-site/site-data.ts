@@ -750,11 +750,11 @@ export const pageData = {
         links: [
           {
             label: "(EN) Venture Electronics EMS Catalog PDF",
-            href: "https://www.venture-mfg.com/wp-content/uploads/2023/09/EN-Venture-Electronics-EMS-Catalog-2023-09-new-1.pdf",
+            href: "/assets/downloads/venture/EN-Venture-Electronics-EMS-Catalog-2023-09-new-1.pdf",
           },
           {
             label: "(EN) Venture Electronics PCB Solution PDF",
-            href: "https://www.venture-mfg.com/wp-content/uploads/2023/09/EN-Venture-Electronics-PCB-Solution-09-1.pdf",
+            href: "/assets/downloads/venture/EN-Venture-Electronics-PCB-Solution-09-1.pdf",
           },
         ],
       },

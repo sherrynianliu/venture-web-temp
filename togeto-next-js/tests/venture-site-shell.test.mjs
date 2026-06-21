@@ -297,6 +297,24 @@ test('public old-site image pool excludes images not approved for direct publica
   );
 });
 
+test('resource catalog downloads are served from local public assets', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const downloadPaths = [
+    '/assets/downloads/venture/EN-Venture-Electronics-EMS-Catalog-2023-09-new-1.pdf',
+    '/assets/downloads/venture/EN-Venture-Electronics-PCB-Solution-09-1.pdf',
+  ];
+
+  for (const downloadPath of downloadPaths) {
+    assert.match(siteData, new RegExp(downloadPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await access(new URL(`public${downloadPath}`, root), constants.R_OK);
+  }
+
+  assert.doesNotMatch(
+    siteData,
+    /https:\/\/www\.venture-mfg\.com\/wp-content\/uploads\/2023\/09\/EN-Venture-Electronics-(?:EMS-Catalog|PCB-Solution)/
+  );
+});
+
 test('real factory and process images are scoped to evidence slots only', async () => {
   const manifestSource = await readProjectFile('src/components/venture-site/image-manifest.ts');
   const auditManifestSource = await readProjectFile('src/components/venture-site/image-audit-manifest.ts');
@@ -390,7 +408,8 @@ test('canonical domain signals use the approved Venture public identity', async 
   assert.doesNotMatch(layout, /contactPoint/);
   assert.doesNotMatch(layout, /faxNumber/);
   assert.match(layout, /'@id': 'https:\/\/www\.venture-mfg\.com\/#organization'/);
-  assert.match(home, /canonical: routes\.home/);
+  assert.match(home, /homeCanonical = 'https:\/\/www\.venture-mfg\.com\/'/);
+  assert.match(home, /canonical: homeCanonical/);
   assert.match(metadata, /canonical: page\.href/);
   assert.match(sitemapRoute, /sitemapLinks\.map/);
   assert.match(sitemapRoute, /https:\/\/www\.venture-mfg\.com/);
