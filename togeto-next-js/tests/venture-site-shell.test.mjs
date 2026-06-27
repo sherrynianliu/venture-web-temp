@@ -458,9 +458,9 @@ test('public Venture domain outputs exclude unapproved domain candidates', async
 
   assert.match(combined, /venture-mfg\.com/);
   assert.match(combined, /venture-pcba\.com/);
+  assert.match(combined, /support@venture-mfg\.com/);
 
   for (const forbidden of [
-    'support@venture-mfg.com',
     'venturepcba.com',
     'venture-pcb.com',
     'ventureems.com',
@@ -475,6 +475,101 @@ test('public Venture domain outputs exclude unapproved domain candidates', async
   ]) {
     assert.doesNotMatch(combined, new RegExp(forbidden.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
+});
+
+test('public contact and RFQ paths show both approved email channels', async () => {
+  const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const footer = await readProjectFile('src/components/venture-site/site/Footer.tsx');
+
+  const combined = `${page}\n${siteData}\n${footer}`;
+
+  assert.match(combined, /info@venture-mfg\.com/);
+  assert.match(combined, /support@venture-mfg\.com/);
+  assert.match(siteData, /RFQ files: support@venture-mfg\.com/);
+  assert.match(siteData, /General inquiry: info@venture-mfg\.com/);
+  assert.match(page, /mailto:support@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ/);
+  assert.match(page, /Email support@venture-mfg\.com/);
+});
+
+test('Venture pages emit conservative page-level structured data', () => {
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const {
+    buildPageStructuredData,
+    serviceSchemaPages,
+  } = loadProjectTsModule('src/components/venture-site/schema/structured-data.ts');
+
+  assert.deepEqual(serviceSchemaPages, [
+    '/services/pcb-assembly-pcba/',
+    '/services/ems-box-build/',
+    '/services/component-sourcing-bom-dfm-review/',
+    '/services/pcb-fabrication-support/',
+    '/quality-testing/',
+  ]);
+
+  const pcbaGraph = buildPageStructuredData(pageData.pcba)['@graph'];
+  assert.ok(pcbaGraph.some((entry) => entry['@type'] === 'BreadcrumbList'));
+  assert.ok(pcbaGraph.some((entry) => entry['@type'] === 'Service' && entry.serviceType === 'PCB Assembly / PCBA'));
+  assert.ok(pcbaGraph.some((entry) => entry['@type'] === 'FAQPage'));
+  assert.ok(JSON.stringify(pcbaGraph).includes('https://www.venture-mfg.com/#organization'));
+  assert.ok(!JSON.stringify(pcbaGraph).includes('Wei Chi'));
+
+  const resourcesGraph = buildPageStructuredData(pageData.resources)['@graph'];
+  assert.ok(resourcesGraph.some((entry) => entry['@type'] === 'FAQPage'));
+});
+
+test('Venture route renderer injects page-level structured data', async () => {
+  const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+
+  assert.match(page, /buildPageStructuredData/);
+  assert.match(page, /<StructuredData data=\{structuredData\}/);
+});
+
+test('claim evidence matrix documents capability claim boundaries', async () => {
+  const matrix = await readFile(
+    new URL('../docs/venture-content/claim-evidence-matrix.md', root),
+    'utf8',
+  );
+
+  for (const expected of [
+    '# Venture Claim Evidence Matrix',
+    'Claim level',
+    'Source / evidence needed',
+    'Public wording rule',
+    'SMT assembly',
+    'SPI / AOI / FAI / X-Ray',
+    'ICT / FCT',
+    'Three-proof coating / conformal coating',
+    'Certificates and standards',
+    'Do not publish legal relationship claims until the customer confirms what can be public.',
+  ]) {
+    assert.match(matrix, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  assert.doesNotMatch(matrix, /Wei Chi|WeiChi/);
+});
+
+test('homepage emits structured data for visible buyer FAQ content', async () => {
+  const home = await readProjectFile('src/app/page.tsx');
+  const homeFaq = await readProjectFile('src/components/venture-site/home/HomeFAQBlock.tsx');
+  const { buildHomeStructuredData } = loadProjectTsModule('src/components/venture-site/schema/structured-data.ts');
+  const { homeFaqs } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+
+  assert.match(home, /buildHomeStructuredData/);
+  assert.match(home, /<StructuredData data=\{homeStructuredData\}/);
+  assert.match(homeFaq, /homeFaqs\.map/);
+
+  const graph = buildHomeStructuredData({
+    title: 'Venture Electronics | PCB Assembly, PCBA & EMS Manufacturing Partner',
+    description:
+      'China-based PCB Manufacturing, PCB Assembly and EMS manufacturing partner with turnkey PCBA, sourcing, testing, and box build support.',
+    faqs: homeFaqs,
+  })['@graph'];
+
+  assert.ok(graph.some((entry) => entry['@type'] === 'BreadcrumbList'));
+  const faq = graph.find((entry) => entry['@type'] === 'FAQPage');
+  assert.ok(faq);
+  assert.equal(faq.mainEntity.length, 5);
 });
 
 test('approved Venture content does not expose internal implementation boundaries', async () => {
@@ -515,9 +610,9 @@ test('RFQ launch path is mailto-only and has no inactive visual form', async () 
   const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
 
-  assert.match(page, /mailto:info@venture-mfg\.com/);
-  assert.match(page, /Email info@venture-mfg\.com/);
-  assert.match(siteData, /cta: \{ label: ['"]Email RFQ Files['"], href: ['"]mailto:info@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ['"] \}/);
+  assert.match(page, /mailto:support@venture-mfg\.com/);
+  assert.match(page, /Email support@venture-mfg\.com/);
+  assert.match(siteData, /cta: \{ label: ['"]Email RFQ Files['"], href: ['"]mailto:support@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ['"] \}/);
   assert.doesNotMatch(page, /<form className=["']contact-form["']/);
   assert.doesNotMatch(page, /type=["']button["'][\s\S]*Placeholder only/);
 });

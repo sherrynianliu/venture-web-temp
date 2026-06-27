@@ -36,6 +36,11 @@ export type PageEvidenceImageGroup = {
   afterSectionIndex: number;
 };
 
+export type PageFAQ = {
+  question: string;
+  answer: string;
+};
+
 export type PageData = SiteLink & {
   eyebrow: string;
   title: string;
@@ -45,6 +50,7 @@ export type PageData = SiteLink & {
   directAnswer?: string[];
   template: "service-conversion" | "strategic-service" | "supporting-capability" | "quality-trust" | "brand-authority" | "resource" | "contact-rfq" | "legal";
   sections: PageSection[];
+  faqs?: PageFAQ[];
   evidenceImages?: PageEvidenceImageGroup[];
   relatedLinks: SiteLink[];
   cta?: SiteLink;
@@ -167,6 +173,113 @@ const qualityFlow = [
   "System-level functional testing for Box Build: check the assembled system according to approved mechanical, harness, firmware and functional requirements.",
   "Reliability testing as required: confirm conditions, samples, standards, acceptance thresholds and any external-laboratory boundary.",
   "Packing and logistics review: confirm labels, ESD or moisture handling, packaging, records and shipment requirements.",
+];
+
+const formatFaqItem = (faq: PageFAQ) => `${faq.question} ${faq.answer}`;
+
+const pcbaFaqs: PageFAQ[] = [
+  {
+    question: "What is the difference between PCB Assembly, PCBA, and Turnkey PCBA?",
+    answer:
+      "PCB Assembly is the service name, PCBA is the assembled board, and Turnkey PCBA means Venture can discuss PCB fabrication support, sourcing, assembly, inspection, testing, packaging, and delivery around approved project files.",
+  },
+  {
+    question: "What files are needed for a PCB Assembly quote?",
+    answer:
+      "Gerber or ODB++, BOM, CPL, assembly drawings, quantity, testing expectations, and delivery requirements are the main RFQ inputs.",
+  },
+  {
+    question: "Can consigned, partial-turnkey, and full-turnkey projects be reviewed?",
+    answer:
+      "Yes. The quotation should define which materials are buyer-supplied, which items Venture reviews or sources, and what inspection or testing scope applies.",
+  },
+];
+
+const emsFaqs: PageFAQ[] = [
+  {
+    question: "When does a PCB Assembly project become EMS or Box Build?",
+    answer:
+      "A project usually moves into EMS or Box Build when the scope extends beyond assembled boards into enclosure, cable or harness, mechanical parts, system testing, labeling, packaging, or delivery preparation.",
+  },
+  {
+    question: "What extra inputs are needed for EMS review?",
+    answer:
+      "System BOM, enclosure drawings, cable or harness drawings, assembly notes, firmware or configuration requirements, system-level test steps, labels, packaging, and accessories should be shared when available.",
+  },
+];
+
+const resourcesFaqs: PageFAQ[] = [
+  {
+    question: "What is the minimum information needed to start an RFQ?",
+    answer:
+      "Gerber or ODB++, BOM, quantity and contact details are a useful starting point. CPL, drawings, testing and packaging information improve the quotation and engineering review.",
+  },
+  {
+    question: "Do I need a complete test plan before contacting Venture?",
+    answer:
+      "No. Share the test information already available and identify what remains open. A clearer test plan may still be required before final quotation or production.",
+  },
+  {
+    question: "Can I request an NDA before sharing files?",
+    answer:
+      "An NDA can be discussed by email. The signing entity, document version, scope and process should be confirmed before sensitive files are transferred.",
+  },
+  {
+    question: "Does Venture have one standard MOQ?",
+    answer:
+      "MOQ is reviewed from the board, BOM, material status, setup, project type and quantity. The website does not state one universal quantity rule.",
+  },
+  {
+    question: "Can alternative components be proposed?",
+    answer:
+      "Yes, availability or lifecycle risks may lead to candidate alternatives. Any alternative must be approved by the customer before use.",
+  },
+];
+
+const requestQuoteFaqs: PageFAQ[] = [
+  {
+    question: "Is file upload required for the first-launch RFQ flow?",
+    answer:
+      "No. The first launch uses email. Buyers can send the available RFQ package or start by email to confirm the preferred transfer method for large or sensitive files.",
+  },
+  {
+    question: "Which email should receive RFQ files?",
+    answer:
+      "Send RFQ files and project details to support@venture-mfg.com. General company or channel questions can use info@venture-mfg.com.",
+  },
+  {
+    question: "What should the RFQ email include?",
+    answer:
+      "Include company name, contact person, project type, quantity, target schedule, delivery expectations, and the current file package.",
+  },
+];
+
+export const homeFaqs: PageFAQ[] = [
+  {
+    question: "What files are needed for a PCB Assembly quote?",
+    answer:
+      "Start with Gerber or ODB++ files, a BOM, CPL or pick-and-place data, an assembly drawing, the required quantity and any testing requirements. Packaging, target schedule and special-process notes help define the quotation scope.",
+  },
+  {
+    question: "What is the difference between PCB Assembly, PCBA and Turnkey PCBA?",
+    answer:
+      "PCB Assembly is the buyer-readable service name, while PCBA is the common abbreviation for the assembled circuit board. Turnkey PCBA describes a broader delivery model that may coordinate PCB fabrication support, BOM review, component sourcing, assembly and project-specific testing.",
+  },
+  {
+    question: "Can Venture Electronics help source components?",
+    answer:
+      "Venture can review the BOM, check availability and lifecycle risks, and discuss sourcing options. Any alternative component must be reviewed against the design requirements and approved by the customer before use.",
+  },
+  {
+    question: "Can testing be included before delivery?",
+    answer:
+      "Inspection or testing can be discussed according to the product, fixture availability, firmware, test procedure and buyer acceptance criteria. Not every project uses the same combination of AOI, X-ray, ICT, FCT or functional testing.",
+  },
+  {
+    question: "When does a project need EMS or Box Build support?",
+    answer:
+      "EMS or Box Build becomes relevant when the project extends beyond an assembled board into an enclosure, cable or wire harness, mechanical parts, system-level checks, labeling, packaging or delivery preparation.",
+  },
 ];
 
 const pageVisuals = {
@@ -339,7 +452,13 @@ export const pageData = {
         ],
         kind: "checklist",
       },
+      {
+        title: "PCB Assembly FAQ",
+        items: pcbaFaqs.map(formatFaqItem),
+        kind: "proof",
+      },
     ],
+    faqs: pcbaFaqs,
     evidenceImages: [
       {
         title: "PCB Assembly process context",
@@ -402,7 +521,13 @@ export const pageData = {
         ],
         kind: "steps",
       },
+      {
+        title: "EMS and Box Build FAQ",
+        items: emsFaqs.map(formatFaqItem),
+        kind: "proof",
+      },
     ],
+    faqs: emsFaqs,
     evidenceImages: [
       {
         title: "EMS and Box Build process context",
@@ -586,6 +711,7 @@ export const pageData = {
           "Brand: Venture Electronics.",
           "Entity: Venture Electronics Technology Ltd / Wei Chi Technology Co., Ltd.",
           "Current main site: venture-mfg.com.",
+          "RFQ email: support@venture-mfg.com.",
           "Main inquiry email: info@venture-mfg.com.",
           "Phone: +86 755 8529 6692.",
           "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, Guangdong, China.",
@@ -645,7 +771,8 @@ export const pageData = {
         items: [
           "venture-mfg.com is the canonical main website for company information, service pages, buyer resources and inquiries.",
           "venture-pcba.com is a legacy PCBA-focused vertical asset connected to Venture Electronics; it should not be treated as a separate company or the current main website.",
-          "Email: info@venture-mfg.com.",
+          "RFQ email: support@venture-mfg.com.",
+          "General inquiry email: info@venture-mfg.com.",
           "Telephone: +86 755 8529 6692.",
           "Fax: +86 755 2397 7408.",
           "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
@@ -734,13 +861,7 @@ export const pageData = {
       },
       {
         title: "Buyer FAQ",
-        items: [
-          "What is the minimum information needed to start an RFQ? Gerber or ODB++, BOM, quantity and contact details are a useful starting point. CPL, drawings, testing and packaging information improve the quotation and engineering review.",
-          "Do I need a complete test plan before contacting Venture? No. Share the test information already available and identify what remains open. A clearer test plan may still be required before final quotation or production.",
-          "Can I request an NDA before sharing files? An NDA can be discussed by email. The signing entity, document version, scope and process should be confirmed before sensitive files are transferred.",
-          "Does Venture have one standard MOQ? MOQ is reviewed from the board, BOM, material status, setup, project type and quantity. The website does not state one universal quantity rule.",
-          "Can alternative components be proposed? Yes, availability or lifecycle risks may lead to candidate alternatives. Any alternative must be approved by the customer before use.",
-        ],
+        items: resourcesFaqs.map(formatFaqItem),
         kind: "proof",
       },
       {
@@ -759,6 +880,7 @@ export const pageData = {
         ],
       },
     ],
+    faqs: resourcesFaqs,
     relatedLinks: [
       { label: "Official Resources", href: routes.officialResources },
       { label: "Contact", href: routes.contact },
@@ -781,7 +903,8 @@ export const pageData = {
       {
         title: "Confirmed contact channels",
         items: [
-          "Email: info@venture-mfg.com.",
+          "RFQ files: support@venture-mfg.com.",
+          "General inquiry: info@venture-mfg.com.",
           "Phone: +86 755 8529 6692.",
           "Fax: +86 755 2397 7408.",
           "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
@@ -818,7 +941,7 @@ export const pageData = {
     title: "Request a PCB Assembly, EMS, sourcing or fabrication quote.",
     role: "RFQ action page for PCBA, EMS, sourcing, and fabrication inquiries.",
     summary:
-      "Email the project files and requirements to info@venture-mfg.com. Venture Electronics reviews the available information, identifies missing inputs and confirms the quotation scope before procurement or production begins.",
+      "Email the project files and requirements to support@venture-mfg.com. Venture Electronics reviews the available information, identifies missing inputs and confirms the quotation scope before procurement or production begins. General company questions can use info@venture-mfg.com.",
     template: "contact-rfq",
     visual: pageVisuals.requestQuote,
     sections: [
@@ -846,11 +969,17 @@ export const pageData = {
       {
         title: "Confirmed contact route",
         items: [
-          "Email project details to info@venture-mfg.com.",
+          "Email RFQ files and project details to support@venture-mfg.com.",
+          "Use info@venture-mfg.com for general company or official-channel questions.",
           "Include company name, contact person, project type, quantity, target schedule, and delivery expectations.",
           "For large files, NDA discussion, or sensitive documents, start by email and ask for the preferred transfer method.",
         ],
         kind: "facts",
+      },
+      {
+        title: "RFQ email FAQ",
+        items: requestQuoteFaqs.map(formatFaqItem),
+        kind: "proof",
       },
       {
         title: "What happens next",
@@ -862,12 +991,13 @@ export const pageData = {
         kind: "steps",
       },
     ],
+    faqs: requestQuoteFaqs,
     relatedLinks: [
       { label: "Contact", href: routes.contact },
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
     ],
-    cta: { label: "Email RFQ Files", href: "mailto:info@venture-mfg.com?subject=Venture%20Electronics%20RFQ" },
+    cta: { label: "Email RFQ Files", href: "mailto:support@venture-mfg.com?subject=Venture%20Electronics%20RFQ" },
     secondaryCta: { label: "Contact First", href: routes.contact },
     showRelatedLinks: false,
   },
@@ -981,7 +1111,7 @@ export const pageData = {
     title: "Continue your Venture Electronics inquiry.",
     role: "Private confirmation route.",
     summary:
-      "The current RFQ process uses email. Open Request a Quote for the file checklist and the confirmed info@venture-mfg.com inquiry route.",
+      "The current RFQ process uses email. Open Request a Quote for the file checklist and the confirmed support@venture-mfg.com RFQ route.",
     template: "contact-rfq",
     visual: pageVisuals.thankYou,
     sections: [

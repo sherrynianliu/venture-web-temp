@@ -10,8 +10,8 @@ export function BrandAuthorityTeaser() {
           <h2 id="brand-authority-title">Which Venture Electronics website and contact details should buyers use?</h2>
           <p>
             Venture Electronics is the primary company brand. venture-mfg.com is the canonical main
-            website, venture-pcba.com is a legacy PCBA-focused vertical asset, and
-            info@venture-mfg.com is the confirmed inquiry email.
+            website, venture-pcba.com is a legacy PCBA-focused vertical asset, support@venture-mfg.com
+            is the RFQ email, and info@venture-mfg.com is available for general inquiries.
           </p>
         </div>
 
