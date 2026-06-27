@@ -10,42 +10,42 @@ type Cap = { icon: CapIcon; title: string; desc: string; href: string };
 const left: Cap[] = [
   {
     icon: "traceability",
-    title: "Smart SMD Manufacturing & Traceability",
-    desc: "ERP, MES, and barcode-driven traceability support production visibility, quality tracking, and process improvement.",
+    title: "Files and Revision Alignment",
+    desc: "Keep Gerber, BOM, CPL, drawings and test requirements on the approved revision before quotation and production review.",
     href: routes.pcba,
   },
   {
     icon: "smt",
-    title: "SMT Placement & Soldering",
-    desc: "High-speed SMT placement, leaded / lead-free reflow, nitrogen vacuum reflow, and wave soldering across a wide range of builds.",
-    href: routes.smtThtBga,
+    title: "Assembly-process Planning",
+    desc: "Review SMT, through-hole, mixed assembly, polarity and special-handling requirements against the project files.",
+    href: routes.pcba,
   },
   {
     icon: "inspection",
-    title: "SPI, AOI, FAI & X-Ray Inspection",
-    desc: "Solder paste control, placement verification, and hidden-joint review with SPI, AOI, first article, and X-Ray inspection.",
-    href: routes.testingQualityControl,
+    title: "Inspection Checkpoints",
+    desc: "Discuss FAI, SPI, AOI, visual inspection or X-ray where the board and package risks support them.",
+    href: routes.qualityTesting,
   },
 ];
 
 const right: Cap[] = [
   {
     icon: "test",
-    title: "Electrical, ICT & Functional Testing",
-    desc: "Electrical performance, ICT / FCT, insulation impedance, voltage withstand, and leakage testing planned to product needs.",
-    href: routes.electricalTesting,
+    title: "Electrical or Functional Checks",
+    desc: "Define ICT, FCT or product-specific tests from the available test plan, fixtures, firmware and acceptance criteria.",
+    href: routes.qualityTesting,
   },
   {
     icon: "coating",
-    title: "Cleaning, Coating & Protection",
-    desc: "Aqueous cleaning, conformal coating, glue filling, depaneling, and UV laser marking for project-specific protection.",
-    href: routes.engineeringSupport,
+    title: "BOM and Approved Alternatives",
+    desc: "Record sourcing restrictions and customer approval before any candidate substitution is used.",
+    href: routes.qualityTesting,
   },
   {
     icon: "reliability",
-    title: "Reliability & Environmental Test Support",
-    desc: "Thermal shock and programmable temperature / humidity testing for reliability validation or environmental stress review.",
-    href: routes.productReliabilityTesting,
+    title: "Records and Reliability Requirements",
+    desc: "Confirm required reports, traceability depth, samples, standards and any external-laboratory role before the scope is finalized.",
+    href: routes.qualityTesting,
   },
 ];
 
@@ -115,14 +115,30 @@ function Feature({ cap }: { cap: Cap }) {
   );
 }
 
-export function CapabilityEvidence() {
+type CapabilityEvidenceProps = {
+  eyebrow?: string;
+  title?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+};
+
+export function CapabilityEvidence({
+  eyebrow = "Project readiness and quality planning",
+  title = "What quality and testing information should be defined before production?",
+  primaryLabel = "View Quality & Testing",
+  primaryHref = routes.qualityTesting,
+  secondaryLabel = "Request Project Review",
+  secondaryHref = routes.requestQuote,
+}: CapabilityEvidenceProps = {}) {
   return (
     <section className="cap" aria-labelledby="cap-title">
       <div className="cap__inner">
         <header className="cap__head">
-          <p className="cap__eyebrow">Capabilities</p>
+          <p className="cap__eyebrow">{eyebrow}</p>
           <h2 id="cap-title" className="cap__title">
-            Production and quality support behind each PCBA / EMS project
+            {title}
           </h2>
         </header>
 
@@ -136,7 +152,7 @@ export function CapabilityEvidence() {
           <div className="cap__media">
             <Image
               src="/capabilities-machine.jpg"
-              alt="Venture SMT placement and assembly equipment"
+              alt="SMT placement and assembly equipment used for quality planning context"
               className="cap__media-img"
               width={768}
               height={960}
@@ -152,9 +168,9 @@ export function CapabilityEvidence() {
         </div>
 
         <div className="cap__actions">
-          <CTAButton href={routes.qualityTesting}>View Full Capability Matrix</CTAButton>
-          <CTAButton href={routes.requestQuote} variant="secondary">
-            Request Project Review
+          <CTAButton href={primaryHref}>{primaryLabel}</CTAButton>
+          <CTAButton href={secondaryHref} variant="secondary">
+            {secondaryLabel}
           </CTAButton>
         </div>
       </div>

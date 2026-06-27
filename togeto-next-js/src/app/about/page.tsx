@@ -1,11 +1,10 @@
-import { Metadata } from 'next';
-import AboutMain from '@/views/about/about';
+import type { Metadata } from "next";
+import { pageData } from "@/components/venture-site/site-data";
+import { createPageMetadata } from "@/components/venture-site/pages/page-metadata";
+import { RoutePage } from "@/components/venture-site/pages/RoutePage";
 
-export const metadata: Metadata = {
-  title: 'Togeto - About Us Page',
-};
+export const metadata: Metadata = createPageMetadata(pageData.about);
 
-const AboutPage = () => {
-  return <AboutMain />;
-};
-export default AboutPage;
+export default function AboutPage() {
+  return <RoutePage page={pageData.about} />;
+}

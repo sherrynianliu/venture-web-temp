@@ -1,14 +1,11 @@
 import { Metadata } from 'next';
-import './venture-exact.css';
-import './venture-overrides.css';
-import HomeSixMain from '@/views/home-6/home-6';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Venture Electronics — Turnkey PCBA & EMS',
+  title: 'Venture Electronics, Turnkey PCBA & EMS',
+  robots: { index: false, follow: true },
 };
 
-const HomeSixPage = () => {
-  return <HomeSixMain />;
-};
+const HomeSixPage = () => redirect('/');
 
 export default HomeSixPage;

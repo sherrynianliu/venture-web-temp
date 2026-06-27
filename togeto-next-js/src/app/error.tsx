@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import ErrorMain from '@/views/error/error';
+import Link from 'next/link';
 
 type ErrorProps = {
   error: Error;
@@ -9,5 +8,23 @@ type ErrorProps = {
 };
 
 export default function Error({ error, reset }: ErrorProps) {
-  return <ErrorMain errorMessage={error.message} onRetry={reset} />;
+  return (
+    <main className="venture-site">
+      <section className="utility-page utility-page--error">
+        <div className="utility-page__inner">
+          <p className="utility-page__eyebrow">Page error</p>
+          <h1>Something went wrong.</h1>
+          <p>{error.message || 'The page could not be loaded. Please retry or return home.'}</p>
+          <div className="utility-page__actions">
+            <button className="it-btn-orange" type="button" onClick={reset}>
+              <span>Try Again</span>
+            </button>
+            <Link className="utility-page__link" href="/">
+              Back to Home
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

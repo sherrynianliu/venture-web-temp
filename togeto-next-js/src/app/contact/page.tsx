@@ -1,11 +1,10 @@
-import { Metadata } from 'next';
-import ContactMain from '@/views/contact/contact';
+import type { Metadata } from "next";
+import { pageData } from "@/components/venture-site/site-data";
+import { createPageMetadata } from "@/components/venture-site/pages/page-metadata";
+import { RoutePage } from "@/components/venture-site/pages/RoutePage";
 
-export const metadata: Metadata = {
-  title: 'Togeto - Contact Us Page',
-};
+export const metadata: Metadata = createPageMetadata(pageData.contact);
 
-const ContactPage = () => {
-  return <ContactMain />;
-};
-export default ContactPage;
+export default function ContactPage() {
+  return <RoutePage page={pageData.contact} />;
+}

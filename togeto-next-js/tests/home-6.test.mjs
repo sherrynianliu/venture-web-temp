@@ -8,29 +8,29 @@ async function readProjectFile(path) {
   return readFile(new URL(path, root), 'utf8');
 }
 
-test('home 06 route is registered as a separate home page', async () => {
-  const page = await readProjectFile('src/app/(homes)/home-6/page.tsx');
+test('root route renders the Venture Home 06 experience', async () => {
+  const page = await readProjectFile('src/app/page.tsx');
 
   assert.match(page, /HomeSixMain/);
   assert.match(page, /Venture Electronics/);
+  assert.doesNotMatch(page, /home-1/);
+  assert.doesNotMatch(page, /Togeto/);
 });
 
-test('home 06 keeps the current template shell and effects', async () => {
+test('home 06 redirects to the canonical root home page', async () => {
+  const page = await readProjectFile('src/app/(homes)/home-6/page.tsx');
+
+  assert.match(page, /redirect\(['"]\/['"]\)/);
+  assert.doesNotMatch(page, /HomeSixMain/);
+});
+
+test('home 06 keeps the Venture shell components', async () => {
   const view = await readProjectFile('src/views/home-6/home-6.tsx');
 
-  assert.match(view, /<Wrapper>/);
   assert.match(view, /<Header/);
-  assert.match(view, /<FooterOne/);
-  assert.match(view, /useGsapAnimations/);
-  assert.match(view, /fadeAnimation/);
-  assert.match(view, /splitAnimation/);
-});
-
-test('home menu exposes Home 06 without replacing the existing home routes', async () => {
-  const menu = await readProjectFile('src/data/menu-data.ts');
-
-  assert.match(menu, /Home 01/);
-  assert.match(menu, /Home 05/);
-  assert.match(menu, /Home 06/);
-  assert.match(menu, /\/home-6/);
+  assert.match(view, /<TopBarArea/);
+  assert.match(view, /<HomeSixContent/);
+  assert.match(view, /<Footer/);
+  assert.match(view, /className=["']venture-site["']/);
+  assert.doesNotMatch(view, /<Wrapper>/);
 });

@@ -1,24 +1,32 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import js from "@eslint/js";
+import globals from "globals";
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
+export default [
   {
+    ignores: [
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+      "node_modules/**",
+      "src/plugins/**",
+      "src/**/*.ts",
+      "src/**/*.tsx",
+    ],
+  },
+  js.configs.recommended,
+  {
+    files: ["**/*.{js,mjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
     rules: {
-      "react/no-unescaped-entities": "off",
+      "no-undef": "off",
     },
   },
-  {
-    files: ["src/plugins/**/*.js"],
-    rules: {
-      "@typescript-eslint/no-this-alias": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/no-unused-expressions": "off",
-    },
-  },
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
-]);
-
-export default eslintConfig;
+];

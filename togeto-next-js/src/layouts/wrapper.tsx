@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import ScrollToTop from '@/components/scroll-to-top/scroll-to-top';
 import Preloader from '@/components/preloader/preloader';
 import { LOADING_ANIMATION_TIMEOUT } from '@/utils/constants';
+import { resolveWowConstructor } from '@/utils/resolve-wow-constructor.mjs';
 import { ToastContainer } from 'react-toastify';
 
 // Props Type
@@ -24,9 +25,13 @@ const Wrapper = ({ children, scrollBackToTop = true }: WrapperProps) => {
   // Dynamically import WOW.js (Client-side only)
   const loadWowJs = useCallback(() => {
     if (typeof window !== 'undefined') {
-      import('wowjs').then(({ WOW }) => {
+      import('wowjs').then((wowModule) => {
+        const WowConstructor = resolveWowConstructor(wowModule);
+
+        if (!WowConstructor) return;
+
         requestAnimationFrame(() => {
-          const wow = new WOW({
+          const wow = new WowConstructor({
             live: false,
             animateClass: 'animate__animated',
           });

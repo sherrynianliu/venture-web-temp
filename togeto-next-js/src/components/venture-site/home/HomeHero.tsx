@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes } from "@/components/venture-site/site-data";
 
@@ -11,32 +11,17 @@ const slides = [
     id: "pcba",
     bg: "/hero-pcba-smt.jpg",
     bgClass: "hero__bg--pcba",
-    accent: "Turnkey PCB Assembly / PCBA and EMS Support for Electronics Projects",
-    keywords: [
-      "China-based manufacturing partner",
-      "Turnkey-first PCB Assembly / PCBA",
-      "BOM review",
-      "Component sourcing",
-      "PCB fabrication",
-      "Assembly",
-      "Testing",
-    ],
+    supportingLine:
+      "Turnkey PCB Assembly can connect board fabrication support, approved component sourcing, assembly, inspection and project-specific testing within one reviewed scope.",
     primary: { label: "Request a Quote", href: routes.requestQuote },
-    secondary: { label: "Explore Turnkey PCBA", href: routes.pcba },
+    secondary: { label: "Explore PCB Assembly / PCBA", href: routes.pcba },
   },
   {
     id: "ems",
     bg: "/hero-ems-factory.jpg",
     bgClass: "hero__bg--ems",
-    accent: "EMS & Box Build — From Assembled Boards to Finished Products",
-    keywords: [
-      "EMS & Box Build",
-      "Final assembly",
-      "Cable & harness assembly",
-      "Functional testing",
-      "Packaging",
-      "Delivery support",
-    ],
+    supportingLine:
+      "EMS and Box Build discussion applies when a PCBA project extends into enclosure, cable, mechanical, system-check, labeling or packaging requirements.",
     primary: { label: "Request a Quote", href: routes.requestQuote },
     secondary: { label: "Explore EMS & Box Build", href: routes.emsBoxBuild },
   },
@@ -85,33 +70,28 @@ export function HomeHero() {
           <span className="hero__eyebrow-arrow" aria-hidden="true">
             →
           </span>
-          Precision. Quality. Reliability.
+          PCB Manufacturing · PCB Assembly · EMS Manufacturing
         </p>
 
         <h1 id="home-hero-title">
-          Venture Electronics <br />
-          <span key={slide.id} className="hero__accent">
-            {slide.accent}
-          </span>
+          PCB Assembly, PCBA and EMS manufacturing support for electronics projects.
         </h1>
 
         <div className="hero__rule" aria-hidden="true" />
 
-        <p key={`lead-${slide.id}`} className="hero__lead hero__lead--keywords">
-          {slide.keywords.map((kw, i) => (
-            <Fragment key={kw}>
-              {i > 0 ? (
-                <span className="hero__lead-sep" aria-hidden="true">
-                  |
-                </span>
-              ) : null}
-              <span className="hero__lead-kw">{kw}</span>
-            </Fragment>
-          ))}
+        <p key={`accent-${slide.id}`} className="hero__accent">
+          {slide.supportingLine}
+        </p>
+
+        <p className="hero__lead">
+          Venture Electronics is a China-based manufacturing partner supporting overseas buyers with PCB fabrication coordination, PCB Assembly, Turnkey PCBA, component sourcing, BOM and DFM review, project-specific testing and EMS or Box Build discussion.
         </p>
 
         <div key={`actions-${slide.id}`} className="hero__actions">
-          <CTAButton href={slide.secondary.href}>{slide.secondary.label}</CTAButton>
+          <CTAButton href={slide.primary.href}>{slide.primary.label}</CTAButton>
+          <CTAButton href={slide.secondary.href} variant="secondary">
+            {slide.secondary.label}
+          </CTAButton>
         </div>
       </div>
 

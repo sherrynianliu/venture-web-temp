@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "venture-content-freeze-manifest-0.2",
+  "packageRevision": "2026-06-20-r2",
+  "templateHeadSha": "b7a10516cced88842b3b9c0bc157b6af318a189c",
+  "manifestStatus": "reviewed-not-frozen",
+  "generatedAt": "2026-06-20",
+  "files": [
+    {
+      "file": "approved-md/00_sitewide-content-rules.md",
+      "pageId": "sitewide-content-rules",
+      "route": "sitewide",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "internal",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "5902c1f5de06fd350099826efe232f0dcee097edc1258ac9d77390891d732940"
+    },
+    {
+      "file": "approved-md/01_home.md",
+      "pageId": "home",
+      "route": "/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "2b50fdd305e6e7d302a488017fb4192fae43f121a229468679f692f7750f624d"
+    },
+    {
+      "file": "approved-md/02_services-overview.md",
+      "pageId": "services-overview",
+      "route": "/services/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "c22509cd003c44a9afd2f066bae0be551d01c0987876b3a7d18e54716a9d7bc4"
+    },
+    {
+      "file": "approved-md/03_pcb-assembly-pcba.md",
+      "pageId": "pcb-assembly-pcba",
+      "route": "/services/pcb-assembly-pcba/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "641b49fb463d331f79eac9cfca3e1ec9a268c9a33af274a3ba5d080fd8c408ef"
+    },
+    {
+      "file": "approved-md/04_ems-box-build.md",
+      "pageId": "ems-box-build",
+      "route": "/services/ems-box-build/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "797b311bb3af5c3d88e3e7cb0a9196cb049b12a0d28e8b4abfe4692dc37e90ff"
+    },
+    {
+      "file": "approved-md/05_component-sourcing-bom-dfm-review.md",
+      "pageId": "component-sourcing-bom-dfm-review",
+      "route": "/services/component-sourcing-bom-dfm-review/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "7b931f4d504dc78e8ebcab89ed59417b7d0e12553db05bc0b209cd07911b067e"
+    },
+    {
+      "file": "approved-md/06_pcb-fabrication-support.md",
+      "pageId": "pcb-fabrication-support",
+      "route": "/services/pcb-fabrication-support/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "899adb1c9a0966ab26f4aa3c14e1c0f539da1835b425579cb8e152dece753eeb"
+    },
+    {
+      "file": "approved-md/07_quality-testing.md",
+      "pageId": "quality-testing",
+      "route": "/quality-testing/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "b6a4b1c035724c56e5c9afe5bc04be03a9a21c4d304fde029f0d624b9e809d44"
+    },
+    {
+      "file": "approved-md/08_about.md",
+      "pageId": "about",
+      "route": "/about/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "26316b655f91bbefa5958a542ddbf9902d3abb7ca4ae57121dd06ff102940d2f"
+    },
+    {
+      "file": "approved-md/09_official-resources.md",
+      "pageId": "official-resources",
+      "route": "/official-resources/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "7f46622dc4f2ea06c42f0ec9a3737bfeca94ac07b1297422bf2625f2d49dfb84"
+    },
+    {
+      "file": "approved-md/10_resources.md",
+      "pageId": "resources",
+      "route": "/resources/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "e8c501b11eaba0e28e785644b3ae975fc55e293cc18db8e33b23f8259888f6f7"
+    },
+    {
+      "file": "approved-md/11_contact.md",
+      "pageId": "contact",
+      "route": "/contact/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "14315ff2401cf180be644aee7b1ad011dfa674cc4943b36259767d72a7f87423"
+    },
+    {
+      "file": "approved-md/12_request-a-quote.md",
+      "pageId": "request-a-quote",
+      "route": "/request-a-quote/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "9f3c72ace9c5797cf3cba4dc3dab8e7077a882407f9105f9f03aa9b3cae1c7ba"
+    },
+    {
+      "file": "approved-md/13_insights.md",
+      "pageId": "insights",
+      "route": "/insights/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "hold",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "1f6ea0e6304169da499dd089a998f30553c49fc9551d481ca31f4ddd902b598f"
+    },
+    {
+      "file": "approved-md/14_privacy-policy.md",
+      "pageId": "privacy-policy",
+      "route": "/privacy-policy/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "c2b20dc0807b7edfc7370db6bc8324615a2315b0543a093ccfa1dd8089dd1c94"
+    },
+    {
+      "file": "approved-md/15_terms.md",
+      "pageId": "terms",
+      "route": "/terms/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "8aaca7f41a645f59cd1294485e82a3fca41ec195844ce9e039322768328192ac"
+    },
+    {
+      "file": "approved-md/16_sitemap.md",
+      "pageId": "sitemap",
+      "route": "/sitemap/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "launch",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "5291f3ef3168fdf3ebec2346fdf7d1c5fcf6c7f055565f05951b00cc275e3416"
+    },
+    {
+      "file": "approved-md/17_thank-you.md",
+      "pageId": "thank-you",
+      "route": "/thank-you/",
+      "revision": "2026-06-20-r2",
+      "contentStatus": "reviewed",
+      "publishStatus": "hold",
+      "reviewer": null,
+      "reviewedAt": null,
+      "sha256": "728a53c84294cdb0d2e0aa8790f74bd9798cca5c6cd61850c0bf9d0bc5905737"
+    }
+  ]
+}

@@ -4,29 +4,29 @@ import { routes } from "@/components/venture-site/site-data";
 
 const questions = [
   {
-    question: "What files are needed for a quote?",
+    question: "What files are needed for a PCB Assembly quote?",
     answer:
-      "Gerber files, BOM, CPL, assembly drawing, quantity, testing requirements, and project timeline help Venture review the RFQ clearly.",
+      "Start with Gerber or ODB++ files, a BOM, CPL or pick-and-place data, an assembly drawing, the required quantity and any testing requirements. Packaging, target schedule and special-process notes help define the quotation scope.",
   },
   {
-    question: "What is turnkey PCBA?",
+    question: "What is the difference between PCB Assembly, PCBA and Turnkey PCBA?",
     answer:
-      "Turnkey PCBA can include BOM review, component sourcing coordination, PCB fabrication coordination, assembly, testing discussion, and delivery support.",
+      "PCB Assembly is the buyer-readable service name, while PCBA is the common abbreviation for the assembled circuit board. Turnkey PCBA describes a broader delivery model that may coordinate PCB fabrication support, BOM review, component sourcing, assembly and project-specific testing.",
   },
   {
-    question: "Can Venture source components?",
+    question: "Can Venture Electronics help source components?",
     answer:
-      "Component sourcing can be discussed as part of turnkey PCBA or EMS planning, with customer approval for substitutions and alternates.",
+      "Venture can review the BOM, check availability and lifecycle risks, and discuss sourcing options. Any alternative component must be reviewed against the design requirements and approved by the customer before use.",
   },
   {
     question: "Can testing be included before delivery?",
     answer:
-      "Testing such as AOI, ICT, functional, or reliability checks can be discussed and planned as part of the PCBA or EMS scope.",
+      "Inspection or testing can be discussed according to the product, fixture availability, firmware, test procedure and buyer acceptance criteria. Not every project uses the same combination of AOI, X-ray, ICT, FCT or functional testing.",
   },
   {
-    question: "What is the difference between PCBA and EMS?",
+    question: "When does a project need EMS or Box Build support?",
     answer:
-      "PCBA focuses on assembled circuit boards. EMS and box build can extend into broader final assembly, testing, packaging, and delivery support.",
+      "EMS or Box Build becomes relevant when the project extends beyond an assembled board into an enclosure, cable or wire harness, mechanical parts, system-level checks, labeling, packaging or delivery preparation.",
   },
 ];
 
@@ -37,7 +37,7 @@ export function HomeFAQBlock() {
         <header className="home-faq__head">
           <p className="home-faq__eyebrow">Buyer questions</p>
           <h2 id="home-faq-title" className="home-faq__title">
-            Answers to common <span className="accent">PCBA &amp; EMS</span> questions
+            Answers to common <span className="accent">PCBA &amp; EMS</span> planning questions
           </h2>
         </header>
 
@@ -55,8 +55,8 @@ export function HomeFAQBlock() {
               </details>
             ))}
 
-            <Link href={routes.faq} className="home-faq__more">
-              View all FAQs
+            <Link href={routes.resources} className="home-faq__more">
+              View all buyer resources
               <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -64,7 +64,7 @@ export function HomeFAQBlock() {
           <div className="home-faq__media">
             <Image
               src="/faq-smt-line.jpg"
-              alt="Illustration of a PCB assembly / SMT production line"
+              alt="SMT production line equipment for buyer resource context"
               className="home-faq__img"
               width={1200}
               height={675}
