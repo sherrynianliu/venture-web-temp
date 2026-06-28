@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes, type PageData, type PageSection } from "@/components/venture-site/site-data";
+import { buildPageStructuredData } from "@/components/venture-site/schema/structured-data";
+import { StructuredData } from "@/components/venture-site/schema/StructuredData";
 import { EvidenceImageBlock } from "./EvidenceImageBlock";
 import { PageEnhancements } from "./PageEnhancements";
 
@@ -120,8 +122,8 @@ function RfqMailtoPanel() {
         the Venture Electronics team for project review.
       </p>
       <div className="stage3-actions">
-        <CTAButton href="mailto:info@venture-mfg.com?subject=Venture%20Electronics%20RFQ">
-          Email info@venture-mfg.com
+        <CTAButton href="mailto:support@venture-mfg.com?subject=Venture%20Electronics%20RFQ">
+          Email support@venture-mfg.com
         </CTAButton>
         <CTAButton href={routes.contact} variant="secondary">
           Contact first
@@ -195,9 +197,11 @@ export function VenturePage({ page }: { page: PageData }) {
   const showHeroVisual = page.showHeroVisual !== false;
   const showRelatedLinks = page.showRelatedLinks !== false && page.relatedLinks.length > 0;
   const evidenceImages = page.evidenceImages ?? [];
+  const structuredData = buildPageStructuredData(page);
 
   return (
     <main className="page-shell page-shell--with-enhancements">
+      <StructuredData data={structuredData} />
       <div className="site-footer__inner stage3-main-wrap">
         <article className={`stage3-page stage3-page--${page.template}`}>
           {showHeroHeader ? (

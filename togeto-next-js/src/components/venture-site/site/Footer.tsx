@@ -3,6 +3,7 @@ import { footerGroups, routes, type SiteLink } from "@/components/venture-site/s
 
 const contactLinks: SiteLink[] = [
   { label: "+86 755 8529 6692", href: "tel:+86075585296692" },
+  { label: "RFQ: support@venture-mfg.com", href: "mailto:support@venture-mfg.com" },
   { label: "info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
   { label: "Request a Quote", href: routes.requestQuote },
 ];

@@ -1,34 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { routes } from "@/components/venture-site/site-data";
-
-const questions = [
-  {
-    question: "What files are needed for a PCB Assembly quote?",
-    answer:
-      "Start with Gerber or ODB++ files, a BOM, CPL or pick-and-place data, an assembly drawing, the required quantity and any testing requirements. Packaging, target schedule and special-process notes help define the quotation scope.",
-  },
-  {
-    question: "What is the difference between PCB Assembly, PCBA and Turnkey PCBA?",
-    answer:
-      "PCB Assembly is the buyer-readable service name, while PCBA is the common abbreviation for the assembled circuit board. Turnkey PCBA describes a broader delivery model that may coordinate PCB fabrication support, BOM review, component sourcing, assembly and project-specific testing.",
-  },
-  {
-    question: "Can Venture Electronics help source components?",
-    answer:
-      "Venture can review the BOM, check availability and lifecycle risks, and discuss sourcing options. Any alternative component must be reviewed against the design requirements and approved by the customer before use.",
-  },
-  {
-    question: "Can testing be included before delivery?",
-    answer:
-      "Inspection or testing can be discussed according to the product, fixture availability, firmware, test procedure and buyer acceptance criteria. Not every project uses the same combination of AOI, X-ray, ICT, FCT or functional testing.",
-  },
-  {
-    question: "When does a project need EMS or Box Build support?",
-    answer:
-      "EMS or Box Build becomes relevant when the project extends beyond an assembled board into an enclosure, cable or wire harness, mechanical parts, system-level checks, labeling, packaging or delivery preparation.",
-  },
-];
+import { homeFaqs, routes } from "@/components/venture-site/site-data";
 
 export function HomeFAQBlock() {
   return (
@@ -43,7 +15,7 @@ export function HomeFAQBlock() {
 
         <div className="home-faq__body">
           <div className="home-faq__list">
-            {questions.map((item, i) => (
+            {homeFaqs.map((item, i) => (
               <details className="faq-item" key={item.question} open={i === 0}>
                 <summary className="faq-item__q">
                   <span>{item.question}</span>
