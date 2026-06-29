@@ -145,17 +145,52 @@ const pcbaFaqs: PageFAQ[] = [
   {
     question: "What is the difference between PCB Assembly, PCBA, and Turnkey PCBA?",
     answer:
-      "PCB Assembly is the service name, PCBA is the assembled board, and Turnkey PCBA means Venture can discuss PCB fabrication support, sourcing, assembly, inspection, testing, packaging, and delivery around approved project files.",
+      "PCB Assembly is the buyer-readable service name. PCBA usually refers to the assembled circuit board and the manufacturing result. Turnkey PCBA is a delivery model where Venture can review fabrication support, BOM, sourcing, assembly, inspection, testing, packaging and delivery around approved project files.",
   },
   {
     question: "What files are needed for a PCB Assembly quote?",
     answer:
-      "Gerber or ODB++, BOM, CPL, assembly drawings, quantity, testing expectations, and delivery requirements are the main RFQ inputs.",
+      "The main RFQ inputs are Gerber or ODB++, BOM, CPL or pick-and-place data, assembly drawing, board revision, quantity, supply model, test expectation, packaging requirement and delivery destination. Fixture, firmware or golden-sample details should be shared when testing is expected.",
   },
   {
     question: "Can consigned, partial-turnkey, and full-turnkey projects be reviewed?",
     answer:
       "Yes. The quotation should define which materials are buyer-supplied, which items Venture reviews or sources, and what inspection or testing scope applies.",
+  },
+  {
+    question: "Can Venture help source components for PCBA?",
+    answer:
+      "Component sourcing can be reviewed as part of a PCBA or Turnkey PCBA scope. Buyers should identify no-substitution parts, approved manufacturers or distributors, lifecycle concerns, documentation needs and who approves alternatives.",
+  },
+  {
+    question: "Can alternatives be proposed when parts are difficult to source?",
+    answer:
+      "Candidate alternatives may be discussed when a BOM has missing data, lifecycle risk, long availability or package questions. Alternatives should be reviewed against design, firmware, compliance and performance requirements and approved by the buyer before use.",
+  },
+  {
+    question: "Can Venture review DFM or DFA before assembly?",
+    answer:
+      "DFM and DFA questions can be reviewed from Gerber or ODB++, BOM, CPL, assembly drawing, panelization, stack-up, component package, polarity notes, test access and mechanical constraints. The review helps clarify manufacturing inputs before procurement or assembly starts.",
+  },
+  {
+    question: "Does every PCB Assembly project include X-Ray, ICT or FCT?",
+    answer:
+      "No. Inspection and testing depend on component package, test points, fixture availability, firmware, test procedure, quantity, acceptance criteria and quotation scope. X-Ray, ICT, FCT and functional testing should be defined by project.",
+  },
+  {
+    question: "What affects a PCB Assembly schedule?",
+    answer:
+      "Schedule is reviewed by project because BOM availability, buyer-supplied material status, board complexity, quantity, process requirements, inspection, testing, packaging and buyer approvals can all affect timing.",
+  },
+  {
+    question: "Can coating, programming, marking or labeling be included?",
+    answer:
+      "Project-specific add-ons such as conformal coating, potting, IC programming, firmware loading, labels, serial numbers, markings and packaging can be reviewed when the buyer provides material, keep-out areas, firmware, label rules and acceptance criteria.",
+  },
+  {
+    question: "When does PCBA become EMS or Box Build?",
+    answer:
+      "The project usually moves from PCBA to EMS or Box Build when the deliverable extends beyond assembled boards into enclosure, cable or harness, mechanical integration, firmware or configuration, system-level checks, labels, accessories, packaging or delivery preparation.",
   },
 ];
 
@@ -169,6 +204,185 @@ const emsFaqs: PageFAQ[] = [
     question: "What extra inputs are needed for EMS review?",
     answer:
       "System BOM, enclosure drawings, cable or harness drawings, assembly notes, firmware or configuration requirements, system-level test steps, labels, packaging, and accessories should be shared when available.",
+  },
+  {
+    question: "Can Venture review enclosure assembly as part of Box Build?",
+    answer:
+      "Enclosure assembly can be reviewed when the buyer provides mechanical drawings, material notes, fastening or torque requirements, mounting constraints, assembly sequence and acceptance criteria. Design ownership and change authority should be clarified before quoting.",
+  },
+  {
+    question: "Can cable or harness work be included in EMS scope?",
+    answer:
+      "Cable, harness and connector-routing requirements can be reviewed inside an EMS or Box Build scope when drawings, pinout, connector specifications, routing requirements and inspection rules are available.",
+  },
+  {
+    question: "What is needed for system-level testing?",
+    answer:
+      "System-level testing usually needs a test procedure, fixture or interface, firmware or configuration state, golden sample when available, pass/fail criteria, report requirement and a clear definition of what the finished unit must prove.",
+  },
+  {
+    question: "Can firmware, IC programming or configuration be included?",
+    answer:
+      "Firmware loading, IC programming or configuration can be reviewed when the buyer provides files, version control, security handling rules and verification method. Data handling and IP controls should be confirmed by project.",
+  },
+  {
+    question: "Can packaging, labels or accessories be included?",
+    answer:
+      "Packaging, labels, serial numbers, accessories, manuals, cartons, trays and shipment documents can be included when they are defined in the system BOM, label rules, packaging standard and delivery requirement.",
+  },
+  {
+    question: "Does every EMS project include functional testing?",
+    answer:
+      "No. Functional testing depends on the agreed test method, fixture, firmware, sample availability, acceptance criteria and quote scope. A Box Build page should not imply that every system receives the same testing method.",
+  },
+  {
+    question: "What affects EMS or Box Build timing?",
+    answer:
+      "Timing depends on PCBA readiness, system BOM completeness, sourcing status, enclosure and mechanical files, cable or harness inputs, firmware, fixtures, packaging and buyer approval cycles.",
+  },
+  {
+    question: "Can NDA or secure file transfer be discussed before system files are shared?",
+    answer:
+      "Yes. For sensitive EMS files, start by email and ask for NDA or file-transfer requirements before sending full system BOM, firmware, mechanical files or product documentation.",
+  },
+];
+
+const sourcingFaqs: PageFAQ[] = [
+  {
+    question: "What should be included in a BOM for PCBA review?",
+    answer:
+      "A useful BOM should include designator, quantity, manufacturer, MPN, package, description, approved alternatives, no-substitution notes, lifecycle concerns and any documentation or compliance requirement that affects sourcing.",
+  },
+  {
+    question: "Can Venture propose component alternatives?",
+    answer:
+      "Candidate alternatives can be discussed when availability, lifecycle, MOQ, package or documentation risk appears. The buyer should approve alternatives before procurement or assembly.",
+  },
+  {
+    question: "Can Venture use alternatives without approval?",
+    answer:
+      "No. Substitution should not happen automatically. Buyer approval is required before using an alternative component, especially for no-substitution parts, firmware-sensitive parts or parts tied to certification or performance.",
+  },
+  {
+    question: "What is DFM / DFA review?",
+    answer:
+      "DFM / DFA review looks for manufacturing and assembly questions from Gerber, BOM, CPL, stack-up, panelization, footprint, polarity, test access, mechanical constraints and special-process requirements.",
+  },
+  {
+    question: "What files help a BOM and DFM review?",
+    answer:
+      "Gerber or ODB++, BOM, CPL, assembly drawing, stack-up, mechanical drawings, test expectations, firmware or programming notes and packaging rules help the review become more useful.",
+  },
+  {
+    question: "Can DFM review happen before a full quote?",
+    answer:
+      "Early DFM questions can be discussed before a full quote when the buyer has enough files to identify practical manufacturing risks. Final quotation still depends on complete files, BOM and scope.",
+  },
+  {
+    question: "What happens if the BOM contains obsolete or long-availability parts?",
+    answer:
+      "The review may flag sourcing risk, ask for buyer guidance, or discuss candidate alternatives. The buyer should decide whether to approve alternatives, revise the design, provide consigned parts or adjust schedule expectations.",
+  },
+  {
+    question: "How does sourcing affect project timing?",
+    answer:
+      "Sourcing can affect timing through availability, MOQ, supplier response, documentation needs, buyer approvals and part arrival. Timing should be reviewed by project instead of treated as a fixed default.",
+  },
+  {
+    question: "Can buyers consign components?",
+    answer:
+      "Yes. Consigned or mixed sourcing can be reviewed. The quotation should define which parts are buyer-supplied, incoming-material handling expectations, shortage responsibility and replacement rules.",
+  },
+  {
+    question: "What are no-substitution parts?",
+    answer:
+      "No-substitution parts are components the buyer does not want changed without explicit approval because they may affect function, firmware, certification, sourcing policy or product performance.",
+  },
+];
+
+const fabricationFaqs: PageFAQ[] = [
+  {
+    question: "What files are needed for PCB Fabrication Support?",
+    answer:
+      "Useful inputs include Gerber or ODB++, stack-up, material requirement, board thickness, copper weight, surface finish, panelization preference, impedance or special requirements and the assembly or test constraints that matter downstream.",
+  },
+  {
+    question: "Is PCB Fabrication Support separate from PCB Assembly?",
+    answer:
+      "It is a support layer for the PCBA and Turnkey PCBA workflow. The page should help buyers prepare assembly-ready boards rather than position Venture as a low-cost PCB-only platform.",
+  },
+  {
+    question: "Can Venture coordinate bare boards and assembly together?",
+    answer:
+      "Bare-board coordination can be reviewed when the buyer wants board fabrication inputs aligned with sourcing, assembly, inspection, testing, packaging and delivery requirements.",
+  },
+  {
+    question: "What stack-up information should be provided?",
+    answer:
+      "Provide layer count, dielectric structure, thickness, impedance needs, material preference and any controlled requirements that affect fabrication, performance or assembly handling.",
+  },
+  {
+    question: "What surface finish should I choose?",
+    answer:
+      "Surface finish should be selected by project requirement, solderability, shelf-life, component package, fine-pitch needs and downstream assembly conditions. The choice should be confirmed during quotation.",
+  },
+  {
+    question: "Why does panelization matter?",
+    answer:
+      "Panelization affects SMT handling, fiducials, rails, tooling holes, depanelization, AOI, test fixture access, label placement and packaging. It should be reviewed before board production and assembly.",
+  },
+  {
+    question: "Can Venture review flex or rigid-flex boards?",
+    answer:
+      "Flex or rigid-flex requirements can be reviewed when the buyer provides board files, stack-up, bend areas, stiffener requirements, handling notes and acceptance criteria. Exact capability should be confirmed by project.",
+  },
+  {
+    question: "Are exact PCB capability specs fixed on the website?",
+    answer:
+      "No. Exact layer count, tolerance, material, finish and special-process values should be confirmed from current project files and quotation scope before being treated as production commitments.",
+  },
+  {
+    question: "How does PCB fabrication affect testing?",
+    answer:
+      "Board decisions can affect test points, fixture access, impedance, reliability, solderability and inspection. Fabrication inputs should be aligned with Quality & Testing expectations before final quotation.",
+  },
+  {
+    question: "When should I start with PCBA instead?",
+    answer:
+      "Start with PCB Assembly / PCBA when the main deliverable is assembled boards and fabrication is only one support layer inside a turnkey quotation.",
+  },
+];
+
+const servicesFaqs: PageFAQ[] = [
+  {
+    question: "Which Venture service should I start with if I need assembled boards?",
+    answer:
+      "Start with PCB Assembly / PCBA. If the project also needs sourcing, testing, packaging or delivery support, those requirements can be reviewed inside the PCBA quotation scope.",
+  },
+  {
+    question: "Is Turnkey PCBA a separate service from PCB Assembly?",
+    answer:
+      "Turnkey PCBA is a delivery model under PCB Assembly / PCBA. It may include PCB fabrication support, BOM review, component sourcing, assembly, inspection, testing, packaging and delivery coordination when agreed in the quote.",
+  },
+  {
+    question: "When does a project become EMS or Box Build?",
+    answer:
+      "A project usually moves into EMS or Box Build when the scope extends beyond assembled boards into enclosure, cable or harness, mechanical parts, system checks, labels, packaging or delivery preparation.",
+  },
+  {
+    question: "Can Venture help with component sourcing and BOM risk?",
+    answer:
+      "Yes. Venture can review BOM completeness, availability, lifecycle risk, MOQ, package questions and candidate alternatives. Any substitution must be approved by the buyer before use.",
+  },
+  {
+    question: "Does every project include the same tests?",
+    answer:
+      "No. Testing depends on board design, fixture availability, firmware, test procedure, acceptance criteria, quantity and project risk.",
+  },
+  {
+    question: "Why does the new site not rebuild all old material, stack-up and industry pages?",
+    answer:
+      "The first-launch site keeps the service structure clear. Old topics are consolidated into service pages, Resources, FAQ and quote-preparation guidance unless a topic has enough evidence to support a dedicated page.",
   },
 ];
 
@@ -225,29 +439,54 @@ const requestQuoteFaqs: PageFAQ[] = [
 
 const qualityTestingFaqs: PageFAQ[] = [
   {
-    question: "Can Venture provide X-Ray inspection?",
+    question: "What quality information should I send with a PCBA RFQ?",
     answer:
-      "X-Ray inspection can be discussed for BGA, QFN, hidden-joint, or other risk areas when the package list and acceptance requirements are clear.",
+      "Send the current design revision, BOM, CPL, assembly drawing, quantity, test expectations, acceptance criteria, reporting needs, firmware or fixture information when available.",
   },
   {
-    question: "Does every project include ICT or FCT?",
+    question: "Does every PCB Assembly project include AOI, X-Ray, ICT and FCT?",
     answer:
-      "No. ICT, FCT, and functional testing depend on test points, fixture availability, firmware, procedure, quantity, and acceptance criteria.",
+      "No. AOI, X-Ray, ICT, FCT and functional testing are selected according to component package, test access, fixture availability, firmware, procedure, quantity, risk and agreed quotation scope.",
   },
   {
-    question: "What should buyers provide for functional testing?",
+    question: "When is X-Ray inspection useful?",
     answer:
-      "Provide the test procedure, firmware or configuration, fixture information, golden sample if available, and pass/fail criteria.",
+      "X-Ray inspection is commonly discussed for BGA, QFN, hidden-joint or bottom-terminated components where solder joints cannot be fully checked visually.",
+  },
+  {
+    question: "What is needed for ICT or FCT?",
+    answer:
+      "ICT or FCT usually requires test access, fixture or interface information, firmware or configuration, test procedure, golden sample when available, and pass/fail criteria.",
+  },
+  {
+    question: "Can Venture discuss first article inspection?",
+    answer:
+      "Yes. FAI can be discussed for new builds, revision changes or NPI review to verify the first assembled unit before continuing the build.",
+  },
+  {
+    question: "Can Venture help with functional testing for EMS or Box Build?",
+    answer:
+      "Functional testing can be reviewed when the system BOM, firmware, enclosure, cable or harness, test steps, fixture, labels and acceptance criteria are available.",
+  },
+  {
+    question: "Can cleaning or conformal coating be included?",
+    answer:
+      "Cleaning, conformal coating or potting should be discussed with material, area, keep-out zones, process, inspection and acceptance requirements.",
   },
   {
     question: "Can reliability testing be arranged?",
     answer:
-      "Reliability or environmental testing should be discussed by standard, condition, sample count, duration, and report requirement.",
+      "Reliability or environmental testing should be discussed by standard, condition, sample count, duration, acceptance criteria and whether internal or external testing is required.",
   },
   {
-    question: "What inspection records can be discussed?",
+    question: "What traceability records can be discussed?",
     answer:
-      "Inspection and test records should follow the agreed production, inspection, testing, and shipment scope.",
+      "Records may include file revision, BOM revision, material decisions, inspection result, test result, batch, serial number, label, packaging and shipment information depending on the agreed scope.",
+  },
+  {
+    question: "Does Venture have all compliance certifications for every project?",
+    answer:
+      "No. Certification and compliance wording must be reviewed by exact entity, scope, document and project requirement. Do not assume every project carries every certificate.",
   },
 ];
 
@@ -551,9 +790,14 @@ export const pageData = {
       "Compare Venture Electronics service paths for PCB Assembly, Turnkey PCBA, EMS & Box Build, component sourcing, BOM review, PCB fabrication support, and quality testing.",
     role: "Service overview for PCBA-first manufacturing inquiries.",
     summary:
-      "PCB Assembly / PCBA is the primary service entry. EMS & Box Build applies when a project extends beyond an assembled board, while sourcing, BOM, DFM and PCB fabrication support help prepare the project for manufacturing review.",
+      "Venture Electronics organizes PCB Assembly, Turnkey PCBA, EMS & Box Build, Component Sourcing, BOM / DFM Review, PCB Fabrication Support, and Quality & Testing around the buyer's intended deliverable. The page helps buyers choose the right starting point before sending RFQ files.",
     template: "service-conversion",
     visual: pageVisuals.services,
+    directAnswer: [
+      "Start with PCB Assembly / PCBA when the required deliverable is assembled boards.",
+      "Use EMS & Box Build when the project extends beyond the PCBA into enclosure, cable or harness, mechanical parts, labeling, packaging, or system-level testing.",
+      "Use Component Sourcing, BOM / DFM Review, PCB Fabrication Support, and Quality & Testing as support layers that help define the quotation and manufacturing scope.",
+    ],
     sections: [
       {
         title: "How Venture services fit together",
@@ -568,34 +812,58 @@ export const pageData = {
           ],
           rows: [
             {
-              goal: "Need assembled boards",
+              goal: "Need prototype / NPI PCBA review",
               start: "PCB Assembly / PCBA",
-              support: "BOM / DFM / Testing",
-              prepare: "Gerber or ODB++, BOM, CPL, assembly notes",
+              support: "DFM / BOM review, test plan discussion, first article review",
+              prepare: "Current revision, Gerber or ODB++, BOM, CPL, assembly notes, target build quantity",
             },
             {
-              goal: "Need supplier-managed sourcing",
-              start: "Component Sourcing & BOM Review",
-              support: "Customer-approved alternatives",
-              prepare: "BOM rules, no-substitution parts, approved vendors",
+              goal: "Need low-volume or medium-volume PCBA",
+              start: "PCB Assembly / PCBA",
+              support: "Turnkey sourcing discussion, inspection, testing and packaging",
+              prepare: "Approved files, quantity range, supply model, test expectations",
             },
             {
-              goal: "Need bare-board-to-assembly coordination",
-              start: "PCB Fabrication Support",
-              support: "Stack-up, material, finish, panelization",
-              prepare: "Gerber, stack-up, material and finish requirements",
+              goal: "Need turnkey PCB Assembly",
+              start: "PCB Assembly / PCBA",
+              support: "PCB fabrication support, component sourcing, inspection, testing, packaging",
+              prepare: "Supply model, no-substitution parts, approved alternatives, test expectations",
             },
             {
-              goal: "Need product-level assembly",
+              goal: "Need box build or system assembly",
               start: "EMS & Box Build",
-              support: "System BOM, enclosure, cable/harness, FCT",
-              prepare: "System files, assembly instructions, packaging requirements",
+              support: "PCBA, enclosure, cable or harness, system-level test, labels, packaging",
+              prepare: "System BOM, enclosure drawings, cable drawings, assembly instructions, test steps",
             },
             {
-              goal: "Need quality planning",
+              goal: "Need BOM risk reduction before quoting",
+              start: "Component Sourcing, BOM & DFM Review",
+              support: "Availability, lifecycle, MOQ, package match, approved alternatives",
+              prepare: "BOM with MPN, manufacturer, quantity, no-substitution rules, approved vendor rules",
+            },
+            {
+              goal: "Need bare-board and assembly coordination",
+              start: "PCB Fabrication Support + PCB Assembly / PCBA",
+              support: "Stack-up, material, finish, panelization, fiducials, test points",
+              prepare: "Gerber, stack-up, material, finish and downstream assembly constraints",
+            },
+            {
+              goal: "Need DFM / DFA / engineering review",
+              start: "Component Sourcing, BOM & DFM Review",
+              support: "Gerber, BOM, stack-up, polarity, fiducials, panelization and assembly questions",
+              prepare: "Current files, known risks, special packages, mechanical or test constraints",
+            },
+            {
+              goal: "Need quality or test planning",
               start: "Quality & Testing",
-              support: "Test procedure, fixture, records",
+              support: "SPI, AOI, FAI, X-Ray, ICT/FCT, functional test, records",
               prepare: "Acceptance criteria, firmware, golden sample, report requirements",
+            },
+            {
+              goal: "Need conformal coating, potting, labeling, packaging or programming add-ons",
+              start: "PCB Assembly / PCBA or EMS & Box Build",
+              support: "IC programming, coating, potting, labels, serial numbers, ESD packaging",
+              prepare: "Material, keep-out areas, firmware, label rules, packaging and inspection method",
             },
           ],
         },
@@ -603,12 +871,118 @@ export const pageData = {
         featured: true,
       },
       {
-        title: "What we intentionally keep consolidated",
+        title: "Start from the deliverable, not from a keyword",
         body:
-          "Detailed material, stack-up, testing, engineering, and industry questions are handled through the relevant service pages, buyer resources, and quote-preparation guidance so buyers can find the right starting point without navigating many narrow pages.",
+          "Many electronics buyers use overlapping terms such as PCB Assembly, PCBA, Turnkey PCBA, EMS, Electronics Manufacturing, Contract Manufacturing, Box Build, Component Sourcing, Testing, DFM, and PCB Fabrication. Venture uses these terms inside one service structure so buyers can begin from the deliverable they need instead of choosing from a long list of old SEO keywords.",
       },
       {
-        title: "What should buyers prepare before selecting a final service scope?",
+        title: "Service paths by buyer situation",
+        body:
+          "Use this table when the buyer knows the project situation but is not sure which Venture page to start from.",
+        table: {
+          columns: [
+            { key: "situation", label: "Buyer situation" },
+            { key: "start", label: "Start with" },
+            { key: "why", label: "Why this is the right entry" },
+            { key: "next", label: "Likely next question" },
+          ],
+          rows: [
+            {
+              situation: "I have Gerber, BOM and CPL and need assembled boards.",
+              start: "PCB Assembly / PCBA",
+              why: "The deliverable is board-level assembly.",
+              next: "Supply model, test method, packaging, schedule boundary.",
+            },
+            {
+              situation: "I need Venture to help source components.",
+              start: "Component Sourcing, BOM & DFM Review",
+              why: "The project depends on sourcing rules, lifecycle risk, MOQ and approved alternatives.",
+              next: "No-substitution parts and customer approval process.",
+            },
+            {
+              situation: "I need bare boards and assembly coordinated together.",
+              start: "PCB Fabrication Support + PCB Assembly / PCBA",
+              why: "Fabrication inputs affect assembly yield, panelization, test points and downstream handling.",
+              next: "Stack-up, material, finish, impedance, panelization, fiducials.",
+            },
+            {
+              situation: "I need the PCBA installed into a complete device or module.",
+              start: "EMS & Box Build",
+              why: "The project now includes mechanical, cable, label, system-test or packaging scope.",
+              next: "System BOM, enclosure files, cable drawings, firmware, packaging.",
+            },
+            {
+              situation: "I am not sure what testing is needed.",
+              start: "Quality & Testing",
+              why: "Testing scope depends on fixture, firmware, test points and acceptance criteria.",
+              next: "AOI, X-Ray, ICT/FCT, functional test, reporting.",
+            },
+            {
+              situation: "I need a first prototype before repeat builds.",
+              start: "PCB Assembly / PCBA",
+              why: "Prototype / NPI starts with file review, BOM review, first article and test planning.",
+              next: "Design revision, build quantity, DFM/DFA risks, acceptance criteria.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "What each service owns",
+        body:
+          "Each service page should own one buyer question. Supporting capabilities appear where they help the quote and manufacturing decision.",
+        table: {
+          columns: [
+            { key: "service", label: "Service page" },
+            { key: "owns", label: "Owns" },
+            { key: "doesNotOwn", label: "Does not own" },
+          ],
+          rows: [
+            {
+              service: "PCB Assembly / PCBA",
+              owns: "Assembly scope, supply model, RFQ inputs, board-level process, inspection and testing discussion.",
+              doesNotOwn: "A full EMS system scope unless enclosure, cable, label or system-test requirements are included.",
+            },
+            {
+              service: "EMS & Box Build",
+              owns: "PCBA integration into enclosure, cable/harness, mechanical parts, system-level checks, labels, packaging and delivery support.",
+              doesNotOwn: "Unverified complete consumer-product certification or universal end-user fulfillment.",
+            },
+            {
+              service: "Component Sourcing, BOM & DFM Review",
+              owns: "BOM completeness, sourcing risk, lifecycle risk, MOQ, package match, customer-approved alternatives and DFM/DFA questions.",
+              doesNotOwn: "Unauthorized substitution or a promise that every component is available.",
+            },
+            {
+              service: "PCB Fabrication Support",
+              owns: "Gerber, stack-up, material, thickness, copper, impedance, surface finish and assembly-ready board requirements.",
+              doesNotOwn: "A low-cost PCB-only platform positioning or dozens of thin material/stack-up pages.",
+            },
+            {
+              service: "Quality & Testing",
+              owns: "Inspection method, test inputs, fixture/firmware dependency, acceptance criteria, records and traceability discussion.",
+              doesNotOwn: "A universal promise that every project uses every test method.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Supporting capabilities that should not become confusing top-level pages",
+        body:
+          "Venture can discuss SMT, through-hole, BGA, IC programming, conformal coating, electronic potting, test fixtures, labeling, packaging, repair, reverse engineering and logistics when they are part of an approved project scope. They should be handled as capability modules inside PCBA, EMS, Quality, Resources or future expansion pages rather than rebuilt as many thin first-launch pages.",
+        items: [
+          "SMT, through-hole, mixed assembly and BGA belong under PCB Assembly / PCBA.",
+          "Solder paste printing, SPI, FAI, AOI, X-Ray, ICT and FCT belong under process and Quality & Testing content.",
+          "Component sourcing, BOM review, lifecycle risk and approved alternatives belong under Component Sourcing, BOM & DFM Review.",
+          "Conformal coating, potting, IC programming, labels and packaging should be handled as project-specific add-ons.",
+          "Wire or cable harness topics stay under EMS / Box Build until Venture confirms public priority and evidence.",
+          "Industry pages should remain scenario-level unless Venture has approved case studies or customer-safe examples.",
+        ],
+        kind: "list",
+      },
+      {
+        title: "What buyers should prepare before service selection",
         body:
           "The file set does not need to be perfect before the first conversation, but missing information may limit quotation accuracy or require follow-up.",
         items: [
@@ -622,7 +996,66 @@ export const pageData = {
         ],
         kind: "checklist",
       },
+      {
+        title: "How old-site topics map into the new service structure",
+        body:
+          "Older Venture websites include useful public vocabulary such as PCB materials, layer stack-up, DFM/DFA, NPI, SMT, through-hole, BGA, PCBA testing, conformal coating, electronic potting, IC programming, test fixtures, wire harness, packaging and logistics. The new site consolidates these topics into service pages and RFQ guidance so buyers see one clear manufacturing path.",
+        table: {
+          columns: [
+            { key: "oldTopic", label: "Old-site topic" },
+            { key: "newLocation", label: "Where it belongs now" },
+            { key: "reason", label: "Reason" },
+          ],
+          rows: [
+            {
+              oldTopic: "SMT, through-hole, mixed assembly, BGA",
+              newLocation: "PCB Assembly / PCBA",
+              reason: "These are assembly-process details inside board-level manufacturing.",
+            },
+            {
+              oldTopic: "PCB materials, layer stack-up, impedance, surface finish",
+              newLocation: "PCB Fabrication Support",
+              reason: "They shape assembly-ready board review rather than separate first-launch pages.",
+            },
+            {
+              oldTopic: "Component sourcing, lifecycle, approved alternatives",
+              newLocation: "Component Sourcing, BOM & DFM Review",
+              reason: "They affect quotation, procurement and customer approval.",
+            },
+            {
+              oldTopic: "SPI, AOI, X-Ray, ICT, FCT, Boundary scan",
+              newLocation: "Quality & Testing",
+              reason: "They are selected according to risk, access, fixture, firmware and acceptance criteria.",
+            },
+            {
+              oldTopic: "Conformal coating, potting, IC programming, labels, packaging",
+              newLocation: "Project-specific add-ons under PCBA or EMS",
+              reason: "They should be scoped during quotation rather than presented as universal defaults.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Service scope boundaries",
+        body:
+          "The Services page should be useful without overpromising. Venture is a project-based PCBA and EMS manufacturing partner, not an instant-price standard-product platform.",
+        items: [
+          "Lead time is reviewed by project because BOM availability, board complexity, quantity, test scope and buyer approvals vary.",
+          "MOQ or quantity fit is reviewed by BOM, setup, material, project scope and repeat-build expectation.",
+          "Testing scope is not universal; AOI, X-Ray, ICT, FCT, functional testing, reliability testing and reports depend on the agreed project requirements.",
+          "Certificate or compliance wording must be tied to confirmed entity, scope, document version and project requirement.",
+          "Named customer references, cases and sensitive industry examples require publication permission.",
+          "Sensitive regulated segments should not be used as public target-industry wording without approved evidence and client confirmation.",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "Services FAQ",
+        kind: "faq",
+      },
     ],
+    faqs: servicesFaqs,
     relatedLinks: serviceHierarchy,
     cta: { label: "Request a Quote", href: routes.requestQuote },
     secondaryCta: { label: "Explore PCB Assembly / PCBA", href: routes.pcba },
@@ -640,15 +1073,135 @@ export const pageData = {
       "Venture Electronics supports SMT, through-hole and mixed PCB Assembly projects. Depending on the quotation, Turnkey PCBA may also coordinate PCB fabrication support, component sourcing, BOM and DFM review, inspection, testing, packaging and delivery requirements.",
     visual: pageVisuals.pcba,
     directAnswer: [
-      "PCB Assembly is the buyer-readable service name; PCBA is the common abbreviation for the assembled circuit board and its manufacturing process.",
-      "Turnkey PCBA is a delivery model, not a competing first-level service.",
+      "PCB Assembly is the buyer-readable service name, while PCBA refers to the assembled circuit board and the manufacturing result.",
+      "Turnkey PCBA is Venture Electronics' main delivery model for many board-level projects: it may coordinate PCB fabrication support, BOM review, component sourcing, assembly, inspection, testing, packaging and delivery around approved project files.",
+      "The right PCBA scope depends on the buyer's files, BOM, sourcing rules, test expectations, quantity, packaging needs and delivery requirements.",
     ],
     template: "service-conversion",
     sections: [
       {
+        title: "What PCB Assembly / PCBA means for Venture Electronics",
+        body:
+          "For Venture Electronics, PCB Assembly / PCBA is not only the soldering step. It is the buyer-facing entry point for turning approved board files and BOM data into assembled boards with a defined supply model, assembly process, inspection method, testing expectation, packaging requirement and delivery path. Buyers may begin with prototype PCBA, low-volume PCBA, turnkey PCB assembly, consigned assembly or partial-turnkey assembly. The quotation should clarify what Venture reviews, what the buyer supplies, which alternatives require approval, and which inspection or test records are expected before production starts. This page is written for engineering, purchasing and quality teams that need to understand the board-level scope before sending Gerber, BOM, CPL, drawings or test requirements.",
+        featured: true,
+      },
+      {
+        title: "PCB Assembly delivery models",
+        body:
+          "The same PCBA page should support different supply models. Buyers should make the supply model clear before quotation because it affects sourcing responsibility, material risk, shortage handling, incoming inspection, assembly sequencing and schedule.",
+        table: {
+          columns: [
+            { key: "model", label: "Delivery model" },
+            { key: "meaning", label: "What it means" },
+            { key: "buyerInput", label: "Buyer should provide" },
+            { key: "boundary", label: "Boundary" },
+          ],
+          rows: [
+            {
+              model: "Consigned assembly",
+              meaning:
+                "The buyer supplies some or all materials and Venture reviews assembly, incoming-material handling, inspection and testing scope.",
+              buyerInput:
+                "Buyer-supplied part list, shipment status, BOM, board files, assembly drawing and test expectations.",
+              boundary: "Material shortages, part condition and replacement rules must be clarified.",
+            },
+            {
+              model: "Partial turnkey",
+              meaning:
+                "The buyer supplies designated or sensitive items while Venture may source approved boards or components.",
+              buyerInput: "No-substitution parts, approved vendors, buyer-supplied items and sourcing restrictions.",
+              boundary: "Alternatives must be approved before procurement or assembly.",
+            },
+            {
+              model: "Full turnkey PCBA discussion",
+              meaning:
+                "Venture may coordinate PCB fabrication support, BOM review, component sourcing, assembly, inspection, testing, packaging and delivery around approved files.",
+              buyerInput:
+                "Gerber or ODB++, BOM, CPL, assembly drawing, quantity, target schedule, test plan and packaging needs.",
+              boundary: "Final scope depends on BOM availability, project complexity and buyer approvals.",
+            },
+            {
+              model: "Prototype / NPI PCBA",
+              meaning:
+                "Early builds used to validate design, BOM, assembly process, test method and manufacturability before repeat production.",
+              buyerInput: "Current revision, prototype quantity, engineering notes, DFM concerns and acceptance criteria.",
+              boundary: "Prototype results may lead to design, BOM, fixture or process changes.",
+            },
+            {
+              model: "Low-volume or medium-volume PCBA",
+              meaning:
+                "Project-based repeat builds where sourcing, inspection, testing and records should be stabilized.",
+              buyerInput: "Repeat forecast, approved revisions, sourcing rules, quality requirements and packaging instructions.",
+              boundary: "Material availability and test scope still affect timing and cost.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Assembly methods and project types",
+        body:
+          "Venture can review common PCB Assembly requirements from current project files. The method should be selected from the board design, component package, soldering process, inspection needs and test requirements.",
+        table: {
+          columns: [
+            { key: "method", label: "Assembly area" },
+            { key: "use", label: "Used for" },
+            { key: "buyerInput", label: "Buyer input" },
+          ],
+          rows: [
+            {
+              method: "SMT assembly",
+              use: "Surface-mount components, reflow workflows, fine-pitch packages and high-density boards.",
+              buyerInput: "Gerber/ODB++, BOM, CPL, assembly drawing, polarity and package notes.",
+            },
+            {
+              method: "Through-hole assembly",
+              use:
+                "Connectors, power parts, terminals, mechanical-stress components or parts requiring wave, selective or manual soldering discussion.",
+              buyerInput: "Assembly notes, soldering requirement, mechanical constraints and inspection criteria.",
+            },
+            {
+              method: "Mixed assembly",
+              use: "Boards that combine SMT and through-hole processes.",
+              buyerInput: "Process sequence requirements, component package list and special handling notes.",
+            },
+            {
+              method: "BGA / QFN / hidden-joint assembly",
+              use: "Packages where solder joints are not fully visible after assembly.",
+              buyerInput: "Package list, risk areas and X-Ray or inspection expectations.",
+            },
+            {
+              method: "Flex or rigid-flex assembly",
+              use: "Flexible or rigid-flex boards requiring handling, fixture and process review.",
+              buyerInput: "Board type, panelization, handling requirements and bend-area notes.",
+            },
+            {
+              method: "Programming, coating, labeling or packaging add-ons",
+              use: "Project-specific steps added to the approved PCBA scope.",
+              buyerInput: "Firmware, coating area, label rules, packaging standard and acceptance criteria.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "How Turnkey PCBA connects fabrication, sourcing, assembly and testing",
+        body:
+          "Turnkey PCBA should be understood as a coordinated delivery model. It does not make every support topic a separate top-level service, but it connects the necessary support layers around the board-level deliverable.",
+        items: [
+          "PCB Fabrication Support helps align Gerber, stack-up, material, surface finish, panelization and assembly constraints before the board enters assembly.",
+          "Component Sourcing and BOM Review helps identify MPN gaps, lifecycle risk, MOQ issues, package mismatch, approved-vendor rules and substitution restrictions.",
+          "DFM / DFA review helps identify manufacturability questions related to spacing, polarity, fiducials, panelization, tooling, test points, connector height or mechanical constraints.",
+          "Assembly turns approved files and material decisions into assembled boards using SMT, through-hole or mixed process planning.",
+          "Quality & Testing defines SPI, AOI, FAI, X-Ray, ICT/FCT, functional testing or reporting requirements when applicable.",
+          "Packaging and delivery requirements should be defined before shipment, especially when ESD, label, serial number or document rules apply.",
+        ],
+        kind: "steps",
+      },
+      {
         title: "PCB Assembly capability review",
         body:
-          "Use this table to prepare a practical PCB Assembly / PCBA discussion. Final scope, schedule, and testing depend on the project files, BOM availability, quantity, and agreed inspection requirements.",
+          "Use this table to prepare a practical PCB Assembly / PCBA discussion. Final scope, schedule, and testing depend on the project files, BOM availability, quantity, supply model and agreed inspection requirements.",
         table: {
           columns: [
             { key: "area", label: "Capability area" },
@@ -658,64 +1211,142 @@ export const pageData = {
           rows: [
             {
               area: "Assembly types",
-              scope: "SMT, through-hole, and mixed assembly",
-              confirm: "Board design, component package, assembly drawing",
+              scope: "SMT, through-hole, mixed assembly, prototype / NPI and repeat-build discussion",
+              confirm: "Board design, component package, assembly drawing and target quantity",
             },
             {
               area: "Component packages",
-              scope: "Passive parts, BGA/QFN/QFP, connectors, terminals",
-              confirm: "BOM, MPN, package, polarity notes",
+              scope: "Passive parts, BGA/QFN/QFP, fine-pitch ICs, connectors, terminals and mechanical-stress parts",
+              confirm: "BOM, MPN, package, footprint, polarity notes and package risk",
             },
             {
               area: "Supply model",
-              scope: "Consigned, partial-turnkey, and full-turnkey discussion",
-              confirm: "Buyer-supplied parts and sourcing rules",
+              scope: "Consigned, partial-turnkey and full-turnkey discussion",
+              confirm: "Buyer-supplied parts, approved vendors, sourcing rules and no-substitution parts",
             },
             {
               area: "File requirements",
-              scope: "Gerber or ODB++, BOM, CPL, assembly drawing",
-              confirm: "Revision control and approved files",
+              scope: "Gerber or ODB++, BOM, CPL, assembly drawing, revision notes and special process instructions",
+              confirm: "Revision control and approved production files",
             },
             {
               area: "Testing",
-              scope: "AOI, X-Ray, ICT/FCT, or functional testing when applicable",
-              confirm: "Fixture, firmware, test method, acceptance criteria",
+              scope: "SPI, FAI, AOI, X-Ray, ICT/FCT or functional testing when applicable",
+              confirm: "Fixture, firmware, test method, golden sample, report format and acceptance criteria",
             },
             {
               area: "Packaging",
-              scope: "ESD, labels, shipment requirements",
-              confirm: "Delivery destination and document needs",
+              scope: "ESD, moisture handling, labels, serial numbers, trays, cartons and shipment requirements",
+              confirm: "Delivery destination, document needs and customer packaging rules",
             },
             {
               area: "Schedule",
-              scope: "Reviewed by project",
-              confirm: "BOM availability, complexity, test scope, and quantity",
+              scope: "Reviewed by project after files, BOM and testing scope are understood",
+              confirm: "BOM availability, complexity, test scope, quantity and buyer approval cycle",
             },
           ],
         },
         kind: "content-table",
-        featured: true,
       },
       {
-        title: "PCB Assembly delivery models",
-        items: [
-          "Consigned assembly: buyer supplies selected or all parts and Venture reviews the assembly, inspection, and testing scope around the supplied materials.",
-          "Partial turnkey: buyer and Venture split sourcing responsibility based on approved sourcing rules and project risk.",
-          "Full turnkey discussion: Venture can review bare-board support, sourcing, assembly, inspection, testing, packaging, and delivery around approved files.",
-        ],
-        kind: "list",
+        title: "BOM and component sourcing relationship",
+        body:
+          "PCBA quotation quality depends heavily on BOM quality. Venture can review BOM completeness, availability, lifecycle risk, MOQ, package match and candidate alternatives, but alternatives should not be used without customer approval.",
+        table: {
+          columns: [
+            { key: "bomItem", label: "BOM item" },
+            { key: "why", label: "Why it matters" },
+            { key: "buyerRule", label: "Buyer rule to provide" },
+          ],
+          rows: [
+            {
+              bomItem: "MPN and manufacturer",
+              why: "Missing or unclear part numbers can lead to quote inaccuracy or sourcing risk.",
+              buyerRule: "Provide approved MPN and manufacturer whenever possible.",
+            },
+            {
+              bomItem: "Designator and quantity",
+              why: "Assembly and sourcing need exact placement and count information.",
+              buyerRule: "Keep BOM aligned with CPL and assembly drawing.",
+            },
+            {
+              bomItem: "No-substitution parts",
+              why: "Some components affect certification, function, firmware or customer approval.",
+              buyerRule: "Mark no-substitution parts clearly.",
+            },
+            {
+              bomItem: "Approved alternatives",
+              why: "Alternatives can reduce availability or lifecycle risk when accepted.",
+              buyerRule: "Define who can approve alternatives and how approval is recorded.",
+            },
+            {
+              bomItem: "Package and footprint",
+              why: "Package mismatch can create assembly or footprint problems.",
+              buyerRule: "Confirm package, footprint and polarity for critical components.",
+            },
+          ],
+        },
+        kind: "content-table",
       },
       {
         title: "Assembly process overview",
+        body:
+          "The assembly process should be read as a project workflow, not a fixed list of universal steps. A prototype PCBA, mixed-technology board, BGA-heavy board, consigned build or full turnkey build may require different preparation and records.",
         items: [
-          "File review: Gerber or ODB++, BOM, CPL, assembly drawing, quantity, and delivery expectations.",
-          "BOM review: MPN completeness, lifecycle risk, MOQ, lead-time risk, and substitution restrictions.",
-          "Material readiness: buyer-supplied, Venture-sourced, or mixed supply model confirmed before build.",
-          "Assembly: SMT, through-hole, or mixed assembly according to approved files and process requirements.",
-          "Inspection and testing: SPI, AOI, X-Ray, ICT/FCT, or functional testing when applicable and agreed.",
-          "Packaging and delivery: ESD, labels, shipment documents, and destination requirements confirmed by project.",
+          "File review: Gerber or ODB++, BOM, CPL, assembly drawing, revision, quantity and delivery expectations are checked for quotation readiness.",
+          "BOM review: MPN completeness, lifecycle risk, MOQ, availability, approved alternatives and no-substitution rules are clarified before procurement.",
+          "Material readiness: buyer-supplied, Venture-sourced or mixed supply model is confirmed before build planning.",
+          "Assembly preparation: stencil, panel, process sequence, package risk, polarity and special handling requirements are reviewed.",
+          "Assembly: SMT, through-hole or mixed assembly is performed according to approved files and process requirements.",
+          "Inspection and testing: SPI, FAI, AOI, X-Ray, ICT/FCT or functional testing are selected when applicable and agreed.",
+          "Packaging and delivery: ESD handling, labels, serial numbers, shipment documents and destination requirements are confirmed by project.",
         ],
         kind: "steps",
+      },
+      {
+        title: "Inspection and testing dependency",
+        body:
+          "Testing is not a fixed checkbox. The right inspection and test method depends on component package, board risk, test points, fixture availability, firmware, test procedure, acceptance criteria and required records.",
+        table: {
+          columns: [
+            { key: "method", label: "Method" },
+            { key: "usedFor", label: "Used for" },
+            { key: "neededInput", label: "Needed input" },
+          ],
+          rows: [
+            {
+              method: "SPI",
+              usedFor: "Solder paste print control before placement.",
+              neededInput: "Stencil and critical paste area requirements if applicable.",
+            },
+            {
+              method: "FAI",
+              usedFor: "First article setup and new-build verification.",
+              neededInput: "Approved files, assembly drawing, polarity and acceptance criteria.",
+            },
+            {
+              method: "AOI",
+              usedFor: "Component placement, polarity and visible solder inspection.",
+              neededInput: "Critical components and workmanship criteria.",
+            },
+            {
+              method: "X-Ray",
+              usedFor: "Hidden solder joints such as BGA, QFN or bottom-terminated packages.",
+              neededInput: "Package list, risk areas and inspection expectations.",
+            },
+            {
+              method: "ICT / FCT",
+              usedFor: "Electrical or functional verification.",
+              neededInput: "Fixture, firmware, test procedure, golden sample and pass/fail criteria.",
+            },
+            {
+              method: "Functional test",
+              usedFor: "Board or system behavior under powered operation.",
+              neededInput: "Configuration, firmware, test steps and acceptance criteria.",
+            },
+          ],
+        },
+        kind: "content-table",
       },
       {
         label: "RFQ inputs",
@@ -733,9 +1364,22 @@ export const pageData = {
         kind: "checklist",
       },
       {
-        title: "Schedule boundary",
+        title: "Schedule boundary and quantity fit",
         body:
-          "PCBA schedule should be reviewed by project. Timing depends on BOM availability, part arrival, board complexity, quantity, process requirements, testing scope, and buyer approvals.",
+          "PCBA schedule and quantity fit should be reviewed by project. Timing depends on BOM availability, part arrival, board complexity, quantity, process requirements, testing scope, packaging needs and buyer approvals. Quantity also affects sourcing, setup, fixture decisions, inspection sampling, packaging and repeat-build planning. Venture should not be presented as an instant standard-product platform; quotation scope should be confirmed from the current files and buyer requirements.",
+      },
+      {
+        title: "When to move from PCBA to EMS & Box Build",
+        body:
+          "A buyer should move from the PCB Assembly / PCBA page to EMS & Box Build when the deliverable extends beyond assembled boards.",
+        items: [
+          "The PCBA must be installed into an enclosure, cabinet, module or mechanical frame.",
+          "Cable or harness drawings, connector routing or mechanical assembly instructions are part of the project.",
+          "Firmware, system configuration or final functional test is required at product or module level.",
+          "Labels, serial numbers, accessories, manuals, packaging or shipment preparation must be included.",
+          "The buyer needs one quotation scope covering board-level and system-level work.",
+        ],
+        kind: "list",
       },
       {
         title: "PCB Assembly FAQ",
@@ -774,76 +1418,164 @@ export const pageData = {
     template: "strategic-service",
     visual: pageVisuals.ems,
     directAnswer: [
-      "EMS & Box Build is a fit when the buyer can define system-level inputs such as the system BOM, enclosure, cable or harness details, functional test expectations, labels, packaging, and delivery requirements.",
+      "EMS Manufacturing is the broader electronics manufacturing scope around an assembled board.",
+      "Box Build is the integration path where approved PCBAs may be combined with enclosure, cable or harness, mechanical parts, firmware or configuration, system-level checks, labels, packaging and delivery preparation.",
+      "The right EMS scope depends on the system BOM, mechanical drawings, cable drawings, firmware, test method, labels, packaging and buyer acceptance criteria.",
     ],
     sections: [
       {
-        title: "EMS & Box Build scope",
+        title: "When a PCBA project becomes EMS or Box Build",
         body:
-          "EMS Manufacturing describes a broader electronics manufacturing scope around an assembled board. Box Build becomes relevant when the project includes enclosure, cable or harness, mechanical parts, system-level testing, labels, packaging, or delivery preparation.",
+          "A project usually moves beyond PCB Assembly / PCBA when the required deliverable is no longer only an assembled board. EMS or Box Build becomes relevant when the project needs mechanical integration, cable or harness work, enclosure installation, firmware or configuration, system-level testing, labels, packaging, accessories or delivery preparation. This page is for buyers who already understand the board-level requirement and now need to define how the PCBA becomes a module, product subassembly or shipment-ready unit.",
+        items: [
+          "The assembled PCBA must be installed into an enclosure, cabinet, module or larger system.",
+          "The project includes cable, harness, connector routing, switch, display, sensor or mechanical installation requirements.",
+          "The buyer needs system-level functional checks, firmware loading or configuration before shipment.",
+          "Labels, serial numbers, packaging, manuals, accessories or shipment documentation are part of the quoted deliverable.",
+          "The buyer wants one project scope that connects PCBA, sourcing, mechanical assembly, testing and delivery support.",
+        ],
+        kind: "list",
+        featured: true,
+      },
+      {
+        title: "EMS & Box Build scope matrix",
+        body:
+          "Use this matrix to decide whether the project is still board-level PCBA or should be reviewed as EMS / Box Build. Each row should be tied to buyer files, acceptance criteria and quotation scope.",
         table: {
           columns: [
-            { key: "item", label: "EMS / Box Build item" },
-            { key: "meaning", label: "What it means" },
-            { key: "input", label: "Buyer input" },
+            { key: "scopeArea", label: "Scope area" },
+            { key: "whatItMeans", label: "What it means" },
+            { key: "buyerInput", label: "Buyer input" },
+            { key: "boundary", label: "Boundary" },
           ],
           rows: [
             {
-              item: "PCBA integration",
-              meaning: "Assembled boards integrated into a larger unit",
-              input: "Approved PCBA files and revision",
+              scopeArea: "PCBA integration",
+              whatItMeans: "Approved assembled boards are installed into a larger module, enclosure or system.",
+              buyerInput: "Approved PCBA files, board revision, mounting notes and handling requirements.",
+              boundary: "PCBA must be stable enough for integration review.",
             },
             {
-              item: "Enclosure / mechanical parts",
-              meaning: "Housing, panels, fasteners, mechanical constraints",
-              input: "Drawings and material notes",
+              scopeArea: "Enclosure and mechanical parts",
+              whatItMeans: "Mechanical parts, housing, panels, fasteners or cabinet details are included.",
+              buyerInput: "Mechanical drawings, CAD files, torque notes, material requirements and assembly sequence.",
+              boundary: "Design responsibility must be clarified before quoting.",
             },
             {
-              item: "Cable / harness",
-              meaning: "Cable routing, connectors, harness drawings",
-              input: "Cable drawings and connector specs",
+              scopeArea: "Cable or harness",
+              whatItMeans: "Cable routing, harness drawing, connectors or wire assembly are part of the build.",
+              buyerInput: "Cable drawings, connector specifications, pinout, routing and inspection requirement.",
+              boundary: "Wire / cable assembly should remain scoped inside EMS unless elevated later.",
             },
             {
-              item: "System-level test",
-              meaning: "Functional check of assembled unit",
-              input: "Firmware, fixture, test procedure",
+              scopeArea: "Firmware / configuration",
+              whatItMeans: "The unit requires firmware loading, IC programming, configuration or software setup.",
+              buyerInput: "Firmware version, programming file, security rules and verification method.",
+              boundary: "Data handling and IP controls should be confirmed.",
             },
             {
-              item: "Label / serial / packaging",
-              meaning: "Identification and shipment preparation",
-              input: "Label rules and packaging standard",
+              scopeArea: "System-level testing",
+              whatItMeans: "The final module or product is checked beyond board-level inspection.",
+              buyerInput: "Test procedure, fixture, golden sample, acceptance criteria and report requirement.",
+              boundary: "Testing is quoted by agreed procedure, not assumed universally.",
             },
             {
-              item: "Delivery support",
-              meaning: "Shipment and document discussion",
-              input: "Destination, Incoterms, documents",
+              scopeArea: "Labels and packaging",
+              whatItMeans: "Labels, serial numbers, accessories, manuals, packing materials or shipment prep are included.",
+              buyerInput: "Label content, packaging standard, accessory list and destination.",
+              boundary: "Retail packaging or fulfillment claims require specific approval.",
             },
           ],
         },
         kind: "content-table",
-        featured: true,
-      },
-      {
-        title: "When EMS & Box Build is a fit",
-        body:
-          "EMS & Box Build should be reviewed after the buyer can define the system BOM, mechanical requirements, cable or harness details, functional test expectations, and packaging needs. If these inputs are not ready, the project may first begin as a PCBA or prototype review.",
       },
       {
         title: "Required inputs for EMS or Box Build review",
+        body:
+          "EMS review needs more than Gerber and BOM. A complete system-level RFQ should include electronic, mechanical, cable, test and packaging information. If these inputs are not ready, the project may first begin as a PCBA, prototype or NPI review before the full EMS scope is confirmed.",
         items: [
-          "Approved PCBA files and board revision.",
-          "Complete system BOM, including electronic, cable, mechanical and packaging items.",
-          "Enclosure and mechanical drawings.",
-          "Cable or harness drawings and connector requirements.",
-          "Assembly sequence, torque or fastening notes where applicable.",
-          "Firmware, configuration or programming requirements.",
-          "System-level test steps, fixtures, samples and acceptance criteria.",
-          "Label, serial-number, packaging and delivery instructions.",
+          "Approved PCBA files, board revision, BOM and assembly drawing.",
+          "Complete system BOM covering electronic, mechanical, cable, packaging and accessory items.",
+          "Enclosure, cabinet, panel, bracket or mechanical drawings.",
+          "Cable or harness drawings, connector requirements, pinout and routing requirements.",
+          "Assembly sequence, fastening, torque, thermal, sealing or special handling notes.",
+          "Firmware, programming, configuration or software setup requirements.",
+          "System-level test method, fixtures, golden sample and pass/fail criteria.",
+          "Label, serial number, accessory, packaging, manual and shipment document requirements.",
         ],
         kind: "checklist",
       },
       {
-        title: "What should be stabilized before an EMS project repeats?",
+        title: "How EMS connects PCBA, sourcing, mechanics and testing",
+        body:
+          "EMS is valuable because it connects multiple workstreams that would otherwise be discussed separately. The board-level assembly still matters, but the buyer also needs to define mechanical constraints, cable routing, firmware, test interfaces, packaging, labels and records. A useful EMS quote should clarify which items Venture reviews, performs, coordinates or receives from the buyer. It should also separate board-level acceptance from system-level acceptance so purchasing, engineering and quality teams understand the handoff.",
+        items: [
+          "PCBA readiness: the assembled board revision, BOM and board-level quality scope should be stable enough for integration.",
+          "Sourcing readiness: electronic, mechanical, cable and packaging items should be listed in a system BOM with clear ownership.",
+          "Mechanical readiness: enclosure files, fastener notes, clearance, thermal and handling requirements should be available.",
+          "Cable readiness: harness drawings, connector requirements, routing, continuity and inspection expectations should be defined.",
+          "Testing readiness: fixture, firmware, golden sample, acceptance criteria and report format should be agreed before repeat builds.",
+        ],
+        kind: "steps",
+      },
+      {
+        title: "System-level testing and configuration",
+        body:
+          "A Box Build project often needs testing beyond board-level AOI or PCBA inspection. The quotation should define what the finished unit must do, what test fixture or interface is available, which firmware or configuration is used, and what record proves acceptance.",
+        table: {
+          columns: [
+            { key: "testArea", label: "Test or configuration area" },
+            { key: "purpose", label: "Purpose" },
+            { key: "buyerInput", label: "Buyer input" },
+          ],
+          rows: [
+            {
+              testArea: "Power-on check",
+              purpose: "Confirm basic system power behavior after integration.",
+              buyerInput: "Voltage, current limits, indicator behavior and safety requirements.",
+            },
+            {
+              testArea: "Firmware / configuration",
+              purpose: "Load or verify the required software or device state.",
+              buyerInput: "Firmware file, version, configuration steps and verification method.",
+            },
+            {
+              testArea: "Functional test",
+              purpose: "Confirm the finished module or product performs required operations.",
+              buyerInput: "Test procedure, golden sample, fixture or interface, pass/fail criteria.",
+            },
+            {
+              testArea: "Cable / connector check",
+              purpose: "Confirm routing, pinout, connection and mechanical installation.",
+              buyerInput: "Cable drawings, connector list, inspection points and continuity rules.",
+            },
+            {
+              testArea: "Label / serial verification",
+              purpose: "Confirm identification, traceability or customer record requirements.",
+              buyerInput: "Label content, barcode format, serial rule and data record requirement.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Packaging, labeling and delivery preparation",
+        body:
+          "Packaging and delivery support should be defined as part of the quote when the buyer needs more than assembled boards in ESD packaging.",
+        items: [
+          "ESD or moisture-sensitive handling requirements.",
+          "Unit labels, serial numbers, barcode labels or customer part numbers.",
+          "Accessories, cable sets, manuals or inserts.",
+          "Protective packaging, foam, cartons, trays or custom packaging materials.",
+          "Shipment destination, shipping documents, incoterms and delivery requirements.",
+          "Any customer-specific packing instruction or photo/report requirement.",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "Pilot build and repeat-build stabilization",
+        body:
+          "EMS and Box Build projects benefit from a stabilization step before repeat orders. The first build should not only prove that the board powers on; it should clarify assembly order, fixture access, label placement, cable routing, packaging, records and buyer approval points.",
         items: [
           "Scope clarification: define the product form, PCBA status, enclosure, harness, test and packaging needs.",
           "Engineering review: identify electronic, mechanical, cable and test-interface risks.",
@@ -854,9 +1586,21 @@ export const pageData = {
         kind: "steps",
       },
       {
-        title: "EMS and Box Build FAQ",
-        items: emsFaqs.map(formatFaqItem),
+        title: "EMS & Box Build boundaries",
+        body:
+          "EMS & Box Build should be presented as a project-based manufacturing scope, not a universal promise of complete finished-product certification, global fulfillment or fully integrated production for every product type.",
+        items: [
+          "Do not imply that every EMS project includes software development, safety testing, RF testing or retail fulfillment.",
+          "Do not claim end-user-ready certification unless the project and evidence support it.",
+          "Do not promise guaranteed timing before system BOM, mechanical files, sourcing status and test scope are reviewed.",
+          "Do not use named customer references, product images or named cases without authorization.",
+          "State clearly whether Venture performs, coordinates or reviews each scope item by project.",
+        ],
         kind: "proof",
+      },
+      {
+        title: "EMS and Box Build FAQ",
+        kind: "faq",
       },
     ],
     faqs: emsFaqs,
@@ -885,69 +1629,188 @@ export const pageData = {
       "Sourcing and engineering review helps reduce RFQ risk before assembly by checking BOM completeness, availability, approved alternatives, and DFM questions.",
     template: "supporting-capability",
     visual: pageVisuals.sourcing,
+    directAnswer: [
+      "Component sourcing and BOM review help identify quote risk before procurement or assembly begins.",
+      "DFM / DFA review helps buyers and Venture discuss manufacturability questions from Gerber, BOM, CPL, stack-up, panelization, footprint, polarity, test access and assembly constraints.",
+      "Any component alternative must be reviewed against the design requirements and approved by the customer before use.",
+    ],
     sections: [
       {
-        title: "BOM risk review",
+        title: "Why BOM and DFM review matter before PCBA",
         body:
-          "BOM and DFM review helps reduce sourcing and manufacturing risk before assembly. Venture can review BOM completeness, availability, MOQ, lifecycle risk, package questions, customer-approved alternatives, and DFM / DFA items that may affect fabrication, assembly, or testing.",
+          "A PCBA quote is only as clear as the files and sourcing rules behind it. BOM gaps, obsolete parts, package mismatches, no-substitution parts, lifecycle risk, MOQ issues, missing CPL data, unclear polarity or test-access problems can delay quotation or create manufacturing risk. Venture uses BOM and DFM review to clarify the project before procurement or assembly starts. This page is for buyers who need a more reliable quotation discussion before committing to component purchase, PCB fabrication or assembly.",
+        featured: true,
+      },
+      {
+        title: "BOM risk review matrix",
+        body:
+          "Use this table to prepare a BOM that can support a clearer quote and sourcing review. The point is not to promise that every sourcing issue can be solved, but to make risk visible before it becomes a production blocker.",
         table: {
           columns: [
             { key: "risk", label: "BOM risk" },
             { key: "why", label: "Why it matters" },
-            { key: "action", label: "Buyer action" },
+            { key: "buyerInput", label: "Buyer input" },
+            { key: "reviewAction", label: "Review action" },
           ],
           rows: [
             {
               risk: "Missing MPN / manufacturer",
-              why: "Hard to quote accurately",
-              action: "Provide approved MPN and manufacturer",
+              why: "Sourcing and quote accuracy depend on exact part identification.",
+              buyerInput: "Approved manufacturer and MPN.",
+              reviewAction: "Flag missing fields and ask for confirmation.",
             },
             {
-              risk: "Obsolete or long-lead parts",
-              why: "May delay sourcing",
-              action: "Allow alternative review",
+              risk: "Obsolete or long-availability part",
+              why: "May affect schedule, cost and repeat production.",
+              buyerInput: "Lifecycle priority, acceptable alternatives and last-buy rules.",
+              reviewAction: "Identify sourcing risk and candidate alternative discussion.",
             },
             {
-              risk: "No-substitution components",
-              why: "Must be protected",
-              action: "Mark clearly in BOM",
+              risk: "No-substitution part",
+              why: "Some parts affect certification, firmware, function or customer approval.",
+              buyerInput: "Mark no-substitution parts clearly.",
+              reviewAction: "Protect no-substitution rules during sourcing review.",
             },
             {
-              risk: "Package mismatch",
-              why: "Can affect assembly footprint",
-              action: "Confirm footprint and package",
+              risk: "Package or footprint mismatch",
+              why: "Can cause assembly or board-fit issues.",
+              buyerInput: "Package, footprint and datasheet for critical items.",
+              reviewAction: "Raise DFM/DFA or footprint questions.",
             },
             {
-              risk: "MOQ constraints",
-              why: "Affects cost and schedule",
-              action: "Confirm acceptable quantity",
+              risk: "MOQ or price-break issue",
+              why: "Small or medium-volume projects can be affected by sourcing constraints.",
+              buyerInput: "Target quantity, pilot quantity and repeat forecast.",
+              reviewAction: "Discuss sourcing and quantity implications.",
             },
             {
               risk: "Compliance requirement",
-              why: "Affects sourcing and documentation",
-              action: "State project requirement early",
+              why: "Parts or materials may need project-specific documentation.",
+              buyerInput: "Required standard, market, document type and acceptance rule.",
+              reviewAction: "Review availability of evidence; do not assume universal compliance.",
             },
           ],
         },
         kind: "content-table",
-        featured: true,
       },
       {
-        title: "Alternative approval flow",
+        title: "Component sourcing rules buyers should define",
         body:
-          "Venture Electronics does not replace parts without buyer approval. When availability or lifecycle risk appears, candidate alternatives may be discussed, but the buyer should approve any substitution before procurement or assembly.",
+          "Before asking Venture to source components, buyers should define which parts are flexible and which are controlled. These rules help purchasing, engineering and quality teams avoid accidental substitutions or unclear approval chains.",
+        items: [
+          "Which components are no-substitution parts.",
+          "Which manufacturers or distributors are approved.",
+          "Whether equivalent parts can be proposed for review.",
+          "Whether lifecycle, availability, price, country of origin or documentation requirements matter.",
+          "Who approves alternative components and how that approval is recorded.",
+          "Whether buyer-supplied, Venture-sourced or mixed sourcing will be used.",
+        ],
+        kind: "checklist",
       },
       {
-        title: "Review outputs",
+        title: "Customer-approved alternative flow",
+        body:
+          "Venture Electronics does not replace parts without buyer approval. Alternatives are a review output, not an automatic procurement decision.",
         items: [
-          "BOM completeness notes",
-          "Availability and lead-time concerns",
-          "DFM or DFA questions that affect fabrication, assembly, or testing",
-          "Customer-approved alternative component list when applicable",
+          "BOM review identifies missing data, obsolete parts, long-availability items or sourcing risk.",
+          "Candidate alternatives may be proposed with manufacturer, MPN, package, electrical or mechanical notes when available.",
+          "Buyer reviews the candidate against design, firmware, certification and performance requirements.",
+          "Approved alternatives are recorded before procurement or assembly.",
+          "No-substitution parts remain protected unless the buyer explicitly changes the rule.",
+        ],
+        kind: "steps",
+      },
+      {
+        title: "DFM / DFA review areas",
+        body:
+          "DFM and DFA review help identify manufacturing and assembly questions before build. The review does not guarantee that every design risk is removed, but it helps buyers resolve practical manufacturing inputs before quoting, sourcing or assembly.",
+        table: {
+          columns: [
+            { key: "area", label: "Review area" },
+            { key: "questions", label: "Typical questions" },
+            { key: "buyerInput", label: "Buyer input" },
+          ],
+          rows: [
+            {
+              area: "Gerber / ODB++",
+              questions: "Are layer data, solder mask, silkscreen, drill and outline information clear?",
+              buyerInput: "Current Gerber or ODB++ package and revision.",
+            },
+            {
+              area: "CPL / placement",
+              questions: "Are coordinates, rotation, polarity and designators aligned with BOM and drawings?",
+              buyerInput: "CPL / XY file, assembly drawing and polarity notes.",
+            },
+            {
+              area: "Panelization",
+              questions: "Does the panel support assembly, handling, fiducials and depanelization?",
+              buyerInput: "Panel preference, breakaway method and edge constraints.",
+            },
+            {
+              area: "Fiducials and test points",
+              questions: "Are inspection and testing access points adequate?",
+              buyerInput: "Test strategy, fixture needs and acceptance criteria.",
+            },
+            {
+              area: "Component height and mechanical constraints",
+              questions: "Could connectors, heatsinks, enclosures or cables affect assembly?",
+              buyerInput: "Mechanical drawings, height limits and enclosure notes.",
+            },
+            {
+              area: "Special processes",
+              questions: "Are coating, potting, programming, cleaning, labeling or packaging requirements clear?",
+              buyerInput: "Material, keep-out areas, firmware, labels and packaging rules.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "How BOM / DFM review improves RFQ quality",
+        body:
+          "BOM and DFM review improves RFQ quality by making assumptions explicit. It helps Venture identify whether the buyer expects consigned, partial-turnkey or full-turnkey support; whether components have sourcing constraints; whether board files match placement data; and whether testing or special processes should be priced early. This does not replace buyer engineering approval, but it creates a clearer discussion before procurement and assembly.",
+        items: [
+          "BOM completeness notes, including missing MPN, manufacturer, designator or package data.",
+          "Availability and sourcing concerns that may affect quote, timing or repeat production.",
+          "DFM or DFA questions that affect fabrication, assembly, inspection or testing.",
+          "Customer-approved alternative component list when applicable.",
+          "Open questions that should be resolved before PCB fabrication or assembly begins.",
         ],
         kind: "list",
       },
+      {
+        title: "Review output and quote assumptions to confirm",
+        body:
+          "A useful BOM / DFM review should leave the buyer with clear next actions, not a vague technical note. Before the quotation is treated as ready, the buyer and Venture should align the assumptions that affect sourcing, assembly, inspection, testing and repeat-build planning.",
+        items: [
+          "Which BOM lines are quote-ready and which lines still need MPN, manufacturer, package, lifecycle or approved-source clarification.",
+          "Which parts are buyer-supplied, which parts may be Venture-sourced, and which parts need written approval before purchase.",
+          "Which DFM or DFA questions affect PCB fabrication, assembly sequence, polarity, panelization, fixture access, cleaning, coating or packaging.",
+          "Which alternatives are only candidates for review, and which alternatives have been formally approved for procurement.",
+          "Which quotation assumptions should be rechecked if the design revision, quantity, target market, compliance need or testing requirement changes.",
+          "Which open questions must be resolved before Venture starts procurement, fabrication coordination, assembly planning or test-fixture discussion.",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "What this page does not promise",
+        body:
+          "BOM and DFM review improves project clarity, but it should not be written as a guarantee that all risks disappear.",
+        items: [
+          "It does not promise that every component is available.",
+          "It does not authorize substitutions without customer approval.",
+          "It does not guarantee project timing before sourcing status is reviewed.",
+          "It does not replace customer engineering approval.",
+          "It does not publish distributor, compliance or authenticity claims without evidence.",
+        ],
+        kind: "proof",
+      },
+      {
+        title: "BOM & DFM Review FAQ",
+        kind: "faq",
+      },
     ],
+    faqs: sourcingFaqs,
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
       { label: "Contact", href: routes.contact },
@@ -965,46 +1828,182 @@ export const pageData = {
       "PCB fabrication support helps align bare-board requirements with downstream assembly, testing, and delivery needs.",
     template: "supporting-capability",
     visual: pageVisuals.fabrication,
+    directAnswer: [
+      "PCB Fabrication Support helps align bare-board requirements with downstream PCB Assembly, inspection, testing and delivery needs.",
+      "Use this page when Gerber, stack-up, material, surface finish, panelization or board constraints must be reviewed before PCBA.",
+      "Exact fabrication capability values should be confirmed from current files, specifications and quotation scope before being treated as final production commitments.",
+    ],
     sections: [
       {
-        title: "Fabrication inputs for assembly-ready boards",
+        title: "PCB Fabrication Support for assembly-ready boards",
         body:
-          "PCB Fabrication Support helps align bare-board requirements with downstream assembly, inspection, testing, and delivery needs. It supports the PCBA and turnkey assembly workflow rather than acting as a separate low-cost PCB-only platform.",
-        table: {
-          columns: [
-            { key: "input", label: "Input" },
-            { key: "why", label: "Why it matters" },
-          ],
-          rows: [
-            { input: "Gerber / ODB++", why: "Board production and review" },
-            { input: "Stack-up", why: "Layer structure, impedance, manufacturability" },
-            { input: "Material", why: "Thermal, mechanical, and electrical requirements" },
-            { input: "Copper weight", why: "Current capacity and fabrication process" },
-            { input: "Surface finish", why: "Solderability and shelf-life" },
-            { input: "Panelization", why: "Assembly efficiency and handling" },
-            { input: "Fiducials / test points", why: "SMT, AOI, and test planning" },
-            { input: "Special requirements", why: "Via-in-pad, impedance, mask, marking, finish" },
-          ],
-        },
-        kind: "content-table",
+          "Venture Electronics discusses PCB Fabrication Support as part of the PCBA and turnkey assembly workflow. The goal is to help the buyer align bare-board files, materials, stack-up, surface finish, panelization and special requirements with downstream assembly, inspection, testing and packaging. This page should not read like a low-cost PCB-only instant-quote platform. It should help buyers prepare fabrication inputs that affect the assembled board.",
         featured: true,
       },
       {
-        title: "Why fabrication topics stay consolidated",
+        title: "Fabrication inputs buyers should provide",
         body:
-          "Material, stack-up, and process questions are handled as fabrication inputs and buyer guidance within the assembly-ready workflow, so buyers can prepare the right information without navigating separate narrow topic pages.",
+          "The more complete the fabrication input package is, the easier it is to review assembly readiness and quote scope. These inputs should be reviewed together with BOM, CPL, assembly drawing, testing requirement and packaging expectation.",
+        table: {
+          columns: [
+            { key: "input", label: "Fabrication input" },
+            { key: "why", label: "Why it matters" },
+            { key: "assemblyImpact", label: "Assembly impact" },
+          ],
+          rows: [
+            {
+              input: "Gerber or ODB++",
+              why: "Defines copper, solder mask, silkscreen, drill, outline and layer data.",
+              assemblyImpact: "Controls placement, fiducials, pad design and inspection readiness.",
+            },
+            {
+              input: "Stack-up",
+              why: "Defines layer structure, dielectric, impedance and design intent.",
+              assemblyImpact: "May affect board thickness, warpage, signal performance and test planning.",
+            },
+            {
+              input: "Material",
+              why: "Affects thermal, electrical and mechanical behavior.",
+              assemblyImpact: "Can influence soldering process, reliability and application fit.",
+            },
+            {
+              input: "Board thickness and copper weight",
+              why: "Affects fabrication process, current capacity and mechanical strength.",
+              assemblyImpact: "Can affect connector fit, thermal behavior and assembly handling.",
+            },
+            {
+              input: "Surface finish",
+              why: "Affects solderability, shelf life and component compatibility.",
+              assemblyImpact: "Important for fine-pitch, BGA, lead-free or special assembly needs.",
+            },
+            {
+              input: "Panelization",
+              why: "Affects production handling, SMT efficiency and depanelization.",
+              assemblyImpact: "Needs fiducials, rails, breakaway method and component clearance review.",
+            },
+            {
+              input: "Impedance or special requirements",
+              why: "May affect fabrication process and test expectations.",
+              assemblyImpact: "Should be aligned before assembly and functional validation.",
+            },
+          ],
+        },
+        kind: "content-table",
       },
       {
-        title: "Fabrication-to-assembly review outputs",
+        title: "How fabrication decisions affect PCB Assembly",
+        body:
+          "Bare-board decisions can affect assembly yield, inspection, testing and packaging. Venture's fabrication support should help buyers identify these questions before board production and assembly begin.",
         items: [
-          "Board file or stack-up questions that may affect assembly readiness.",
-          "Material, finish, copper weight, impedance, and panelization notes to confirm before fabrication.",
-          "Pad design, fiducial, via-in-pad, and test-point issues that affect assembly or inspection.",
-          "Questions that should be resolved before the project moves into PCBA review.",
+          "Surface finish can affect solderability and fine-pitch assembly suitability.",
+          "Panelization can affect SMT handling, fiducials, rails, tooling holes and depanelization stress.",
+          "Board thickness and copper weight can affect thermal behavior, connector fit and mechanical handling.",
+          "Stack-up and material can affect impedance, reliability, warpage and application requirements.",
+          "Fiducials, test points and keep-out areas can affect AOI, ICT/FCT, fixture access and inspection.",
+          "Special processes such as via-in-pad, controlled impedance, flex or rigid-flex construction should be reviewed before quotation.",
         ],
         kind: "list",
       },
+      {
+        title: "Board capability categories to review",
+        body:
+          "The current public website contains detailed PCB capability categories, but exact numeric ranges should be confirmed from the current project files and quotation scope before being treated as production commitments.",
+        table: {
+          columns: [
+            { key: "category", label: "Category" },
+            { key: "review", label: "What to review" },
+            { key: "buyerInput", label: "Buyer input" },
+          ],
+          rows: [
+            {
+              category: "Board type",
+              review: "Rigid, flex, rigid-flex, aluminum or special board type.",
+              buyerInput: "Board files, stack-up and application requirement.",
+            },
+            {
+              category: "Layer count and stack-up",
+              review: "Layer structure, dielectric, impedance and thickness.",
+              buyerInput: "Stack-up drawing and impedance requirement.",
+            },
+            {
+              category: "Material and thermal needs",
+              review: "FR-4, high-Tg, aluminum, high-frequency or other material needs.",
+              buyerInput: "Material requirement or performance target.",
+            },
+            {
+              category: "Copper and finish",
+              review: "Copper weight, surface finish and solderability requirements.",
+              buyerInput: "Copper requirement and finish preference.",
+            },
+            {
+              category: "Mechanical constraints",
+              review: "Outline, slots, holes, connector fit, panel and depanelization.",
+              buyerInput: "Mechanical drawing and panel preference.",
+            },
+            {
+              category: "Special requirements",
+              review: "Impedance, via-in-pad, controlled drill, special mask, marking or testing.",
+              buyerInput: "Specification, tolerance and acceptance criteria.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Panelization and assembly preparation",
+        body:
+          "Panelization should be reviewed before assembly because it affects SMT efficiency, handling, inspection and depanelization.",
+        items: [
+          "Confirm whether the buyer provides panelized Gerber or expects panelization support.",
+          "Review fiducials, tooling holes, rails, breakaway tabs or V-score requirements.",
+          "Check component clearance near edges, connectors or mechanical features.",
+          "Confirm how the panel will be separated after assembly.",
+          "Align panel design with AOI, test fixture, labeling, packaging and final delivery requirements.",
+        ],
+        kind: "checklist",
+      },
+      {
+        title: "Fabrication-to-assembly review flow",
+        items: [
+          "Review Gerber or ODB++, stack-up, material, thickness, finish and special requirements.",
+          "Check whether panelization, fiducials, test points and keep-out areas support assembly and inspection.",
+          "Confirm supply model: buyer-provided boards, Venture-supported fabrication, or full turnkey discussion.",
+          "Review BOM and assembly drawing together with fabrication inputs.",
+          "Confirm inspection, testing, packaging and delivery requirements before final quotation.",
+        ],
+        kind: "steps",
+      },
+      {
+        title: "What stays consolidated instead of becoming thin pages",
+        body:
+          "Venture's older sites include many material, brand, stack-up and process pages. The first-launch GEO site should keep those topics consolidated unless a topic has enough verified evidence and buyer value for a future dedicated page.",
+        items: [
+          "Material brand pages should not be recreated as first-launch standalone pages.",
+          "Layer-count stack-up topics should be treated as fabrication inputs unless a strong buyer resource page is planned.",
+          "Design-layout topics should stay inside DFM/DFA or engineering review unless Venture confirms a separate public priority.",
+          "Industry pages should remain scenario-level unless real cases or evidence are approved.",
+        ],
+        kind: "list",
+      },
+      {
+        title: "PCB Fabrication Support boundaries",
+        body:
+          "This page should help buyers prepare better board inputs without over-positioning Venture as a low-cost instant PCB platform.",
+        items: [
+          "Exact fabrication specs should be confirmed from current project files and quotation scope.",
+          "Do not publish unsupported layer count, capacity, delivery timing or tolerance claims.",
+          "Do not imply every board type, material or special process is available for every project.",
+          "Do not separate fabrication from assembly context when the buyer's main need is Turnkey PCBA.",
+          "Use the page to support PCBA readiness, not to rebuild the old SEO materials library.",
+        ],
+        kind: "proof",
+      },
+      {
+        title: "PCB Fabrication Support FAQ",
+        kind: "faq",
+      },
     ],
+    faqs: fabricationFaqs,
     relatedLinks: [
       { label: "PCB Assembly / PCBA", href: routes.pcba },
       { label: "Component Sourcing, BOM & DFM Review", href: routes.componentSourcingBomDfmReview },
@@ -1016,72 +2015,68 @@ export const pageData = {
     label: "Quality & Testing",
     href: routes.qualityTesting,
     eyebrow: "Quality page",
-    title: "Inspection and testing planned around each PCBA or EMS project.",
-    seoTitle: "Quality & Testing for PCBA and EMS Projects | Venture Electronics",
+    title: "Quality & Testing for PCB Assembly, PCBA and EMS projects.",
+    seoTitle: "Quality & Testing for PCB Assembly, PCBA and EMS | Venture Electronics",
     metaDescription:
-      "Review Venture Electronics quality and testing planning for PCBA and EMS projects, including SPI, AOI, X-Ray, ICT/FCT, functional testing, FAI, records, and buyer inputs.",
-    role: "Quality and testing discussion point for PCBA and EMS project planning.",
+      "Plan PCB Assembly, PCBA and EMS inspection and testing with Venture Electronics, including IQC, SPI, FAI, AOI, X-Ray, ICT/FCT, functional testing, cleaning, reliability testing, records and traceability boundaries.",
+    role:
+      "Quality planning, inspection methods, testing inputs and records for project-based PCB Assembly and EMS manufacturing.",
     summary:
-      "Inspection and testing scope depends on the product, files, fixture, firmware, standards, acceptance criteria, sample plan, and records required for the project.",
+      "Venture Electronics plans quality and testing around each project's design files, BOM, components, assembly process, fixture availability, firmware, standards, acceptance criteria, reporting needs and delivery requirements.",
     template: "quality-trust",
     visual: pageVisuals.quality,
     directAnswer: [
-      "Venture can discuss inspection and testing methods such as SPI, AOI, X-Ray, ICT/FCT, functional testing, FAI, and reliability or environmental testing when the project requirements and acceptance criteria are clear.",
+      "Quality & Testing should define what is checked, when it is checked, which method applies, what buyer input is required, and what record or report is expected.",
+      "Not every project uses every inspection or test method. SPI, FAI, AOI, X-Ray, ICT, FCT, functional testing, reliability testing and final inspection are selected according to project risk and agreed scope.",
     ],
     sections: [
       {
-        title: "Inspection and testing methods",
+        title: "Quality planning across the project lifecycle",
         body:
-          "The right method depends on product risk, component package, test points, firmware, fixtures, standards, and buyer acceptance criteria.",
+          "A useful quality plan connects the design revision, BOM, sourcing rules, assembly process, inspection points, test method, records and shipment requirements. This page helps buyers prepare the information Venture needs before confirming inspection or testing scope.",
         table: {
           columns: [
-            { key: "method", label: "Method / equipment" },
-            { key: "checks", label: "What it helps check" },
-            { key: "applies", label: "When it applies" },
-            { key: "input", label: "Buyer input needed" },
+            { key: "stage", label: "Stage" },
+            { key: "qualityQuestion", label: "Quality question" },
+            { key: "buyerInput", label: "Buyer input" },
+            { key: "possibleOutput", label: "Possible output" },
           ],
           rows: [
             {
-              method: "SPI",
-              checks: "Solder paste volume and position",
-              applies: "SMT process control",
-              input: "Board and stencil requirements",
+              stage: "File and BOM review",
+              qualityQuestion: "Are the approved design files and BOM complete enough for quote and build review?",
+              buyerInput: "Gerber or ODB++, BOM, CPL, assembly drawing, revision and special notes.",
+              possibleOutput: "Missing-input list, BOM questions, DFM/DFA notes, sourcing-risk questions.",
             },
             {
-              method: "AOI",
-              checks: "Component placement, polarity, and solder quality",
-              applies: "SMT / assembly inspection",
-              input: "Acceptance criteria if special",
+              stage: "Incoming material / IQC",
+              qualityQuestion: "Which components, boards, or buyer-supplied materials need incoming checks?",
+              buyerInput: "Approved vendor rules, no-substitution parts, certificates or inspection requirements.",
+              possibleOutput: "Incoming check scope, shortage or exception questions, material decision records.",
             },
             {
-              method: "Visual inspection",
-              checks: "Assembly workmanship and visible issues",
-              applies: "General assembly review",
-              input: "Workmanship or cosmetic requirements",
+              stage: "SMT preparation",
+              qualityQuestion: "How should solder paste and placement readiness be checked?",
+              buyerInput: "Stencil, paste, component package risk, board finish, process notes.",
+              possibleOutput: "SPI, first article, line setup verification or process-control notes.",
             },
             {
-              method: "X-Ray",
-              checks: "Hidden solder joints and BGA/QFN risks",
-              applies: "BGA, QFN, and hidden joints",
-              input: "Package list and risk areas",
+              stage: "In-process inspection",
+              qualityQuestion: "Which visual or machine inspection methods apply during assembly?",
+              buyerInput: "Acceptance criteria, critical components, package list, polarity and orientation notes.",
+              possibleOutput: "FAI, AOI, X-Ray, visual inspection or rework decision records.",
             },
             {
-              method: "ICT / FCT",
-              checks: "Electrical or functional verification",
-              applies: "Project-specific testing",
-              input: "Fixture, firmware, test procedure",
+              stage: "Electrical / functional testing",
+              qualityQuestion: "What should the assembled board or system prove before delivery?",
+              buyerInput: "Test points, firmware, fixture, test procedure, golden sample and pass/fail criteria.",
+              possibleOutput: "ICT, FCT, functional test, programming or test-report requirement.",
             },
             {
-              method: "FAI",
-              checks: "First article verification",
-              applies: "New build / NPI",
-              input: "Approved sample or criteria",
-            },
-            {
-              method: "Reliability / environmental testing",
-              checks: "Stress or environmental behavior",
-              applies: "If required by project",
-              input: "Standard, sample count, and conditions",
+              stage: "Final inspection and shipment",
+              qualityQuestion: "What records, labels, packaging and shipment checks are required?",
+              buyerInput: "Label rules, serial number needs, ESD packaging, delivery documents and report format.",
+              possibleOutput: "Final inspection record, packaging confirmation and shipment documentation.",
             },
           ],
         },
@@ -1089,40 +2084,268 @@ export const pageData = {
         featured: true,
       },
       {
-        title: "6-step quality and testing flow",
+        title: "Inspection and testing method matrix",
         body:
-          "A board-only PCBA project may move from board-level testing directly to packing; a Box Build project may continue through system-level checks.",
-        items: qualityFlow,
-        kind: "steps",
+          "The right method depends on product risk, component package, test points, firmware, fixtures, standards, and buyer acceptance criteria.",
+        table: {
+          columns: [
+            { key: "method", label: "Method" },
+            { key: "checks", label: "What it helps check" },
+            { key: "when", label: "When it applies" },
+            { key: "input", label: "Buyer input needed" },
+          ],
+          rows: [
+            {
+              method: "IQC / incoming material check",
+              checks: "Material identity, quantity, package condition and incoming exceptions.",
+              when: "Before production when parts, boards or buyer-supplied materials arrive.",
+              input: "Approved vendors, no-substitution list, incoming inspection or certificate needs.",
+            },
+            {
+              method: "SPI",
+              checks: "Solder paste volume, alignment and print condition.",
+              when: "SMT process control after solder paste printing.",
+              input: "Stencil requirements, board finish and critical paste areas if applicable.",
+            },
+            {
+              method: "FAI",
+              checks: "First article setup, placement accuracy, polarity and assembly readiness.",
+              when: "New build, revision change, first production setup or NPI review.",
+              input: "Approved files, assembly drawing, polarity notes and acceptance criteria.",
+            },
+            {
+              method: "AOI",
+              checks: "Component placement, polarity, visible solder defects and assembly consistency.",
+              when: "Post-reflow or assembly inspection where optical inspection is appropriate.",
+              input: "Critical component list, special workmanship criteria and board revision.",
+            },
+            {
+              method: "X-Ray",
+              checks: "Hidden solder joints such as BGA, QFN or bottom-terminated components.",
+              when: "When hidden-joint risk exists or buyer requires X-Ray inspection.",
+              input: "Package list, risk areas, sample plan and acceptance criteria.",
+            },
+            {
+              method: "Manual Visual Inspection",
+              checks: "Workmanship, visible solder joints, cleanliness, cosmetic or mechanical issues.",
+              when: "Final visual review or project-specific workmanship checks.",
+              input: "Cosmetic criteria, workmanship standard, sample or photo requirements.",
+            },
+            {
+              method: "Electrical Testing / bare-board test",
+              checks: "Continuity, shorts, opens and board-level electrical integrity before assembly.",
+              when: "Bare-board or fabrication-support scope where electrical test is required.",
+              input: "Netlist, fabrication requirement and acceptance criteria.",
+            },
+            {
+              method: "ICT",
+              checks: "Component presence, orientation, solder shorts, opens and electrical parameters.",
+              when: "When test points, fixture and program are available or can be developed.",
+              input: "Test points, fixture, test program, BOM and pass/fail limits.",
+            },
+            {
+              method: "FCT / functional test",
+              checks: "Board or system behavior under powered operation.",
+              when: "When firmware, fixture, procedure and acceptance criteria are available.",
+              input: "Firmware, configuration, fixture, golden sample, test steps and pass/fail criteria.",
+            },
+            {
+              method: "Boundary scan",
+              checks: "Digital interconnects on compatible ICs where physical probing is limited.",
+              when: "High-density boards or BGA-related designs that support boundary scan.",
+              input: "Device support, design files, test access and procedure.",
+            },
+            {
+              method: "Programming / configuration",
+              checks: "Firmware, IC programming or configuration state before test or shipment.",
+              when: "When the build requires programmed devices or configured systems.",
+              input: "Firmware version, programming file, security requirements and verification method.",
+            },
+            {
+              method: "Cleaning / residue control",
+              checks: "Flux residues, contamination and cleanliness before coating or shipment.",
+              when: "When process, coating, reliability or buyer cleanliness requirements require it.",
+              input: "Cleaning standard, material compatibility and inspection method.",
+            },
+            {
+              method: "Reliability / environmental testing",
+              checks: "Performance under defined temperature, humidity, cycling, vibration or stress conditions.",
+              when: "Only when the project defines standard, sample count, condition and report need.",
+              input: "Standard, test condition, sample quantity, duration and acceptance criteria.",
+            },
+          ],
+        },
+        kind: "content-table",
       },
       {
-        title: "Test scope inputs buyers should prepare",
+        title: "Buyer inputs required for test planning",
+        body:
+          "Venture can discuss testing earlier, but final test scope is clearer when the buyer shares the files, procedure and criteria behind the expected result.",
+        table: {
+          columns: [
+            { key: "input", label: "Buyer input" },
+            { key: "why", label: "Why it matters" },
+            { key: "example", label: "Example" },
+          ],
+          rows: [
+            {
+              input: "Current board and BOM revision",
+              why: "Testing must match the revision being built.",
+              example: "Gerber/ODB++, BOM, CPL, assembly drawing, revision notes.",
+            },
+            {
+              input: "Critical components and risk areas",
+              why: "Inspection priority depends on package risk and product risk.",
+              example: "BGA, QFN, fine-pitch ICs, connectors, polarity-sensitive parts.",
+            },
+            {
+              input: "Fixture and test access",
+              why: "ICT and FCT depend on physical/electrical access.",
+              example: "Test points, fixture files, test interface, cable or harness requirement.",
+            },
+            {
+              input: "Firmware or software",
+              why: "Functional test often depends on firmware state or configuration.",
+              example: "Programming file, firmware version, setup instructions.",
+            },
+            {
+              input: "Acceptance criteria",
+              why: "The team needs pass/fail rules before confirming testing scope.",
+              example: "Voltage/current range, LED behavior, communication response, functional steps.",
+            },
+            {
+              input: "Report requirements",
+              why: "The quotation should define what records or exported data are needed.",
+              example: "Photos, test log, serial number, batch record, customer form.",
+            },
+            {
+              input: "Special standards or market requirements",
+              why: "Compliance language must match evidence and scope.",
+              example: "Project-specific standard, customer inspection checklist, external lab requirement.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "Records and traceability discussion",
+        body:
+          "Traceability should be defined by project. A simple PCBA order may need basic revision and inspection records, while a more demanding EMS project may require stronger material, serial number, batch, test-data or shipment records.",
+        table: {
+          columns: [
+            { key: "record", label: "Record type" },
+            { key: "canInclude", label: "May include" },
+            { key: "confirm", label: "Confirm before production" },
+          ],
+          rows: [
+            {
+              record: "File and revision record",
+              canInclude: "Gerber/ODB++ revision, BOM revision, CPL revision, drawing revision.",
+              confirm: "Which file revision controls the build.",
+            },
+            {
+              record: "Material decision record",
+              canInclude: "Approved alternatives, shortages, substitutions, no-substitution parts.",
+              confirm: "Who approves alternatives and how approval is recorded.",
+            },
+            {
+              record: "Inspection record",
+              canInclude: "FAI, AOI, X-Ray, visual inspection, rework or deviation notes.",
+              confirm: "Required inspection method and reporting format.",
+            },
+            {
+              record: "Test record",
+              canInclude: "ICT/FCT/functional result, firmware version, fixture ID, pass/fail result.",
+              confirm: "Whether exported test data or customer form is required.",
+            },
+            {
+              record: "Traceability record",
+              canInclude: "Batch, lot, barcode, serial number, key component batch, shipment record.",
+              confirm: "Whether unit-level or batch-level traceability is needed.",
+            },
+            {
+              record: "Packaging and shipment record",
+              canInclude: "ESD packaging, label, destination, shipping documents.",
+              confirm: "Destination, packaging, label and document needs.",
+            },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "PCBA cleaning, coating and special-process boundaries",
+        body:
+          "Cleaning, conformal coating, potting, programming, labeling and packaging can affect both quality planning and quotation scope. These items should be confirmed early when they apply.",
         items: [
-          "Product revision and approved BOM.",
-          "CPL / pick-and-place file and assembly drawing.",
-          "Test plan, firmware, fixture, or golden sample when functional testing is needed.",
-          "Acceptance criteria, sample plan, reporting requirements, and applicable standards.",
-          "Special handling, programming, coating, marking, packaging, or shipment requirements.",
+          "Cleaning requirements should state residue, process, material compatibility and inspection expectations.",
+          "Conformal coating should define material, coating area, keep-out areas, masking, thickness and inspection method.",
+          "Potting or glue-filling requirements should define material, curing, coverage, thermal and mechanical needs.",
+          "Programming or IC configuration should define firmware version, programming file, security handling and verification method.",
+          "Labeling or serial-number requirements should define label content, location, barcode or customer record needs.",
+          "Packaging requirements should define ESD, moisture, mechanical protection, accessories, manuals and shipment documents.",
         ],
         kind: "checklist",
       },
       {
-        title: "Records and traceability discussion",
-        items: [
-          "Inspection and test records should match the agreed project scope.",
-          "Barcode, serial number, lot, or process traceability should be confirmed before production if required.",
-          "Special report formats, customer forms, or external-lab requirements should be shared during RFQ review.",
-        ],
-        kind: "facts",
+        title: "Reliability and environmental testing boundaries",
+        body:
+          "Reliability or environmental testing should not be written as a blanket default. It must be planned from the required standard, condition, sample quantity, duration, acceptance criteria and whether the test is performed internally, coordinated externally or supported through sample preparation.",
+        table: {
+          columns: [
+            { key: "test", label: "Test area" },
+            { key: "confirm", label: "What to confirm" },
+            { key: "boundary", label: "Public wording boundary" },
+          ],
+          rows: [
+            {
+              test: "Temperature / humidity",
+              confirm: "Condition, duration, sample quantity, report format.",
+              boundary: "Discuss by project; do not imply every PCBA uses environmental testing.",
+            },
+            {
+              test: "Thermal shock / cycling",
+              confirm: "Temperature range, cycle count, dwell time, acceptance criteria.",
+              boundary: "Use only when the project requirement is defined.",
+            },
+            {
+              test: "Vibration or mechanical stress",
+              confirm: "Standard, fixture, product state, pass/fail criteria.",
+              boundary: "Requires clear test method and sample plan.",
+            },
+            {
+              test: "External laboratory involvement",
+              confirm: "Who performs test, who owns report, applicable standard.",
+              boundary: "State external-lab boundary when not performed directly.",
+            },
+          ],
+        },
+        kind: "content-table",
       },
       {
-        title: "Reliability or environmental testing",
+        title: "Certificate and compliance boundaries",
+        body:
+          "Venture-owned ISO 9001:2015 and UL Product iQ evidence can be discussed only by exact entity, document, scope and validity. Other compliance requirements should be reviewed by project and should not be written as Venture-held certifications unless evidence is approved.",
         items: [
-          "Define the applicable standard, conditions, sample quantity and duration.",
-          "Confirm fixtures, pass or fail criteria and report expectations.",
-          "State whether Venture performs, coordinates or only prepares samples for an external laboratory.",
+          "Do not present unverified workmanship, environmental, automotive, social-audit, medical, or market-compliance requirements as Venture-held qualifications.",
+          "Do not turn partner-factory certificates into Venture Electronics qualifications.",
+          "UL Product iQ evidence should not be expanded into a broad claim that every PCBA or EMS project is UL certified.",
+          "Medical can be discussed only as a non-certified, project-assessed scenario unless suitable certification evidence is provided.",
+          "Regulated or sensitive market wording should remain excluded unless the customer approves evidence-backed public wording.",
         ],
-        kind: "list",
+        kind: "checklist",
+      },
+      {
+        title: "What Quality & Testing does not promise",
+        body:
+          "This page should increase trust without creating unsupported guarantees.",
+        items: [
+          "It does not promise that each project includes all inspection or test methods.",
+          "It does not promise universal ICT, FCT, X-Ray, reliability testing or full system testing.",
+          "It does not publish fixed response timing, guaranteed delivery timing, fixed quantity rules, capacity or headcount claims.",
+          "It does not publish named customer references, testimonials or named cases without authorization.",
+          "It does not replace a project-specific quality plan, inspection plan, test procedure or quotation scope.",
+        ],
+        kind: "proof",
       },
       {
         title: "Quality & Testing FAQ",
