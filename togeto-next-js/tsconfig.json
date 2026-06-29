@@ -37,7 +37,6 @@
     "src/app/**/*.tsx",
     "src/components/venture-site/**/*.ts",
     "src/components/venture-site/**/*.tsx",
-    "src/layouts/wrapper.tsx",
     "src/utils/**/*.ts",
     "src/utils/**/*.tsx",
     "src/utils/**/*.mjs",

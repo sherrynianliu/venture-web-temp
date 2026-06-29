@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 /**
- * Layers togeto's WOW.js scroll-reveal motion onto the verbatim Venture
+ * Layers the existing WOW.js scroll-reveal motion onto the verbatim Venture
  * section markup WITHOUT editing the ported components. It tags a curated set
  * of elements with `wow animate__…` (+ staggered `data-wow-delay`) on mount,
  * so the classes are present in the DOM before `Wrapper` initialises WOW.js
