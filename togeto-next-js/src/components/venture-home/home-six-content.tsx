@@ -2,6 +2,7 @@
 
 import { HomeHero } from '@/components/venture-site/home/HomeHero';
 import { CoreServicesBlock } from '@/components/venture-site/home/CoreServicesBlock';
+import { HomeBuyerPathBlock } from '@/components/venture-site/home/HomeBuyerPathBlock';
 import { VentureIdentityBlock } from '@/components/venture-site/home/VentureIdentityBlock';
 import { ProjectPathStepper } from '@/components/venture-site/home/ProjectPathStepper';
 import { CapabilityEvidence } from '@/components/venture-site/home/CapabilityEvidence';
@@ -14,6 +15,7 @@ const HomeSixContent = () => {
     <main>
       <HomeHero />
       <CoreServicesBlock />
+      <HomeBuyerPathBlock />
       <VentureIdentityBlock />
       <ProjectPathStepper />
       <CapabilityEvidence />

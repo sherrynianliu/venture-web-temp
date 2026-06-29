@@ -2833,6 +2833,87 @@
   line-height: 1.6;
 }
 
+.venture-site .buyer-path__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.venture-site .buyer-path__intro h2 {
+  margin: 10px 0 16px;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+.venture-site .buyer-path__intro p {
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.venture-site .buyer-path__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.venture-site .buyer-path__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: var(--radius-pill);
+  color: var(--deep-navy);
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.venture-site .buyer-path__actions a:hover {
+  border-color: rgba(36, 99, 235, 0.32);
+  color: var(--tech-blue);
+}
+
+.venture-site .buyer-path__table {
+  display: grid;
+  gap: 12px;
+}
+
+.venture-site .buyer-path__row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.06);
+}
+
+.venture-site .buyer-path__row span {
+  display: block;
+  margin-bottom: 6px;
+  color: #6a7488;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.venture-site .buyer-path__row strong,
+.venture-site .buyer-path__row p {
+  margin: 0;
+  color: #172033;
+  line-height: 1.55;
+}
+
 .venture-site .grid-2,
 .venture-site .grid-1,
 .venture-site .grid-3 {
@@ -4233,6 +4314,57 @@
   border-collapse: collapse;
 }
 
+.venture-site .stage3-content-table {
+  margin-top: 22px;
+  overflow-x: auto;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.venture-site .stage3-content-table__caption {
+  margin: 0;
+  padding: 16px 18px 0;
+  color: #536078;
+  font-size: 0.95rem;
+}
+
+.venture-site .stage3-content-table table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+}
+
+.venture-site .stage3-content-table th,
+.venture-site .stage3-content-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  color: #243047;
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.venture-site .stage3-content-table thead th {
+  background: rgba(15, 23, 42, 0.04);
+  color: #172033;
+  font-size: 0.76rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.venture-site .stage3-content-table tbody th {
+  color: #172033;
+  font-weight: 760;
+}
+
+.venture-site .stage3-content-table tr:last-child th,
+.venture-site .stage3-content-table tr:last-child td {
+  border-bottom: 0;
+}
+
 .venture-site .stage3-page-faq {
   display: grid;
   gap: 12px;
@@ -4593,6 +4725,11 @@
   }
 
   .venture-site .stage3-domain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .venture-site .buyer-path__inner,
+  .venture-site .buyer-path__row {
     grid-template-columns: 1fr;
   }
 
@@ -5221,6 +5358,14 @@
 
   .venture-site .identity__media {
     aspect-ratio: 4 / 5;
+  }
+
+  .venture-site .stage3-content-table {
+    border-radius: 8px;
+  }
+
+  .venture-site .stage3-content-table table {
+    min-width: 620px;
   }
 }
 

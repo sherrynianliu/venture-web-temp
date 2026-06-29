@@ -1,9 +1,7 @@
 import { CapabilityEvidence } from "@/components/venture-site/home/CapabilityEvidence";
-import { CoreServicesBlock } from "@/components/venture-site/home/CoreServicesBlock";
 import { EMSBoxBuildBlock } from "@/components/venture-site/home/EMSBoxBuildBlock";
 import { HomeFAQBlock } from "@/components/venture-site/home/HomeFAQBlock";
 import { ProjectPathStepper } from "@/components/venture-site/home/ProjectPathStepper";
-import { VentureIdentityBlock } from "@/components/venture-site/home/VentureIdentityBlock";
 import { routes, type PageData } from "@/components/venture-site/site-data";
 
 type PageEnhancementsProps = {
@@ -11,14 +9,6 @@ type PageEnhancementsProps = {
 };
 
 export function PageEnhancements({ page }: PageEnhancementsProps) {
-  if (page.href === routes.services) {
-    return (
-      <div className="stage3-enhancements stage3-enhancements--services">
-        <CoreServicesBlock />
-      </div>
-    );
-  }
-
   if (page.href === routes.pcba) {
     return (
       <div className="stage3-enhancements stage3-enhancements--pcba">
@@ -52,14 +42,6 @@ export function PageEnhancements({ page }: PageEnhancementsProps) {
           secondaryLabel="View PCBA Service"
           secondaryHref={routes.pcba}
         />
-      </div>
-    );
-  }
-
-  if (page.href === routes.about) {
-    return (
-      <div className="stage3-enhancements stage3-enhancements--about">
-        <VentureIdentityBlock />
       </div>
     );
   }
