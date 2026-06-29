@@ -345,6 +345,11 @@ test('real factory and process images are scoped to evidence slots only', async 
       images: ['smtPickAndPlace', 'waveSoldering'],
       afterSectionIndex: 1,
     },
+    {
+      title: 'Inspection context for PCBA review',
+      images: ['aoiInspection', 'firstArticleInspection'],
+      afterSectionIndex: 4,
+    },
   ]);
   assert.deepEqual(pageData.emsBoxBuild.evidenceImages, [
     {
@@ -356,15 +361,20 @@ test('real factory and process images are scoped to evidence slots only', async 
   assert.deepEqual(pageData.qualityTesting.evidenceImages, [
     {
       title: 'Inspection and testing process context',
-      images: ['firstArticleInspection', 'aoiInspection'],
+      images: ['firstArticleInspection', 'aoiInspection', 'finishedProductFunctionTest'],
       afterSectionIndex: 0,
     },
   ]);
   assert.deepEqual(pageData.about.evidenceImages, [
     {
-      title: 'Factory visit and production review context',
-      images: ['factoryVisit03', 'factoryVisit04'],
-      afterSectionIndex: 1,
+      title: 'Production and buyer review context',
+      images: ['factoryVisit03', 'smtPickAndPlace'],
+      afterSectionIndex: 2,
+    },
+    {
+      title: 'Inspection context',
+      images: ['firstArticleInspection', 'aoiInspection'],
+      afterSectionIndex: 5,
     },
   ]);
 
@@ -646,7 +656,23 @@ test('official resources categorizes Venture domain roles without expanding offi
   assert.doesNotMatch(footer, /support@venture-mfg\.com/);
 });
 
-test('about page uses a short official-domain teaser instead of repeating the domain registry', () => {
+test('buyer-facing content tables are supported by the shared Venture page renderer', async () => {
+  const pageTypes = await readProjectFile('src/components/venture-site/content/page-types.ts');
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const pageRenderer = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const css = await readProjectFile('src/app/(homes)/home-6/venture-exact.css');
+
+  assert.match(pageTypes, /type ContentTableColumn/);
+  assert.match(pageTypes, /table\?: ContentTable/);
+  assert.match(pageTypes, /"content-table"/);
+  assert.match(siteData, /kind: "content-table"/);
+  assert.match(pageRenderer, /function ContentTable/);
+  assert.match(pageRenderer, /stage3-content-table/);
+  assert.match(pageRenderer, /pageFaqs/);
+  assert.match(css, /\.venture-site \.stage3-content-table/);
+});
+
+test('about page reads as a buyer-facing company page with claim boundaries', () => {
   const { domainGovernanceGroups, pageData, routes } = loadProjectTsModule('src/components/venture-site/site-data.ts');
   const aboutSections = pageData.about.sections;
   const aboutText = JSON.stringify(aboutSections);
@@ -654,15 +680,74 @@ test('about page uses a short official-domain teaser instead of repeating the do
     .flatMap((group) => group.domains.map((record) => record.domain))
     .filter((domain) => domain !== 'venture-mfg.com');
 
-  assert.equal(aboutSections[0].title, 'Official websites, domains and company entities');
-  assert.match(aboutSections[0].body, /current domain asset map/i);
-  assert.deepEqual(aboutSections[0].links, [
-    { label: 'View Official Websites & Domain Asset Map', href: routes.officialResources },
+  assert.equal(pageData.about.title, 'About Venture Electronics');
+  assert.match(pageData.about.seoTitle, /PCB Assembly, PCBA & EMS Manufacturing Partner in China/);
+  assert.ok(aboutSections.some((section) => section.title === 'Company facts' && section.kind === 'content-table'));
+  assert.ok(aboutSections.some((section) => section.title === 'Who we are'));
+  assert.ok(aboutSections.some((section) => section.title === 'What Venture supports' && section.kind === 'content-table'));
+  assert.ok(aboutSections.some((section) => section.title === 'How Venture works with buyers'));
+  assert.ok(aboutSections.some((section) => section.title === 'Project fit' && section.kind === 'content-table'));
+  assert.ok(aboutSections.some((section) => section.title === 'How quality scope is confirmed' && section.kind === 'content-table'));
+
+  const officialDomainTeaser = aboutSections.find(
+    (section) => section.title === 'Official websites, domains and company entity clarification',
+  );
+  assert.ok(officialDomainTeaser);
+  assert.match(officialDomainTeaser.body, /current official main website/i);
+  assert.deepEqual(officialDomainTeaser.links, [
+    { label: 'View Official Websites, Domains & Company Entities', href: routes.officialResources },
   ]);
+  assert.deepEqual(pageData.about.relatedLinks, [
+    { label: 'Official Websites, Domains & Company Entities', href: routes.officialResources },
+    { label: 'Services', href: routes.services },
+    { label: 'RFQ Checklist', href: routes.resources },
+  ]);
+  assert.equal(pageData.about.cta.label, 'Request a Quote');
+  assert.equal(pageData.about.secondaryCta.label, 'View RFQ Checklist');
 
   for (const domain of nonCanonicalDomains) {
     assert.doesNotMatch(aboutText, new RegExp(domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
+
+  assert.doesNotMatch(aboutText, /24\/7|24h response|No MOQ|Since 2010|IPC Class 3|IATF|BSCI/);
+});
+
+test('Services page explains service hierarchy without rebuilding thin legacy pages', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const enhancements = await readProjectFile('src/components/venture-site/pages/PageEnhancements.tsx');
+
+  assert.match(siteData, /How Venture services fit together/);
+  assert.match(siteData, /PCB Assembly \/ PCBA is the main buyer entry point/);
+  assert.match(siteData, /Turnkey PCBA is a delivery model/);
+  assert.match(siteData, /EMS & Box Build is a higher manufacturing scope/);
+  assert.match(siteData, /What we intentionally keep consolidated/);
+  assert.doesNotMatch(enhancements, /CoreServicesBlock/);
+  assert.doesNotMatch(enhancements, /VentureIdentityBlock/);
+  assert.doesNotMatch(siteData, /Home 01|service-details|Ocean Freight|Warehousing/);
+});
+
+test('PCBA page is a conservative buyer conversion page', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+
+  assert.match(siteData, /PCB Assembly capability review/);
+  assert.match(siteData, /PCB Assembly delivery models/);
+  assert.match(siteData, /Assembly process overview/);
+  assert.match(siteData, /Schedule boundary/);
+  assert.match(siteData, /Reviewed by project/);
+  assert.doesNotMatch(siteData, /1-5 days|10-16 days|No MOQ|IPC Class 3/);
+});
+
+test('Quality page explains testing methods with project-specific boundaries', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+
+  assert.match(siteData, /Inspection and testing methods/);
+  assert.match(siteData, /SPI/);
+  assert.match(siteData, /AOI/);
+  assert.match(siteData, /X-Ray/);
+  assert.match(siteData, /ICT \/ FCT/);
+  assert.match(siteData, /Test scope inputs buyers should prepare/);
+  assert.match(siteData, /Records and traceability discussion/);
+  assert.doesNotMatch(siteData, /every project includes ICT|every project includes FCT|guaranteed testing/);
 });
 
 test('public contact and RFQ paths use the centralized approved email channel', async () => {

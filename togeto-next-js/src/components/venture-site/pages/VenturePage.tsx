@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
-import { routes, type PageData, type PageSection } from "@/components/venture-site/site-data";
+import { routes, type PageData, type PageFAQ, type PageSection } from "@/components/venture-site/site-data";
 import { buildPageStructuredData } from "@/components/venture-site/schema/structured-data";
 import { StructuredData } from "@/components/venture-site/schema/StructuredData";
 import { EvidenceImageBlock } from "./EvidenceImageBlock";
@@ -134,6 +134,41 @@ function DomainRecordTable({ records }: { records: NonNullable<PageSection["doma
   );
 }
 
+function ContentTable({ table }: { table: NonNullable<PageSection["table"]> }) {
+  return (
+    <div className="stage3-content-table">
+      {table.caption ? <p className="stage3-content-table__caption">{table.caption}</p> : null}
+      <table>
+        <thead>
+          <tr>
+            {table.columns.map((column) => (
+              <th key={column.key} scope="col">
+                {column.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, index) => (
+            <tr key={`${table.columns[0]?.key ?? "row"}-${index}`}>
+              {table.columns.map((column, columnIndex) => {
+                const value = row[column.key] ?? "";
+                return columnIndex === 0 ? (
+                  <th key={column.key} scope="row">
+                    {value}
+                  </th>
+                ) : (
+                  <td key={column.key}>{value}</td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function PageFaqList({ faqs }: { faqs: NonNullable<PageSection["faqItems"]> }) {
   return (
     <div className="stage3-page-faq">
@@ -147,7 +182,9 @@ function PageFaqList({ faqs }: { faqs: NonNullable<PageSection["faqItems"]> }) {
   );
 }
 
-function SectionItems({ section }: { section: PageSection }) {
+function SectionItems({ section, pageFaqs = [] }: { section: PageSection; pageFaqs?: PageFAQ[] }) {
+  const sectionFaqs = section.faqItems ?? pageFaqs;
+
   if (section.kind === "quick-answer" && section.quickAnswers?.length) {
     return <QuickAnswerTable rows={section.quickAnswers} />;
   }
@@ -160,8 +197,12 @@ function SectionItems({ section }: { section: PageSection }) {
     return <DomainRecordTable records={section.domainRecords} />;
   }
 
-  if (section.kind === "faq" && section.faqItems?.length) {
-    return <PageFaqList faqs={section.faqItems} />;
+  if (section.kind === "content-table" && section.table) {
+    return <ContentTable table={section.table} />;
+  }
+
+  if (section.kind === "faq" && sectionFaqs.length) {
+    return <PageFaqList faqs={sectionFaqs} />;
   }
 
   if (!section.items?.length) return null;
@@ -245,7 +286,15 @@ function SectionLinks({ section }: { section: PageSection }) {
   );
 }
 
-function PageSectionBlock({ section, index }: { section: PageSection; index: number }) {
+function PageSectionBlock({
+  section,
+  index,
+  pageFaqs = [],
+}: {
+  section: PageSection;
+  index: number;
+  pageFaqs?: PageFAQ[];
+}) {
   const sectionId = section.anchorId ?? `section-${index}`;
 
   return (
@@ -259,7 +308,7 @@ function PageSectionBlock({ section, index }: { section: PageSection; index: num
       </div>
       <div className="stage3-section__body">
         {section.body ? <p>{section.body}</p> : null}
-        <SectionItems section={section} />
+        <SectionItems section={section} pageFaqs={pageFaqs} />
         <SectionLinks section={section} />
       </div>
     </section>
@@ -349,7 +398,7 @@ export function VenturePage({ page }: { page: PageData }) {
 
           {page.sections.map((section, index) => (
             <Fragment key={`${section.title}-${index}`}>
-              <PageSectionBlock section={section} index={index} />
+              <PageSectionBlock section={section} index={index} pageFaqs={page.faqs} />
               {evidenceImages
                 .filter((group) => group.afterSectionIndex === index)
                 .map((group) => (

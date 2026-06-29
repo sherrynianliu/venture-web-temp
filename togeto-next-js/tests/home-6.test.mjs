@@ -34,3 +34,16 @@ test('home 06 keeps the Venture shell components', async () => {
   assert.match(view, /className=["']venture-site["']/);
   assert.doesNotMatch(view, /<Wrapper>/);
 });
+
+test('Home includes buyer path proof content', async () => {
+  const content = await readProjectFile('src/components/venture-home/home-six-content.tsx');
+  const buyerBlock = await readProjectFile('src/components/venture-site/home/HomeBuyerPathBlock.tsx');
+  const css = await readProjectFile('src/app/(homes)/home-6/venture-exact.css');
+
+  assert.match(content, /HomeBuyerPathBlock/);
+  assert.match(buyerBlock, /A clearer path from PCB files to assembled electronics/);
+  assert.match(buyerBlock, /Unsure whether the project is PCBA or EMS/);
+  assert.match(buyerBlock, /Multiple Venture domains appear online/);
+  assert.match(buyerBlock, /RFQ files are incomplete/);
+  assert.match(css, /\.venture-site \.buyer-path__inner/);
+});
