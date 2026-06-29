@@ -720,10 +720,37 @@ test('Services page explains service hierarchy without rebuilding thin legacy pa
   assert.match(siteData, /PCB Assembly \/ PCBA is the main buyer entry point/);
   assert.match(siteData, /Turnkey PCBA is a delivery model/);
   assert.match(siteData, /EMS & Box Build is a higher manufacturing scope/);
-  assert.match(siteData, /What we intentionally keep consolidated/);
+  assert.match(siteData, /Supporting capabilities that should not become confusing top-level pages/);
   assert.doesNotMatch(enhancements, /CoreServicesBlock/);
   assert.doesNotMatch(enhancements, /VentureIdentityBlock/);
   assert.doesNotMatch(siteData, /Home 01|service-details|Ocean Freight|Warehousing/);
+});
+
+test('Services page has enough buyer-facing depth for service selection', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+
+  for (const expected of [
+    'Start from the deliverable, not from a keyword',
+    'Service paths by buyer situation',
+    'What each service owns',
+    'Supporting capabilities that should not become confusing top-level pages',
+    'What buyers should prepare before service selection',
+    'How old-site topics map into the new service structure',
+    'Service scope boundaries',
+    'Services FAQ',
+    'Prototype / NPI',
+    'Turnkey PCBA is a delivery model',
+    'Conformal coating',
+    'IC programming',
+    'test fixtures',
+  ]) {
+    assert.match(siteData, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  assert.equal(pageData.services.faqs.length, 6);
+  assert.ok(pageData.services.sections.some((section) => section.title === 'Services FAQ' && section.kind === 'faq'));
+  assert.doesNotMatch(siteData, /24\/7|24h response|No MOQ|Since 2010|IPC Class 3|Aerospace|Defense/);
 });
 
 test('PCBA page is a conservative buyer conversion page', async () => {
@@ -740,14 +767,56 @@ test('PCBA page is a conservative buyer conversion page', async () => {
 test('Quality page explains testing methods with project-specific boundaries', async () => {
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
 
-  assert.match(siteData, /Inspection and testing methods/);
+  assert.match(siteData, /Inspection and testing method matrix/);
   assert.match(siteData, /SPI/);
   assert.match(siteData, /AOI/);
   assert.match(siteData, /X-Ray/);
-  assert.match(siteData, /ICT \/ FCT/);
-  assert.match(siteData, /Test scope inputs buyers should prepare/);
+  assert.match(siteData, /ICT/);
+  assert.match(siteData, /FCT/);
+  assert.match(siteData, /Buyer inputs required for test planning/);
   assert.match(siteData, /Records and traceability discussion/);
   assert.doesNotMatch(siteData, /every project includes ICT|every project includes FCT|guaranteed testing/);
+});
+
+test('Quality page has full method, input, records and boundary coverage', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+
+  for (const expected of [
+    'Quality planning across the project lifecycle',
+    'Inspection and testing method matrix',
+    'Buyer inputs required for test planning',
+    'Records and traceability discussion',
+    'PCBA cleaning, coating and special-process boundaries',
+    'Reliability and environmental testing boundaries',
+    'Certificate and compliance boundaries',
+    'What Quality & Testing does not promise',
+    'IQC',
+    'SPI',
+    'FAI',
+    'AOI',
+    'X-Ray',
+    'ICT',
+    'FCT',
+    'Boundary scan',
+    'Manual Visual Inspection',
+    'Cleaning',
+    'Conformal coating',
+    'Traceability',
+  ]) {
+    assert.match(siteData, new RegExp(expected.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  assert.equal(pageData.qualityTesting.faqs.length, 10);
+  assert.ok(
+    pageData.qualityTesting.sections.some(
+      (section) => section.title === 'Quality & Testing FAQ' && section.kind === 'faq',
+    ),
+  );
+  assert.doesNotMatch(
+    siteData,
+    /every project includes every inspection|100% system testing|fixed lead time|No MOQ|IPC Class 3|IATF|BSCI|Aerospace|Defense/,
+  );
 });
 
 test('P1 buyer-support pages include human-friendly manufacturing guidance without overclaims', async () => {
@@ -756,9 +825,9 @@ test('P1 buyer-support pages include human-friendly manufacturing guidance witho
   const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
 
   const expectedTables = [
-    [pageData.emsBoxBuild, 'EMS & Box Build scope'],
-    [pageData.componentSourcingBomDfmReview, 'BOM risk review'],
-    [pageData.pcbFabricationSupport, 'Fabrication inputs for assembly-ready boards'],
+    [pageData.emsBoxBuild, 'EMS & Box Build scope matrix'],
+    [pageData.componentSourcingBomDfmReview, 'BOM risk review matrix'],
+    [pageData.pcbFabricationSupport, 'Fabrication inputs buyers should provide'],
     [pageData.resources, 'RFQ checklist'],
     [pageData.contact, 'Choose the right contact path'],
   ];
@@ -776,12 +845,12 @@ test('P1 buyer-support pages include human-friendly manufacturing guidance witho
     }
   }
 
-  assert.match(siteData, /EMS & Box Build scope/);
-  assert.match(siteData, /When EMS & Box Build is a fit/);
-  assert.match(siteData, /BOM risk review/);
+  assert.match(siteData, /EMS & Box Build scope matrix/);
+  assert.match(siteData, /When a PCBA project becomes EMS or Box Build/);
+  assert.match(siteData, /BOM risk review matrix/);
   assert.match(siteData, /Venture Electronics does not replace parts without buyer approval/);
-  assert.match(siteData, /Fabrication inputs for assembly-ready boards/);
-  assert.match(siteData, /Why fabrication topics stay consolidated/);
+  assert.match(siteData, /Fabrication inputs buyers should provide/);
+  assert.match(siteData, /What stays consolidated instead of becoming thin pages/);
   assert.match(siteData, /RFQ checklist/);
   assert.match(siteData, /Choose the right contact path/);
   assert.match(siteData, /This first-launch RFQ page does not upload files directly/);
@@ -797,6 +866,138 @@ test('P1 buyer-support pages include human-friendly manufacturing guidance witho
     `${siteData}\n${composer}`,
     /24\/7|24h response|No MOQ for all projects|fixed lead time for every project|customer logos|IPC Class 3|IATF|BSCI|aerospace|defense/i,
   );
+});
+
+function collectVisiblePageText(page) {
+  function collect(value) {
+    if (!value) return '';
+    if (typeof value === 'string') return `${value} `;
+    if (Array.isArray(value)) return value.map(collect).join('');
+    if (typeof value === 'object') return Object.values(value).map(collect).join('');
+    return '';
+  }
+
+  const visibleSections = page.sections.map((section) => ({
+    title: section.title,
+    label: section.label,
+    body: section.body,
+    items: section.items,
+    links: section.links?.map((link) => link.label),
+    quickAnswers: section.quickAnswers,
+    table: section.table,
+    faqItems: section.faqItems,
+  }));
+
+  return collect({
+    title: page.title,
+    summary: page.summary,
+    directAnswer: page.directAnswer,
+    sections: visibleSections,
+    faqs: page.faqs,
+  });
+}
+
+test('four service child pages have page-specific buyer-facing GEO depth', () => {
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const expectedSectionsByPage = {
+    pcba: [
+      'What PCB Assembly / PCBA means for Venture Electronics',
+      'PCB Assembly delivery models',
+      'Assembly methods and project types',
+      'How Turnkey PCBA connects fabrication, sourcing, assembly and testing',
+      'BOM and component sourcing relationship',
+      'Inspection and testing dependency',
+      'When to move from PCBA to EMS & Box Build',
+    ],
+    emsBoxBuild: [
+      'When a PCBA project becomes EMS or Box Build',
+      'EMS & Box Build scope matrix',
+      'System-level testing and configuration',
+      'Packaging, labeling and delivery preparation',
+      'EMS & Box Build boundaries',
+    ],
+    componentSourcingBomDfmReview: [
+      'Why BOM and DFM review matter before PCBA',
+      'BOM risk review matrix',
+      'Component sourcing rules buyers should define',
+      'Customer-approved alternative flow',
+      'DFM / DFA review areas',
+      'What this page does not promise',
+    ],
+    pcbFabricationSupport: [
+      'PCB Fabrication Support for assembly-ready boards',
+      'Fabrication inputs buyers should provide',
+      'How fabrication decisions affect PCB Assembly',
+      'Board capability categories to review',
+      'Panelization and assembly preparation',
+      'Fabrication-to-assembly review flow',
+      'What stays consolidated instead of becoming thin pages',
+      'PCB Fabrication Support boundaries',
+    ],
+  };
+
+  for (const [pageKey, expectedSections] of Object.entries(expectedSectionsByPage)) {
+    const page = pageData[pageKey];
+    const sectionTitles = page.sections.map((section) => section.title);
+    const visibleText = collectVisiblePageText(page);
+
+    for (const expectedSection of expectedSections) {
+      assert.ok(sectionTitles.includes(expectedSection), `${page.href} is missing ${expectedSection}`);
+      assert.match(visibleText, new RegExp(expectedSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    }
+
+    assert.doesNotMatch(
+      visibleText,
+      /24\/7|24h response|No MOQ|Since 2010|IPC Class 3|IATF|BSCI|Aerospace|Defense|all under one roof|every project includes every test/i,
+      `${page.href} should not expose forbidden or unsupported claims`,
+    );
+  }
+});
+
+test('four service child pages expose visible FAQ content for FAQPage schema', () => {
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const { buildPageStructuredData } = loadProjectTsModule('src/components/venture-site/schema/structured-data.ts');
+
+  for (const page of [
+    pageData.pcba,
+    pageData.emsBoxBuild,
+    pageData.componentSourcingBomDfmReview,
+    pageData.pcbFabricationSupport,
+  ]) {
+    assert.ok(page.faqs?.length >= 8, `${page.href} should have at least 8 FAQs`);
+    assert.ok(
+      page.sections.some((section) => section.kind === 'faq'),
+      `${page.href} should render a visible FAQ section`,
+    );
+
+    const graph = buildPageStructuredData(page)['@graph'];
+    const faq = graph.find((entry) => entry['@type'] === 'FAQPage');
+    assert.ok(faq, `${page.href} should emit FAQPage schema`);
+    assert.equal(faq.mainEntity.length, page.faqs.length);
+
+    for (const [index, pageFaq] of page.faqs.entries()) {
+      assert.equal(faq.mainEntity[index].name, pageFaq.question);
+      assert.equal(faq.mainEntity[index].acceptedAnswer.text, pageFaq.answer);
+    }
+  }
+});
+
+test('four service child pages are not thin placeholder pages', () => {
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const minimumTextChars = {
+    pcba: 12000,
+    emsBoxBuild: 9000,
+    componentSourcingBomDfmReview: 8500,
+    pcbFabricationSupport: 8500,
+  }
+
+  for (const [pageKey, minimumLength] of Object.entries(minimumTextChars)) {
+    const text = collectVisiblePageText(pageData[pageKey]);
+    assert.ok(
+      text.length >= minimumLength,
+      `${pageData[pageKey].href} visible content is still too thin: ${text.length} chars`,
+    );
+  }
 });
 
 test('public contact and RFQ paths use the centralized approved email channel', async () => {
@@ -846,6 +1047,23 @@ test('Venture pages emit conservative page-level structured data', () => {
 
   const resourcesGraph = buildPageStructuredData(pageData.resources)['@graph'];
   assert.ok(resourcesGraph.some((entry) => entry['@type'] === 'FAQPage'));
+
+  for (const page of [pageData.services, pageData.qualityTesting]) {
+    const graph = buildPageStructuredData(page)['@graph'];
+    const faq = graph.find((entry) => entry['@type'] === 'FAQPage');
+    assert.ok(faq, `${page.href} should emit FAQPage schema from visible page FAQs`);
+    assert.equal(
+      faq.mainEntity.length,
+      page.faqs.length,
+      `${page.href} FAQPage schema should stay synced with visible page FAQs`,
+    );
+    for (const item of page.faqs) {
+      assert.ok(
+        JSON.stringify(faq).includes(item.question),
+        `${page.href} FAQPage schema should include visible FAQ question: ${item.question}`,
+      );
+    }
+  }
 
   const officialResourcesGraph = buildPageStructuredData(pageData.officialResources)['@graph'];
   const officialResourcesJson = JSON.stringify(officialResourcesGraph);
