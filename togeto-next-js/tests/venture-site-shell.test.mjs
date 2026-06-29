@@ -750,6 +750,55 @@ test('Quality page explains testing methods with project-specific boundaries', a
   assert.doesNotMatch(siteData, /every project includes ICT|every project includes FCT|guaranteed testing/);
 });
 
+test('P1 buyer-support pages include human-friendly manufacturing guidance without overclaims', async () => {
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const composer = await readProjectFile('src/components/venture-site/pages/RfqEmailComposer.tsx');
+  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+
+  const expectedTables = [
+    [pageData.emsBoxBuild, 'EMS & Box Build scope'],
+    [pageData.componentSourcingBomDfmReview, 'BOM risk review'],
+    [pageData.pcbFabricationSupport, 'Fabrication inputs for assembly-ready boards'],
+    [pageData.resources, 'RFQ checklist'],
+    [pageData.contact, 'Choose the right contact path'],
+  ];
+
+  for (const [page, title] of expectedTables) {
+    const section = page.sections.find((item) => item.kind === 'content-table' && item.title === title);
+    assert.ok(section, `${page.href} should include ${title}`);
+    assert.ok(section.table.columns.length > 0, `${title} should define columns`);
+    assert.ok(section.table.rows.length > 0, `${title} should define rows`);
+
+    for (const row of section.table.rows) {
+      for (const column of section.table.columns) {
+        assert.ok(row[column.key], `${title} row should include ${column.key}`);
+      }
+    }
+  }
+
+  assert.match(siteData, /EMS & Box Build scope/);
+  assert.match(siteData, /When EMS & Box Build is a fit/);
+  assert.match(siteData, /BOM risk review/);
+  assert.match(siteData, /Venture Electronics does not replace parts without buyer approval/);
+  assert.match(siteData, /Fabrication inputs for assembly-ready boards/);
+  assert.match(siteData, /Why fabrication topics stay consolidated/);
+  assert.match(siteData, /RFQ checklist/);
+  assert.match(siteData, /Choose the right contact path/);
+  assert.match(siteData, /This first-launch RFQ page does not upload files directly/);
+  assert.match(siteData, /Schedule is reviewed by project/);
+  assert.match(siteData, /Email \/ RFQ: \$\{CONTACT_CHANNELS\.rfqEmail\}/);
+  assert.match(composer, /Contact person/);
+  assert.match(composer, /Files available/);
+  assert.match(composer, /Delivery destination/);
+  assert.match(composer, /Testing needs/);
+  assert.match(composer, /Copy RFQ Details/);
+  assert.match(composer, /navigator\.clipboard\.writeText/);
+  assert.doesNotMatch(
+    `${siteData}\n${composer}`,
+    /24\/7|24h response|No MOQ for all projects|fixed lead time for every project|customer logos|IPC Class 3|IATF|BSCI|aerospace|defense/i,
+  );
+});
+
 test('public contact and RFQ paths use the centralized approved email channel', async () => {
   const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
   const composer = await readProjectFile('src/components/venture-site/pages/RfqEmailComposer.tsx');
@@ -766,6 +815,7 @@ test('public contact and RFQ paths use the centralized approved email channel', 
   assert.match(siteData, /CONTACT_CHANNELS\.generalEmail/);
   assert.match(composer, /CONTACT_CHANNELS\.rfqEmail/);
   assert.match(composer, /Prepare RFQ Email/);
+  assert.match(composer, /Copy RFQ Details/);
   assert.match(composer, /mailto:/);
   assert.match(page, /const isMailto = href\.startsWith\("mailto:"\)/);
   assert.match(page, /<a href=\{row\.href\} \{\.\.\.getExternalAnchorProps\(row\.href\)\}>/);

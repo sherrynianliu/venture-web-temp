@@ -73,6 +73,7 @@
 | Services Overview 内容深度 | 服务层级不够清楚 | 加 service hierarchy table，说明 PCBA 主入口、turnkey 模式、EMS 高层级、fabrication/sourcing/testing 支撑关系 | `site-data.ts` | P0 | 客户一眼看懂应该从哪个服务页开始 |
 | PCB Assembly / PCBA 内容深度 | 核心转化页需要更像能力页 | 加 capability table、delivery model、RFQ checklist、assembly flow、testing dependency、schedule boundary | `site-data.ts`, evidence images | P0 | 不出现固定 lead time、No MOQ、IPC Class 3 等未确认 claim |
 | Quality & Testing 内容深度 | “depends on scope” 太薄 | 加 inspection/testing matrix、equipment examples、test input checklist、records/traceability、FAQ | `site-data.ts`, evidence images | P0 | 能解释 SPI/AOI/X-Ray/ICT/FCT/FAI 适用条件和买家输入 |
+| Services + Quality 内容厚度补丁 | PR2/PR4 结构正确，但人类验收仍觉得 Services 与 Quality 解释厚度不足 | 追加专门 content-depth patch，扩展 Services buyer-situation/service-ownership/old-site-topic mapping，扩展 Quality lifecycle/method/input/records/certificate-boundary/FAQ | `2026-06-29-services-quality-content-depth-patch-plan.md`, `site-data.ts`, tests | P0 follow-up | 不是只补几句文案；必须通过内容覆盖测试、视觉验收和 subagent review |
 | P1 页面内容深度 | EMS/Sourcing/Fabrication/Resources/RFQ/Contact 仍偏骨架 | 第二轮补 EMS scope、BOM risk、fabrication input、RFQ checklist、mailto helper、contact routing | `site-data.ts`, `RfqEmailComposer.tsx` | P1 | P0 风格确认后再扩展，仍保持 claim-safe wording |
 | 图片策略 | 图片不能堆，也不能缺少真实感 | 每个核心页少量使用已批准 WebP 真实图；Quality 可用 4-6 张小图 | `image-manifest.ts`, `EvidenceImageBlock.tsx`, existing assets | P0/P1 | 不用客户 logo，不用未授权 social proof，图片不拖慢 LCP |
 | Claim 风险边界 | 旧站有强承诺和证书风险 | 明确排除 Since 2010、24/7、固定交期、No MOQ、未确认认证、客户 logo、敏感行业 claim | `site-data.ts`, tests | P0 | denylist 测试能拦截高风险旧站说法 |
@@ -138,6 +139,13 @@
 5. **Official Resources 页面公开名称**
    - 统一使用 `Official Websites, Domains & Company Entities`。
    - H1、About dropdown、About teaser、footer、breadcrumb、metadata/schema 页面名称都使用这个完整名称。
+
+6. **Services + Quality 内容厚度补丁**
+   - 2026-06-29 人类验收发现：Services Overview 和 Quality & Testing 结构正确，但解释厚度仍不够像真实 B2B 制造商官网页面。
+   - 这不是重新开大方向，也不是重做 IA。
+   - 已新增专项计划：`docs/venture-content/2026-06-29-services-quality-content-depth-patch-plan.md`。
+   - 该补丁应作为独立 follow-up PR 从最新 `main` 开分支施工；不建议回到已 merge 的 `codex/venture-pr2-core-content-depth` 老分支继续改。
+   - 如果和当前 PR3 并行开发，必须明确这是 stacked PR，因为两者都会改 `site-data.ts` 和 `venture-site-shell.test.mjs`。
    - 路由仍保留 `/official-resources/`，避免本轮增加路由 churn。
 
 6. **package / directory naming**
@@ -3261,6 +3269,13 @@ Decision: execute the full master plan, but ship it as five sequential PRs rathe
    - Audits PageEnhancements after content expansion
    - Keeps old-site risky claims out of public copy
    - Gate: Task 21 QA/performance/subagent review before merge
+
+2A. `content: deepen Venture Services and Quality pages`
+   - Follow-up plan: `docs/venture-content/2026-06-29-services-quality-content-depth-patch-plan.md`
+   - Expands Services Overview from a service hierarchy page into a buyer service-selection guide
+   - Expands Quality & Testing from a method overview into a lifecycle/method/input/records/boundary quality planning page
+   - Keeps the existing IA, schema builder, renderer, Official Websites placement, and RFQ/contact facts intact
+   - Gate: content coverage tests, build, desktop/mobile visual QA, and subagent review before merge
 
 3. `content: expand Venture buyer-support pages`
    - Task 14

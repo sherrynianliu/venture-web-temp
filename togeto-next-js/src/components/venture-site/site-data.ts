@@ -174,29 +174,34 @@ const emsFaqs: PageFAQ[] = [
 
 const resourcesFaqs: PageFAQ[] = [
   {
-    question: "What is the minimum information needed to start an RFQ?",
+    question: "What files are needed for a PCB Assembly quote?",
     answer:
-      "Gerber or ODB++, BOM, quantity and contact details are a useful starting point. CPL, drawings, testing and packaging information improve the quotation and engineering review.",
+      "Gerber or ODB++, BOM, CPL, assembly drawing, quantity, testing requirements, and delivery expectations are the main RFQ inputs.",
   },
   {
-    question: "Do I need a complete test plan before contacting Venture?",
+    question: "Can I start an RFQ without a complete test plan?",
     answer:
-      "No. Share the test information already available and identify what remains open. A clearer test plan may still be required before final quotation or production.",
+      "Yes, but Venture may ask for fixture, firmware, acceptance criteria, or test procedure details before confirming testing scope.",
   },
   {
-    question: "Can I request an NDA before sharing files?",
+    question: "Can Venture review BOM alternatives?",
     answer:
-      "An NDA can be discussed by email. The signing entity, document version, scope and process should be confirmed before sensitive files are transferred.",
+      "Alternatives can be discussed when sourcing or lifecycle risk appears, but buyer approval is required before substitution.",
   },
   {
-    question: "Does Venture have one standard MOQ?",
+    question: "How should I send large Gerber, BOM, or CPL packages?",
     answer:
-      "MOQ is reviewed from the board, BOM, material status, setup, project type and quantity. The website does not state one universal quantity rule.",
+      "Start by email and ask for the preferred transfer method before sending sensitive or large files.",
   },
   {
-    question: "Can alternative components be proposed?",
+    question: "Does Venture provide a standard schedule for every project?",
     answer:
-      "Yes, availability or lifecycle risks may lead to candidate alternatives. Any alternative must be approved by the customer before use.",
+      "Schedule is reviewed by project because BOM availability, complexity, quantity, and testing scope vary.",
+  },
+  {
+    question: "What should be included for EMS / Box Build review?",
+    answer:
+      "System BOM, enclosure drawings, cable or harness details, functional test method, labels, packaging, and delivery requirements should be shared when available.",
   },
 ];
 
@@ -768,17 +773,60 @@ export const pageData = {
       "EMS Manufacturing describes a broader electronics-manufacturing scope around an assembled board. Box Build is a specific integration path that may combine approved PCBAs with enclosure, cable or harness, mechanical parts, system checks, labeling, packaging and delivery requirements.",
     template: "strategic-service",
     visual: pageVisuals.ems,
+    directAnswer: [
+      "EMS & Box Build is a fit when the buyer can define system-level inputs such as the system BOM, enclosure, cable or harness details, functional test expectations, labels, packaging, and delivery requirements.",
+    ],
     sections: [
       {
-        title: "What can an EMS or Box Build scope include?",
-        items: [
-          "PCBA integration with enclosure, cabinet, connectors or mechanical components.",
-          "Cable or harness discussion when drawings, connector specifications, routing and inspection requirements are available.",
-          "System-level checks based on customer procedures, fixtures, firmware and acceptance criteria.",
-          "Identification and packaging such as labels, serial numbers, packaging materials, accessories and shipment preparation when included in the quotation.",
-        ],
-        kind: "list",
+        title: "EMS & Box Build scope",
+        body:
+          "EMS Manufacturing describes a broader electronics manufacturing scope around an assembled board. Box Build becomes relevant when the project includes enclosure, cable or harness, mechanical parts, system-level testing, labels, packaging, or delivery preparation.",
+        table: {
+          columns: [
+            { key: "item", label: "EMS / Box Build item" },
+            { key: "meaning", label: "What it means" },
+            { key: "input", label: "Buyer input" },
+          ],
+          rows: [
+            {
+              item: "PCBA integration",
+              meaning: "Assembled boards integrated into a larger unit",
+              input: "Approved PCBA files and revision",
+            },
+            {
+              item: "Enclosure / mechanical parts",
+              meaning: "Housing, panels, fasteners, mechanical constraints",
+              input: "Drawings and material notes",
+            },
+            {
+              item: "Cable / harness",
+              meaning: "Cable routing, connectors, harness drawings",
+              input: "Cable drawings and connector specs",
+            },
+            {
+              item: "System-level test",
+              meaning: "Functional check of assembled unit",
+              input: "Firmware, fixture, test procedure",
+            },
+            {
+              item: "Label / serial / packaging",
+              meaning: "Identification and shipment preparation",
+              input: "Label rules and packaging standard",
+            },
+            {
+              item: "Delivery support",
+              meaning: "Shipment and document discussion",
+              input: "Destination, Incoterms, documents",
+            },
+          ],
+        },
+        kind: "content-table",
         featured: true,
+      },
+      {
+        title: "When EMS & Box Build is a fit",
+        body:
+          "EMS & Box Build should be reviewed after the buyer can define the system BOM, mechanical requirements, cable or harness details, functional test expectations, and packaging needs. If these inputs are not ready, the project may first begin as a PCBA or prototype review.",
       },
       {
         title: "Required inputs for EMS or Box Build review",
@@ -839,23 +887,55 @@ export const pageData = {
     visual: pageVisuals.sourcing,
     sections: [
       {
-        title: "What this support covers",
-        items: [
-          "BOM field completeness, MPN, manufacturer, package, quantity, and substitution restrictions.",
-          "Availability, MOQ, lead-time, lifecycle, and long-lead risk review.",
-          "Customer-approved alternatives and DFM/DFA findings before procurement or assembly.",
-        ],
-        kind: "checklist",
+        title: "BOM risk review",
+        body:
+          "BOM and DFM review helps reduce sourcing and manufacturing risk before assembly. Venture can review BOM completeness, availability, MOQ, lifecycle risk, package questions, customer-approved alternatives, and DFM / DFA items that may affect fabrication, assembly, or testing.",
+        table: {
+          columns: [
+            { key: "risk", label: "BOM risk" },
+            { key: "why", label: "Why it matters" },
+            { key: "action", label: "Buyer action" },
+          ],
+          rows: [
+            {
+              risk: "Missing MPN / manufacturer",
+              why: "Hard to quote accurately",
+              action: "Provide approved MPN and manufacturer",
+            },
+            {
+              risk: "Obsolete or long-lead parts",
+              why: "May delay sourcing",
+              action: "Allow alternative review",
+            },
+            {
+              risk: "No-substitution components",
+              why: "Must be protected",
+              action: "Mark clearly in BOM",
+            },
+            {
+              risk: "Package mismatch",
+              why: "Can affect assembly footprint",
+              action: "Confirm footprint and package",
+            },
+            {
+              risk: "MOQ constraints",
+              why: "Affects cost and schedule",
+              action: "Confirm acceptable quantity",
+            },
+            {
+              risk: "Compliance requirement",
+              why: "Affects sourcing and documentation",
+              action: "State project requirement early",
+            },
+          ],
+        },
+        kind: "content-table",
         featured: true,
       },
       {
-        title: "Alternative approval process",
-        items: [
-          "Venture reviews BOM risk and flags availability, MOQ, lifecycle, lead-time, or package questions before procurement.",
-          "Alternative components are shared for customer review when substitution is possible.",
-          "Approved alternatives, no-substitution items, and sourcing restrictions should be captured before assembly proceeds.",
-        ],
-        kind: "steps",
+        title: "Alternative approval flow",
+        body:
+          "Venture Electronics does not replace parts without buyer approval. When availability or lifecycle risk appears, candidate alternatives may be discussed, but the buyer should approve any substitution before procurement or assembly.",
       },
       {
         title: "Review outputs",
@@ -887,14 +967,32 @@ export const pageData = {
     visual: pageVisuals.fabrication,
     sections: [
       {
-        title: "Inputs to collect",
-        items: [
-          "Gerber or ODB++ files",
-          "Stack-up, material, copper weight, impedance, surface finish, and panelization requirements",
-          "Assembly constraints that affect pad design, fiducials, via-in-pad, and test points",
-        ],
-        kind: "checklist",
+        title: "Fabrication inputs for assembly-ready boards",
+        body:
+          "PCB Fabrication Support helps align bare-board requirements with downstream assembly, inspection, testing, and delivery needs. It supports the PCBA and turnkey assembly workflow rather than acting as a separate low-cost PCB-only platform.",
+        table: {
+          columns: [
+            { key: "input", label: "Input" },
+            { key: "why", label: "Why it matters" },
+          ],
+          rows: [
+            { input: "Gerber / ODB++", why: "Board production and review" },
+            { input: "Stack-up", why: "Layer structure, impedance, manufacturability" },
+            { input: "Material", why: "Thermal, mechanical, and electrical requirements" },
+            { input: "Copper weight", why: "Current capacity and fabrication process" },
+            { input: "Surface finish", why: "Solderability and shelf-life" },
+            { input: "Panelization", why: "Assembly efficiency and handling" },
+            { input: "Fiducials / test points", why: "SMT, AOI, and test planning" },
+            { input: "Special requirements", why: "Via-in-pad, impedance, mask, marking, finish" },
+          ],
+        },
+        kind: "content-table",
         featured: true,
+      },
+      {
+        title: "Why fabrication topics stay consolidated",
+        body:
+          "Material, stack-up, and process questions are handled as fabrication inputs and buyer guidance within the assembly-ready workflow, so buyers can prepare the right information without navigating separate narrow topic pages.",
       },
       {
         title: "Fabrication-to-assembly review outputs",
@@ -1413,6 +1511,29 @@ export const pageData = {
     visual: pageVisuals.resources,
     sections: [
       {
+        title: "RFQ checklist",
+        body:
+          "A useful RFQ identifies current design files, BOM, quantity, delivery needs, sourcing restrictions, testing requirements, and customer-approval points.",
+        table: {
+          columns: [
+            { key: "file", label: "File / information" },
+            { key: "why", label: "Why it helps" },
+          ],
+          rows: [
+            { file: "Gerber / ODB++", why: "Board fabrication and assembly review" },
+            { file: "BOM", why: "Component sourcing and risk review" },
+            { file: "CPL / XY file", why: "SMT placement preparation" },
+            { file: "Assembly drawing", why: "Polarity, connector, and mechanical notes" },
+            { file: "Quantity", why: "Material planning and quotation scope" },
+            { file: "Testing requirement", why: "Fixture, firmware, and acceptance planning" },
+            { file: "Packaging / delivery", why: "Labels, ESD, destination, and document needs" },
+            { file: "NDA / large file note", why: "Safe transfer path before sharing sensitive files" },
+          ],
+        },
+        kind: "content-table",
+        featured: true,
+      },
+      {
         title: "Core RFQ files",
         items: [
           "Gerber or ODB++",
@@ -1421,7 +1542,6 @@ export const pageData = {
           "Assembly drawing and polarity notes",
         ],
         kind: "checklist",
-        featured: true,
       },
       {
         title: "Project requirements to include",
@@ -1449,8 +1569,7 @@ export const pageData = {
       },
       {
         title: "Buyer FAQ",
-        items: resourcesFaqs.map(formatFaqItem),
-        kind: "proof",
+        kind: "faq",
       },
       {
         title: "Approved catalog downloads",
@@ -1491,8 +1610,12 @@ export const pageData = {
       {
         title: "Confirmed contact channels",
         items: [
-          `RFQ files: ${CONTACT_CHANNELS.rfqEmail}.`,
-          `General inquiry: ${CONTACT_CHANNELS.generalEmail}.`,
+          CONTACT_CHANNELS.rfqEmail === CONTACT_CHANNELS.generalEmail
+            ? `Email / RFQ: ${CONTACT_CHANNELS.rfqEmail}.`
+            : `RFQ files: ${CONTACT_CHANNELS.rfqEmail}.`,
+          ...(CONTACT_CHANNELS.rfqEmail === CONTACT_CHANNELS.generalEmail
+            ? []
+            : [`General inquiry: ${CONTACT_CHANNELS.generalEmail}.`]),
           `Phone: ${CONTACT_CHANNELS.phone}.`,
           `Fax: ${CONTACT_CHANNELS.fax}.`,
           `Address: ${CONTACT_CHANNELS.address}.`,
@@ -1502,9 +1625,27 @@ export const pageData = {
         featured: true,
       },
       {
-        title: "General inquiry fit",
+        title: "Choose the right contact path",
         body:
           "Use Contact for company questions, channel verification, and early project discussion before files are ready. When Gerber, BOM, CPL, drawings, quantities, or testing requirements are ready, move to Request a Quote.",
+        table: {
+          columns: [
+            { key: "type", label: "Inquiry type" },
+            { key: "path", label: "Recommended path" },
+          ],
+          rows: [
+            { type: "General company question", path: "Email Venture Electronics" },
+            { type: "RFQ with files", path: "Request a Quote / email file package" },
+            { type: "Large files or NDA", path: "Start by email and confirm transfer method" },
+            { type: "Domain verification", path: "Official Websites, Domains & Company Entities page" },
+            { type: "Testing or quality questions", path: "Share test plan or acceptance criteria" },
+            { type: "EMS / Box Build discussion", path: "Share system BOM, enclosure, cable, and test information" },
+          ],
+        },
+        kind: "content-table",
+      },
+      {
+        title: "General inquiry fit",
         items: [
           "Verify official Venture Electronics contact information.",
           "Ask whether a project type fits before sending detailed files.",
@@ -1534,10 +1675,15 @@ export const pageData = {
     visual: pageVisuals.requestQuote,
     sections: [
       {
+        title: "First-launch email workflow",
+        body:
+          "This first-launch RFQ page does not upload files directly. Please email Gerber, BOM, CPL, drawings or other sensitive files through the confirmed Venture Electronics contact channel.",
+        featured: true,
+      },
+      {
         title: "Core RFQ files",
         items: quoteChecklist,
         kind: "checklist",
-        featured: true,
       },
       {
         title: "Project-type additions",
