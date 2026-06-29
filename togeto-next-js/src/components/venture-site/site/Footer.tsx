@@ -1,12 +1,30 @@
 import Link from "next/link";
 import { footerGroups, routes, type SiteLink } from "@/components/venture-site/site-data";
+import { CONTACT_CHANNELS } from "@/components/venture-site/content/contact-channels";
 
-const contactLinks: SiteLink[] = [
-  { label: "+86 755 8529 6692", href: "tel:+86075585296692" },
-  { label: "RFQ: support@venture-mfg.com", href: "mailto:support@venture-mfg.com" },
-  { label: "info@venture-mfg.com", href: "mailto:info@venture-mfg.com" },
-  { label: "Request a Quote", href: routes.requestQuote },
-];
+function getFooterContactLinks(): SiteLink[] {
+  const emailLinks: SiteLink[] =
+    CONTACT_CHANNELS.rfqEmail === CONTACT_CHANNELS.generalEmail
+      ? [
+          {
+            label: `Email / RFQ: ${CONTACT_CHANNELS.rfqEmail}`,
+            href: `mailto:${CONTACT_CHANNELS.rfqEmail}`,
+          },
+        ]
+      : [
+          { label: `RFQ: ${CONTACT_CHANNELS.rfqEmail}`, href: `mailto:${CONTACT_CHANNELS.rfqEmail}` },
+          {
+            label: `General inquiry: ${CONTACT_CHANNELS.generalEmail}`,
+            href: `mailto:${CONTACT_CHANNELS.generalEmail}`,
+          },
+        ];
+
+  return [
+    { label: CONTACT_CHANNELS.phone, href: CONTACT_CHANNELS.phoneHref },
+    ...emailLinks,
+    { label: "Request a Quote", href: routes.requestQuote },
+  ];
+}
 
 export function Footer() {
   return (
@@ -35,11 +53,10 @@ export function Footer() {
                 </svg>
               </span>
               <span>
-                Building 36, Chentian Industrial Area, Xixiang, Bao'an District, Shenzhen,
-                Guangdong, China
+                {CONTACT_CHANNELS.address}
               </span>
             </a>
-            {contactLinks.map((link) => (
+            {getFooterContactLinks().map((link) => (
               <Link key={link.href} className="footer-contact__item" href={link.href}>
                 <span className="footer-contact__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

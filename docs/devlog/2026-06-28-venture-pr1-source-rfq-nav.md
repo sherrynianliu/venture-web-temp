@@ -1,0 +1,54 @@
+# Venture PR1 Source Authority, RFQ, Official Domains, and Mobile Nav Devlog
+
+## 2026-06-28
+
+- Created branch `codex/venture-pr1-source-rfq-nav` from `main` with existing uncommitted Official Domains work preserved.
+- Started PR1 from the approved five-PR implementation plan:
+  - Source authority freeze.
+  - Buyer page source map gate.
+  - Official Websites, Domains & Company Entities under About.
+  - Mailto-first RFQ composer.
+  - Mobile navigation.
+  - Local preview workflow documentation.
+- Added `CONTACT_CHANNELS` as the single first-launch contact source:
+  - Current main website: `venture-mfg.com`.
+  - Legacy PCBA asset: `venture-pcba.com`.
+  - RFQ/general inquiry email: `info@venture-mfg.com`.
+  - Phone, fax, Shenzhen address.
+- Replaced public source references that still used the older `support@venture-mfg.com` planning value.
+- Removed visible AI/search-engine rationale from the Official Websites page copy.
+- Kept the public page title and navigation label as `Official Websites, Domains & Company Entities`.
+- Added a buyer-page source map at `docs/venture-content/2026-06-28-venture-buyer-page-source-map.md`.
+- Updated local preview docs to make Webpack dev mode the default and explain local cold compile behavior.
+- Added the first-launch RFQ composer:
+  - No backend submission.
+  - No webpage file upload.
+  - Prepares a mailto email to `info@venture-mfg.com`.
+  - Reminds buyers to attach Gerber, BOM, CPL, drawings, and related files in their email client.
+- Added mobile navigation toggle and panel so users below `820px` can reach About, Official Domains, Contact, and Request a Quote.
+- Added template cleanup/source authority guardrail tests in `tests/template-cleanup.test.mjs`.
+- Verification completed:
+  - `node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolve-wow-constructor.test.mjs tests/template-cleanup.test.mjs` passed, 34/34 tests.
+  - `npm run build` passed.
+  - Route smoke checks passed for `/`, `/official-resources`, `/about`, `/request-a-quote`, `/services`, `/contact`, and legacy `/blog` redirect.
+  - Source scan found no public source references to `support@venture-mfg.com`, visible AI/search-engine rationale, Wei Chi, Chinese entity text, or unconfirmed Chinese entity naming.
+  - CSS source and public preview stylesheet are identical.
+- Visual QA notes:
+  - Desktop screenshots were captured for Home, Official Resources, About, RFQ, Services, and Contact.
+  - Mobile screenshots initially showed horizontal clipping on Official Resources / RFQ; mobile CSS constraints were tightened afterward.
+  - Desktop visual acceptance was completed in the local live preview.
+  - Mobile overflow fixes were added, but final mobile visual QA still needs human confirmation in live browser preview.
+- Subagent review:
+  - A review agent was requested after implementation.
+  - The review did not complete because the environment hit the current Codex usage limit.
+  - This PR should not be marked as subagent-reviewed until a later review pass succeeds.
+- Live review setup:
+  - Opened the real local preview page at `http://127.0.0.1:3002/official-resources/` in the in-app browser for human visual acceptance.
+  - A follow-up automated mobile viewport overflow check timed out in browser control, so final mobile acceptance remains a manual review item.
+- PR review fixes after GitHub review:
+  - Added runtime schema coverage for the actual Official Resources page structured data and the runtime Organization/WebSite identity schema.
+  - Confirmed `ItemList` contains the domain status map while Organization/WebSite schema stays limited to `https://www.venture-mfg.com/`.
+  - Confirmed non-canonical, historical, associated, candidate, and non-owned domains are not emitted as Organization/WebSite `url`, `contactPoint`, or `sameAs`.
+  - Updated footer rendering so identical RFQ/general emails appear as one `Email / RFQ` row.
+  - Updated Quick Answer mailto links so they do not use `target="_blank"` or `rel="noopener noreferrer"`.
+  - Updated PR body wording to avoid claiming full mobile visual acceptance.

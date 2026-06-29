@@ -1,4 +1,11 @@
-import { routes, serviceHierarchy, type PageData, type PageFAQ, type SiteLink } from "../site-data";
+import {
+  domainGovernanceGroups,
+  routes,
+  serviceHierarchy,
+  type PageData,
+  type PageFAQ,
+  type SiteLink,
+} from "../site-data";
 
 const siteBaseUrl = "https://www.venture-mfg.com";
 const organizationId = `${siteBaseUrl}/#organization`;
@@ -177,6 +184,46 @@ function buildFaqPageSchema(page: PageData): JsonLdObject | null {
   };
 }
 
+function buildDomainStatusItemListSchema(page: PageData): JsonLdObject | null {
+  if (page.href !== routes.officialResources) return null;
+
+  const records = domainGovernanceGroups.flatMap((group) =>
+    group.domains.map((record) => ({
+      group: group.title,
+      record,
+    })),
+  );
+
+  return {
+    "@type": "ItemList",
+    "@id": pageId(page, "domain-status-map"),
+    name: "Venture Electronics domain status map",
+    itemListElement: records.map(({ group, record }, index) => {
+      const item: JsonLdObject = {
+        "@type": "Thing",
+        name: record.domain,
+        description: [
+          `Category: ${group}.`,
+          `What it is: ${record.currentRole}`,
+          `How it is used: ${record.howItIsUsed}`,
+          `Buyer guidance: ${record.buyerGuidance}`,
+        ].join(" "),
+      };
+
+      if (record.href) {
+        item.url = record.href;
+      }
+
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: record.domain,
+        item,
+      };
+    }),
+  };
+}
+
 export function buildPageStructuredData(page: PageData): PageStructuredData {
   const graph: JsonLdObject[] = [
     buildBreadcrumbSchema(page),
@@ -188,6 +235,9 @@ export function buildPageStructuredData(page: PageData): PageStructuredData {
 
   const faqPageSchema = buildFaqPageSchema(page);
   if (faqPageSchema) graph.push(faqPageSchema);
+
+  const domainStatusItemListSchema = buildDomainStatusItemListSchema(page);
+  if (domainStatusItemListSchema) graph.push(domainStatusItemListSchema);
 
   return {
     "@context": "https://schema.org",

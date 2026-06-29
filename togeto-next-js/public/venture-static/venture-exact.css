@@ -266,6 +266,18 @@
   outline: none;
 }
 
+.venture-site .site-header--glass .nav-link--active,
+.venture-site .site-header--glass .nav-trigger--active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.venture-site .site-header--scrolled .nav-link--active,
+.venture-site .site-header--scrolled .nav-trigger--active {
+  background: var(--tech-blue-soft);
+  color: var(--tech-blue);
+}
+
 .venture-site .nav-menu {
   position: absolute;
   top: calc(100% + 14px);
@@ -322,6 +334,39 @@
 
 .venture-site .header-cta {
   flex: 0 0 auto;
+}
+
+.venture-site .mobile-nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  color: var(--deep-navy);
+  cursor: pointer;
+}
+
+.venture-site .site-header--glass .mobile-nav-toggle {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.venture-site .mobile-nav-toggle span {
+  width: 18px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+.venture-site .mobile-nav-panel {
+  display: none;
 }
 
 /* ============================================================
@@ -3827,6 +3872,32 @@
   border-bottom: 1px solid var(--line-gray);
 }
 
+.venture-site .stage3-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.7vw, 3.55rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.08;
+  overflow-wrap: break-word;
+}
+
+.venture-site .stage3-hero--compact {
+  min-height: auto;
+  padding-block: clamp(64px, 8vw, 112px) clamp(32px, 5vw, 56px);
+  align-items: center;
+}
+
+.venture-site .stage3-hero--compact .stage3-hero__content {
+  max-width: 760px;
+}
+
+.venture-site .stage3-hero--compact + .stage3-section--featured {
+  margin-top: clamp(24px, 4vw, 40px);
+}
+
 .venture-site .stage3-plain-header {
   padding: clamp(18px, 3vw, 30px) 0 24px;
   border-bottom: 1px solid var(--line-gray);
@@ -3983,6 +4054,369 @@
 .venture-site .stage3-facts {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: clamp(24px, 4vw, 48px);
+}
+
+.venture-site .stage3-quick-answer {
+  max-width: 820px;
+  margin-top: 24px;
+  overflow-x: auto;
+  border: 1px solid var(--line-gray);
+  border-radius: 8px;
+  background: var(--card-white);
+  box-shadow: 0 12px 28px rgba(17, 24, 34, 0.04);
+}
+
+.venture-site .stage3-quick-answer table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.venture-site .stage3-quick-answer th,
+.venture-site .stage3-quick-answer td,
+.venture-site .stage3-domain-table th,
+.venture-site .stage3-domain-table td {
+  border-bottom: 1px solid var(--line-gray);
+  padding: 15px 18px;
+  color: #243047;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  text-align: left;
+  vertical-align: top;
+}
+
+.venture-site .stage3-quick-answer thead th {
+  background: rgba(77, 93, 118, 0.08);
+  color: var(--deep-navy);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.venture-site .stage3-domain-table thead th {
+  background: rgba(77, 93, 118, 0.06);
+  color: var(--deep-navy);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.venture-site .stage3-quick-answer tbody th {
+  width: 42%;
+  color: var(--deep-navy);
+  font-weight: 650;
+}
+
+.venture-site .stage3-domain-table tbody th {
+  width: 25%;
+  color: var(--deep-navy);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.venture-site .stage3-quick-answer tr:last-child th,
+.venture-site .stage3-quick-answer tr:last-child td,
+.venture-site .stage3-domain-table tr:last-child th,
+.venture-site .stage3-domain-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.venture-site .stage3-quick-answer a {
+  color: var(--tech-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.venture-site .stage3-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.venture-site .stage3-domain-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+  border: 1px solid var(--line-gray);
+  border-top: 3px solid var(--stage3-accent);
+  border-radius: 8px;
+  background: var(--card-white);
+  padding: 20px;
+  box-shadow: 0 12px 28px rgba(17, 24, 34, 0.05);
+}
+
+.venture-site .stage3-domain-card--safe {
+  border-top-color: var(--tech-blue);
+}
+
+.venture-site .stage3-domain-card--route {
+  border-top-color: var(--steel-blue);
+}
+
+.venture-site .stage3-domain-card--caution {
+  border-top-color: var(--amber-copper);
+}
+
+.venture-site .stage3-domain-card__top {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.venture-site .stage3-domain-card__label,
+.venture-site .stage3-domain-card dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.venture-site .stage3-domain-card h3 {
+  margin: 0;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.venture-site .stage3-domain-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.venture-site .stage3-domain-card h3 a:hover,
+.venture-site .stage3-quick-answer a:hover {
+  color: var(--tech-blue);
+}
+
+.venture-site .stage3-domain-card__details {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.venture-site .stage3-domain-card__details div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.venture-site .stage3-domain-card dd {
+  margin: 0;
+  color: #243047;
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.venture-site .stage3-domain-table {
+  max-width: 920px;
+  margin-top: 24px;
+  overflow-x: auto;
+  border: 1px solid var(--line-gray);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.venture-site .stage3-domain-table table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.venture-site .stage3-page-faq {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.venture-site .stage3-page-faq__item {
+  border: 1px solid var(--line-gray);
+  border-radius: 8px;
+  background: var(--card-white);
+  padding: 0;
+}
+
+.venture-site .stage3-page-faq__item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 20px;
+  color: var(--deep-navy);
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.venture-site .stage3-page-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.venture-site .stage3-page-faq__item p {
+  margin: 0;
+  border-top: 1px solid var(--line-gray);
+  padding: 16px 20px 18px;
+  color: #243047;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.venture-site .rfq-composer {
+  border: 1px solid var(--line-gray);
+  border-radius: 8px;
+  background: var(--card-white);
+  padding: clamp(24px, 4vw, 42px);
+  box-shadow: 0 18px 44px rgba(17, 24, 34, 0.08);
+}
+
+.venture-site .rfq-composer__head {
+  max-width: 760px;
+  margin-bottom: 26px;
+}
+
+.venture-site .rfq-composer__eyebrow {
+  margin: 0 0 8px;
+  color: var(--tech-blue);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.venture-site .rfq-composer h2 {
+  margin: 0 0 12px;
+  color: var(--deep-navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.14;
+}
+
+.venture-site .rfq-composer p {
+  margin: 0;
+  color: #243047;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.venture-site .rfq-composer__form {
+  display: grid;
+  gap: 22px;
+}
+
+.venture-site .rfq-composer__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.venture-site .rfq-composer label,
+.venture-site .rfq-composer__files {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.venture-site .rfq-composer label > span,
+.venture-site .rfq-composer__files legend {
+  color: var(--deep-navy);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.venture-site .rfq-composer input,
+.venture-site .rfq-composer textarea,
+.venture-site .rfq-composer select {
+  width: 100%;
+  border: 1px solid var(--line-gray);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-dark);
+  padding: 11px 12px;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.venture-site .rfq-composer textarea {
+  resize: vertical;
+}
+
+.venture-site .rfq-composer input:focus,
+.venture-site .rfq-composer textarea:focus,
+.venture-site .rfq-composer select:focus {
+  border-color: var(--tech-blue);
+  box-shadow: 0 0 0 3px var(--tech-blue-soft);
+  outline: none;
+}
+
+.venture-site .rfq-composer__files {
+  border: 1px solid var(--line-gray);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.venture-site .rfq-composer__files legend {
+  padding: 0 6px;
+}
+
+.venture-site .rfq-composer__files label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 7px 18px 7px 0;
+  color: #243047;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.venture-site .rfq-composer__files input {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+}
+
+.venture-site .rfq-composer__full {
+  max-width: 920px;
+}
+
+.venture-site .rfq-composer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+}
+
+.venture-site .rfq-composer__actions button {
+  min-height: 46px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--tech-blue);
+  color: #ffffff;
+  padding: 11px 22px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.28);
+}
+
+.venture-site .rfq-composer__actions button:hover,
+.venture-site .rfq-composer__actions button:focus-visible {
+  background: var(--tech-blue-dark);
+  outline: none;
+}
+
+.venture-site .rfq-composer__actions p {
+  max-width: 620px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
 }
 
 .venture-site .stage3-related-section {
@@ -4155,6 +4589,10 @@
   }
 
   .venture-site .stage3-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .venture-site .stage3-domain-grid {
     grid-template-columns: 1fr;
   }
 
@@ -4534,6 +4972,47 @@
     display: none;
   }
 
+  .venture-site .mobile-nav-toggle {
+    display: inline-flex;
+  }
+
+  .venture-site .mobile-nav-panel {
+    display: none;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+    padding: 12px 20px 20px;
+  }
+
+  .venture-site .mobile-nav-panel--open {
+    display: block;
+  }
+
+  .venture-site .mobile-nav-panel .nav-menu,
+  .venture-site .mobile-nav-panel .nav-submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: 0;
+    padding: 0;
+    min-width: 0;
+    background: transparent;
+  }
+
+  .venture-site .mobile-nav-panel .nav-menu a,
+  .venture-site .mobile-nav-panel .nav-submenu a {
+    display: block;
+    padding: 10px 0;
+  }
+
+  .venture-site .mobile-nav-panel__cta {
+    width: 100%;
+    margin-top: 12px;
+    justify-content: center;
+  }
+
   .venture-site .nav-list,
 .venture-site .grid-2,
 .venture-site .grid-3,
@@ -4551,6 +5030,14 @@
   .venture-site .header-cta { padding: 8px 14px; min-height: 38px; font-size: 0.82rem; }
 
   .venture-site .teaser-actions { min-width: 0; }
+
+  .venture-site .stage3-hero--compact {
+    padding-block: 48px 28px;
+  }
+
+  .venture-site .rfq-composer__grid {
+    grid-template-columns: 1fr;
+  }
 
   .venture-site .trust-strip__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4570,12 +5057,70 @@
 }
 
 @media (max-width: 640px) {
+  .venture-site {
+    overflow-x: hidden;
+  }
+
   .venture-site .brand-mark__logo {
     height: 34px;
   }
 
+  .venture-site .site-header__inner {
+    width: min(var(--max-width), calc(100% - 28px));
+  }
+
   .venture-site .header-cta {
     display: none;
+  }
+
+  .venture-site .mobile-nav-toggle {
+    margin-left: auto;
+  }
+
+  .venture-site .stage3-page,
+  .venture-site .stage3-hero,
+  .venture-site .stage3-hero__content,
+  .venture-site .stage3-section,
+  .venture-site .stage3-section__body,
+  .venture-site .stage3-main-wrap,
+  .venture-site .stage3-tail-wrap {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .venture-site .stage3-hero h1,
+  .venture-site .stage3-hero--with-visual h1,
+  .venture-site .stage3-plain-header h1 {
+    max-width: 100%;
+    font-size: clamp(1.5rem, 6.4vw, 1.72rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
+
+  .venture-site .stage3-role {
+    font-size: 0.94rem;
+  }
+
+  .venture-site .stage3-direct-answer {
+    max-width: 100%;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .venture-site .stage3-actions {
+    align-items: stretch;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .venture-site .stage3-actions .cta-button {
+    flex: 1 1 140px;
+    min-width: 0;
+    padding-inline: 12px;
+    font-size: 0.84rem;
+    white-space: normal;
+    text-align: center;
   }
 
   .venture-site .hero__arrow {
