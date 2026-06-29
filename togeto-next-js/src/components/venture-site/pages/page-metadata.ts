@@ -4,17 +4,18 @@ import type { PageData } from "@/components/venture-site/site-data";
 const siteName = "Venture Electronics";
 
 export function createPageMetadata(page: PageData): Metadata {
-  const title = `${page.label} | ${siteName}`;
+  const title = page.seoTitle ?? `${page.label} | ${siteName}`;
+  const description = page.metaDescription ?? page.summary;
 
   return {
     title,
-    description: page.summary,
+    description,
     alternates: {
       canonical: page.href,
     },
     openGraph: {
       title,
-      description: page.summary,
+      description,
       url: page.href,
       siteName,
       type: "website",

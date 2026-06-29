@@ -34,7 +34,7 @@ export const sitemapLinks: SiteLink[] = [
   { label: "PCB Fabrication Support", href: "/services/pcb-fabrication-support/" },
   { label: "Quality & Testing", href: "/quality-testing/" },
   { label: "About Venture Electronics", href: "/about/" },
-  { label: "Official Resources", href: "/official-resources/" },
+  { label: "Official Websites, Domains & Company Entities", href: "/official-resources/" },
   { label: "Resources", href: "/resources/" },
   { label: "Contact", href: "/contact/" },
   { label: "Request a Quote", href: "/request-a-quote/" },

@@ -1,5 +1,6 @@
 import { CTAButton } from "@/components/venture-site/site/CTAButton";
 import { routes } from "@/components/venture-site/site-data";
+import { CONTACT_CHANNELS } from "@/components/venture-site/content/contact-channels";
 
 export function BrandAuthorityTeaser() {
   return (
@@ -9,15 +10,15 @@ export function BrandAuthorityTeaser() {
           <p className="section-header__label">Brand and official resources</p>
           <h2 id="brand-authority-title">Which Venture Electronics website and contact details should buyers use?</h2>
           <p>
-            Venture Electronics is the primary company brand. venture-mfg.com is the canonical main
-            website, venture-pcba.com is a legacy PCBA-focused vertical asset, support@venture-mfg.com
-            is the RFQ email, and info@venture-mfg.com is available for general inquiries.
+            venture-mfg.com is the current official main website. The official resources page
+            separates the current website from legacy, associated, historical, reserved and
+            non-official domains; {CONTACT_CHANNELS.rfqEmail} is the RFQ email.
           </p>
         </div>
 
         <div className="teaser-actions">
           <CTAButton href={routes.officialResources} variant="secondary">
-            View Official Resources
+            View Official Websites, Domains & Company Entities
           </CTAButton>
         </div>
       </div>

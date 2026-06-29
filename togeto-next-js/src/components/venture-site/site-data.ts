@@ -1,5 +1,6 @@
 import { routes, sitemapLinks, type SiteLink } from "./site-routes";
 import type { VentureImageId } from "./image-manifest";
+import { CONTACT_CHANNELS } from "./content/contact-channels";
 
 export { routes, sitemapLinks };
 export type { SiteLink };
@@ -14,13 +15,32 @@ export type ServiceItem = SiteLink & {
   description: string;
 };
 
+export type QuickAnswerRow = {
+  question: string;
+  answer: string;
+  href?: string;
+};
+
 export type PageSection = {
+  anchorId?: string;
   label?: string;
   title: string;
   body?: string;
   items?: string[];
+  quickAnswers?: QuickAnswerRow[];
+  faqItems?: PageFAQ[];
+  domainRecords?: DomainGovernanceRecord[];
   links?: SiteLink[];
-  kind?: "list" | "steps" | "checklist" | "facts" | "proof";
+  kind?:
+    | "list"
+    | "steps"
+    | "checklist"
+    | "facts"
+    | "proof"
+    | "domain-cards"
+    | "domain-table"
+    | "quick-answer"
+    | "faq";
   featured?: boolean;
 };
 
@@ -41,9 +61,25 @@ export type PageFAQ = {
   answer: string;
 };
 
+export type DomainGovernanceRecord = {
+  domain: string;
+  href?: string;
+  currentRole: string;
+  howItIsUsed: string;
+  buyerGuidance: string;
+  safePublicInquiries: string;
+};
+
+export type DomainGovernanceGroup = {
+  title: string;
+  domains: DomainGovernanceRecord[];
+};
+
 export type PageData = SiteLink & {
   eyebrow: string;
   title: string;
+  seoTitle?: string;
+  metaDescription?: string;
   role: string;
   summary: string;
   visual: PageVisual;
@@ -55,6 +91,7 @@ export type PageData = SiteLink & {
   relatedLinks: SiteLink[];
   cta?: SiteLink;
   secondaryCta?: SiteLink;
+  heroDensity?: "standard" | "compact";
   showHeroHeader?: boolean;
   showHeroVisual?: boolean;
   showRelatedLinks?: boolean;
@@ -94,12 +131,11 @@ export const serviceHierarchy: ServiceItem[] = [
 
 const aboutLinks: NavItem[] = [
   { label: "About Venture Electronics", href: routes.about },
-  { label: "Official Resources", href: routes.officialResources },
+  { label: "Official Websites, Domains & Company Entities", href: routes.officialResources },
 ];
 
 const resourceLinks: NavItem[] = [
   { label: "Resources / FAQ", href: routes.resources },
-  { label: "Official Resources", href: routes.officialResources },
 ];
 
 export const navItems: NavItem[] = [
@@ -133,7 +169,7 @@ export const footerGroups: { title: string; links: SiteLink[] }[] = [
     title: "Company",
     links: [
       { label: "About Venture Electronics", href: routes.about },
-      { label: "Brand & Official Resources", href: routes.officialResources },
+      { label: "Official Websites, Domains & Company Entities", href: routes.officialResources },
       { label: "Contact", href: routes.contact },
       { label: "Request a Quote", href: routes.requestQuote },
     ],
@@ -143,7 +179,6 @@ export const footerGroups: { title: string; links: SiteLink[] }[] = [
     links: [
       { label: "FAQ", href: routes.resources },
       { label: "RFQ Preparation", href: routes.requestQuote },
-      { label: "Official Resources", href: routes.officialResources },
     ],
   },
   {
@@ -245,12 +280,200 @@ const requestQuoteFaqs: PageFAQ[] = [
   {
     question: "Which email should receive RFQ files?",
     answer:
-      "Send RFQ files and project details to support@venture-mfg.com. General company or channel questions can use info@venture-mfg.com.",
+      `Send RFQ files, project details, and general company or channel questions to ${CONTACT_CHANNELS.rfqEmail}.`,
   },
   {
     question: "What should the RFQ email include?",
     answer:
       "Include company name, contact person, project type, quantity, target schedule, delivery expectations, and the current file package.",
+  },
+];
+
+const officialResourcesFaqs: PageFAQ[] = [
+  {
+    question: "Which Venture Electronics website should buyers use?",
+    answer:
+      "venture-mfg.com is the current official main website for Venture Electronics buyer information, service pages, and contact routing.",
+  },
+  {
+    question: "Is venture-pcba.com still connected to Venture Electronics?",
+    answer:
+      "venture-pcba.com is a legacy PCBA-focused vertical asset connected to Venture Electronics, but it should not be treated as the current official main website.",
+  },
+  {
+    question: "Why does Venture Electronics have several domains?",
+    answer:
+      "Some domains are current, some are legacy or supporting assets, and some are historical, reserved, or listed to prevent confusion with non-official websites.",
+  },
+  {
+    question: "Can buyers send RFQ files through old or redirected domains?",
+    answer:
+      "No. Buyers should use venture-mfg.com and confirmed Venture Electronics contact channels for current inquiries and RFQ file routing.",
+  },
+  {
+    question: "Is venturepcb.com owned by Venture Electronics?",
+    answer:
+      "No. venturepcb.com is not owned or operated by Venture Electronics and should not be used for Venture Electronics inquiries.",
+  },
+  {
+    question: "How can I verify a Venture-related website before sharing files?",
+    answer:
+      "Start from venture-mfg.com, check this domain map, or contact Venture Electronics through the email and phone number shown on this website before sharing Gerber files, BOMs, drawings, or confidential project documents.",
+  },
+];
+
+export const domainGovernanceGroups: DomainGovernanceGroup[] = [
+  {
+    title: "Current official main website",
+    domains: [
+      {
+        domain: "venture-mfg.com",
+        href: CONTACT_CHANNELS.currentMainWebsite,
+        currentRole: "Venture Electronics' current official main website.",
+        howItIsUsed:
+          "Company information, service pages, buyer resources, and inquiry routing.",
+        buyerGuidance:
+          "Use this website and the contact details shown here for current Venture Electronics communication.",
+        safePublicInquiries:
+          "Yes - use the current Venture Electronics contact path on venture-mfg.com.",
+      },
+    ],
+  },
+  {
+    title: "Legacy / vertical web assets",
+    domains: [
+      {
+        domain: "venture-pcba.com",
+        href: "https://venture-pcba.com/",
+        currentRole:
+          "A legacy PCBA-focused website connected to Venture Electronics.",
+        howItIsUsed:
+          "It may still appear in older PCBA references and contains PCBA-related content.",
+        buyerGuidance:
+          "It is not the current main website. Use venture-mfg.com for the latest company information and inquiries.",
+        safePublicInquiries:
+          "Use the current venture-mfg.com contact path for new public inquiries.",
+      },
+    ],
+  },
+  {
+    title: "Venture-owned or associated web assets",
+    domains: [
+      {
+        domain: "pcb-supplier.com",
+        href: "https://pcb-supplier.com/",
+        currentRole:
+          "Venture-owned / associated web asset. Not the current official main Venture Electronics website.",
+        howItIsUsed:
+          "It may appear as a Venture-owned or Venture-associated website asset.",
+        buyerGuidance:
+          "Use venture-mfg.com for official Venture Electronics information and inquiries unless Venture confirms a specific role for this site.",
+        safePublicInquiries:
+          "Use venture-mfg.com for current public inquiries unless Venture confirms a public inquiry role.",
+      },
+      {
+        domain: "v-cst.com",
+        currentRole: "Related company / registry-linked asset.",
+        howItIsUsed:
+          "It may appear in company or registry information connected with the broader business structure.",
+        buyerGuidance:
+          "It is not the current buyer-facing Venture Electronics website unless Venture confirms a specific purpose.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path until the relationship is confirmed.",
+      },
+    ],
+  },
+  {
+    title: "Historical email / redirected domains",
+    domains: [
+      {
+        domain: "venturegroup-mfg.com",
+        currentRole: "Historical email or redirected domain asset.",
+        howItIsUsed:
+          "It may appear in older communication records or redirects.",
+        buyerGuidance:
+          "Do not send new RFQ files through this domain. Use venture-mfg.com and confirmed contact details.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+      {
+        domain: "venturegroup-mfg.net",
+        currentRole: "Historical email or redirected domain asset.",
+        howItIsUsed:
+          "It may appear in older communication records or redirects.",
+        buyerGuidance:
+          "Do not send new RFQ files through this domain. Use venture-mfg.com and confirmed contact details.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+      {
+        domain: "uni-venture.com",
+        currentRole:
+          "Historical JV or old email-related asset, not the current public website.",
+        howItIsUsed:
+          "It may appear in older joint-venture or email-related references.",
+        buyerGuidance:
+          "Do not cite it as the current Venture Electronics website or send new RFQs through it.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+    ],
+  },
+  {
+    title: "Registered / reserved / unused / candidate domains",
+    domains: [
+      {
+        domain: "venture-pcb.com",
+        currentRole: "Registered / unused.",
+        howItIsUsed: "Not used as a public inquiry website.",
+        buyerGuidance:
+          "Do not use this domain for current Venture Electronics inquiries.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+      {
+        domain: "ventureems.com",
+        currentRole: "Registered / candidate.",
+        howItIsUsed: "Not used as the current official website.",
+        buyerGuidance:
+          "Do not use this domain for current Venture Electronics inquiries.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+      {
+        domain: "venture-ems.com",
+        currentRole: "Registered / candidate.",
+        howItIsUsed: "Not used as the current official website.",
+        buyerGuidance:
+          "Do not use this domain for current Venture Electronics inquiries.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+      {
+        domain: "venturepcba.com",
+        currentRole: "Not active / to verify.",
+        howItIsUsed: "Not the same as venture-pcba.com.",
+        buyerGuidance:
+          "Do not use this domain for inquiries unless Venture confirms a public role.",
+        safePublicInquiries:
+          "No - use the current venture-mfg.com contact path for public inquiries.",
+      },
+    ],
+  },
+  {
+    title: "Not Venture-owned / not official",
+    domains: [
+      {
+        domain: "venturepcb.com",
+        currentRole: "Not Venture-owned / not official.",
+        howItIsUsed:
+          "This domain is not owned or operated by Venture Electronics.",
+        buyerGuidance:
+          "venturepcb.com is not owned or operated by Venture Electronics and should not be used for Venture Electronics inquiries.",
+        safePublicInquiries:
+          "No - do not send Venture Electronics inquiries through this domain.",
+      },
+    ],
   },
 ];
 
@@ -706,17 +929,15 @@ export const pageData = {
     visual: pageVisuals.about,
     sections: [
       {
-        title: "Company and contact details",
-        items: [
-          "Brand: Venture Electronics.",
-          "Entity: Venture Electronics Technology Ltd / Wei Chi Technology Co., Ltd.",
-          "Current main site: venture-mfg.com.",
-          "RFQ email: support@venture-mfg.com.",
-          "Main inquiry email: info@venture-mfg.com.",
-          "Phone: +86 755 8529 6692.",
-          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, Guangdong, China.",
+        title: "Official websites, domains and company entities",
+        body:
+          "Venture Electronics uses venture-mfg.com as its current official main website. Some older, vertical, redirected, reserved, or related-company domains may still appear online or in business records. See the Official Websites, Domains & Company Entities page for the current domain asset map.",
+        links: [
+          {
+            label: "View Official Websites & Domain Asset Map",
+            href: routes.officialResources,
+          },
         ],
-        kind: "facts",
         featured: true,
       },
       {
@@ -737,74 +958,148 @@ export const pageData = {
       },
     ],
     relatedLinks: [
-      { label: "Official Resources", href: routes.officialResources },
+      { label: "Official Websites, Domains & Company Entities", href: routes.officialResources },
       { label: "Services", href: routes.services },
       { label: "Contact", href: routes.contact },
     ],
     cta: { label: "View Services", href: routes.services },
-    secondaryCta: { label: "Official Resources", href: routes.officialResources },
+    secondaryCta: { label: "Official Websites, Domains & Company Entities", href: routes.officialResources },
   },
   officialResources: {
-    label: "Official Resources",
+    label: "Official Websites, Domains & Company Entities",
     href: routes.officialResources,
     eyebrow: "Brand and official resources",
-    title: "Official Venture Electronics brand, website and contact information.",
-    role: "Official channels, domain context, and source-of-truth links.",
+    title: "Official Websites, Domains & Company Entities",
+    seoTitle: "Official Venture Electronics Websites, Domains & Company Entities",
+    metaDescription:
+      "Verify Venture Electronics' current official website, legacy PCBA-focused domain assets, related domain roles, and safe inquiry contact paths.",
+    role: "Buyer guide to Venture Electronics websites and contact channels.",
     summary:
-      "This page clarifies Venture Electronics, venture-mfg.com, the legacy PCBA-focused asset, and the confirmed inquiry path so buyers can identify the right source of information.",
+      "Venture Electronics uses several websites and domain assets for different purposes. This page explains which website is the current official source, which domains are historical or supporting assets, and which channels buyers should use for inquiries.",
     template: "brand-authority",
     visual: pageVisuals.officialResources,
+    heroDensity: "compact",
+    showHeroVisual: false,
+    directAnswer: [
+      "For current Venture Electronics company information, services, buyer resources, and RFQ communication, use venture-mfg.com and the contact details shown on this website.",
+    ],
     sections: [
       {
-        title: "Brand and entity source of truth",
-        items: [
-          "Primary brand: Venture Electronics.",
-          "English entity: Venture Electronics Technology Ltd.",
-          "Chinese entity: Wei Chi Technology Co., Ltd.",
-          "Main service positioning: PCB Manufacturing, PCB Assembly and EMS Manufacturing partner.",
+        title: "Quick answer",
+        body:
+          "Use this table before choosing a Venture Electronics website, sending files, or citing a domain.",
+        quickAnswers: [
+          {
+            question: "Current official main website",
+            answer: CONTACT_CHANNELS.currentMainDomain,
+            href: CONTACT_CHANNELS.currentMainWebsite,
+          },
+          {
+            question: "PCBA legacy / vertical asset",
+            answer: CONTACT_CHANNELS.legacyPcbaDomain,
+            href: "https://venture-pcba.com/",
+          },
+          {
+            question: "Main inquiry path",
+            answer: CONTACT_CHANNELS.rfqEmail,
+            href: `mailto:${CONTACT_CHANNELS.rfqEmail}`,
+          },
+          {
+            question: "Not Venture-owned domain",
+            answer: "venturepcb.com",
+          },
+          {
+            question: "Where to check domain roles",
+            answer: "This page",
+          },
         ],
-        kind: "facts",
+        links: [
+          { label: "Current Website", href: "#current-website" },
+          { label: "Legacy Assets", href: "#legacy-assets" },
+          { label: "Associated Sites", href: "#associated-sites" },
+          { label: "Historical Domains", href: "#historical-domains" },
+          { label: "Reserved Domains", href: "#reserved-domains" },
+          { label: "Not Official", href: "#not-official" },
+          { label: "Verification", href: "#verification" },
+          { label: "FAQ", href: "#faq" },
+        ],
+        kind: "quick-answer",
         featured: true,
       },
       {
-        title: "Domain relationship and confirmed contact route",
+        title: "Review status and source basis",
         items: [
-          "venture-mfg.com is the canonical main website for company information, service pages, buyer resources and inquiries.",
-          "venture-pcba.com is a legacy PCBA-focused vertical asset connected to Venture Electronics; it should not be treated as a separate company or the current main website.",
-          "RFQ email: support@venture-mfg.com.",
-          "General inquiry email: info@venture-mfg.com.",
-          "Telephone: +86 755 8529 6692.",
-          "Fax: +86 755 2397 7408.",
-          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
-        ],
-        links: [
-          { label: "Open venture-mfg.com", href: "https://www.venture-mfg.com/" },
-          { label: "Open venture-pcba.com", href: "https://www.venture-pcba.com/" },
+          "Last reviewed: 2026-06-28.",
+          "This page is maintained as the current Venture Electronics domain and official-asset guide.",
+          "Domain roles may change; buyers should use venture-mfg.com and confirmed Venture Electronics contact channels for current inquiries.",
         ],
         kind: "facts",
       },
       {
-        title: "How Venture handles other domains",
-        body:
-          "Only the domains and contact channels listed above should be treated as current public sources for Venture Electronics. If you encounter another Venture-related domain, confirm its role with Venture before citing it as an official website or sending project files through it.",
+        title: "Company entity and inquiry source of truth",
+        items: [
+          "Primary brand: Venture Electronics.",
+          "English entity: Venture Electronics Technology Ltd.",
+          "Main service positioning: PCB Manufacturing, PCB Assembly and EMS Manufacturing partner.",
+          `Current official main website: ${CONTACT_CHANNELS.currentMainDomain}.`,
+          `RFQ email: ${CONTACT_CHANNELS.rfqEmail}.`,
+          `General inquiry email: ${CONTACT_CHANNELS.generalEmail}.`,
+          `Phone: ${CONTACT_CHANNELS.phone}.`,
+          `Fax: ${CONTACT_CHANNELS.fax}.`,
+          `Address: ${CONTACT_CHANNELS.address}.`,
+          "For legal-entity, registry, contract, or file-transfer questions, contact Venture Electronics before sharing project documents.",
+        ],
+        kind: "facts",
       },
       {
-        title: "How to verify official information",
+        title: "How buyers should use this domain list",
+        body:
+          "Use this page to check which web address is current, which assets are legacy or reserved, and where a buyer should safely send project files. Some listed domains are intentionally plain text because they should not be treated as active public inquiry channels. Only venture-mfg.com and confirmed Venture Electronics contact emails should be used as the default public inquiry path.",
+        links: [
+          { label: "Open venture-mfg.com", href: CONTACT_CHANNELS.currentMainWebsite },
+          { label: "Request a Quote", href: routes.requestQuote },
+          { label: "Contact Venture Electronics", href: routes.contact },
+        ],
+      },
+      ...domainGovernanceGroups.map((group) => ({
+        anchorId:
+          group.title === "Current official main website"
+            ? "current-website"
+            : group.title === "Legacy / vertical web assets"
+              ? "legacy-assets"
+              : group.title === "Venture-owned or associated web assets"
+                ? "associated-sites"
+                : group.title === "Historical email / redirected domains"
+                  ? "historical-domains"
+                  : group.title === "Registered / reserved / unused / candidate domains"
+                    ? "reserved-domains"
+                    : "not-official",
+        title: group.title,
+        domainRecords: group.domains,
+        kind:
+          group.title === "Registered / reserved / unused / candidate domains"
+            ? ("domain-table" as const)
+            : ("domain-cards" as const),
+      })),
+      {
+        anchorId: "verification",
+        title: "How to choose the right Venture Electronics contact channel",
         items: [
-          "Use the current main website and the email domain shown on this page.",
-          "Check whether a service claim appears consistently on the relevant service page.",
-          "Ask Venture to confirm the current channel before sharing sensitive files.",
-          "Review certificate wording, entity name and scope before relying on a certificate for a regulated or project-specific requirement.",
-          "Use the Request a Quote page for the current RFQ file and email route.",
+          "For current company information, services, and RFQ communication, start from venture-mfg.com.",
+          "If you see an older Venture-related domain, check its role on this page before sending files.",
+          "Do not send Gerber files, BOMs, drawings, or confidential project documents through historical, reserved, candidate, or unconfirmed domains.",
+          "When in doubt, contact Venture Electronics through the email and phone number shown on this website.",
         ],
         kind: "checklist",
       },
       {
-        title: "Channels that should be confirmed before use",
-        body:
-          "Before sharing sensitive project files through a new channel, confirm the current account, file-transfer method, entity name and document version with Venture Electronics by email or phone.",
+        anchorId: "faq",
+        title: "FAQ",
+        faqItems: officialResourcesFaqs,
+        kind: "faq",
       },
     ],
+    faqs: officialResourcesFaqs,
     relatedLinks: [
       { label: "About Venture Electronics", href: routes.about },
       { label: "Resources", href: routes.resources },
@@ -882,7 +1177,7 @@ export const pageData = {
     ],
     faqs: resourcesFaqs,
     relatedLinks: [
-      { label: "Official Resources", href: routes.officialResources },
+      { label: "Official Websites, Domains & Company Entities", href: routes.officialResources },
       { label: "Contact", href: routes.contact },
       { label: "Request a Quote", href: routes.requestQuote },
     ],
@@ -903,12 +1198,12 @@ export const pageData = {
       {
         title: "Confirmed contact channels",
         items: [
-          "RFQ files: support@venture-mfg.com.",
-          "General inquiry: info@venture-mfg.com.",
-          "Phone: +86 755 8529 6692.",
-          "Fax: +86 755 2397 7408.",
-          "Address: Building 36, Chentian Industrial Area, Xixiang, Bao an District, Shenzhen, GuangDong, China.",
-          "Current main website: venture-mfg.com.",
+          `RFQ files: ${CONTACT_CHANNELS.rfqEmail}.`,
+          `General inquiry: ${CONTACT_CHANNELS.generalEmail}.`,
+          `Phone: ${CONTACT_CHANNELS.phone}.`,
+          `Fax: ${CONTACT_CHANNELS.fax}.`,
+          `Address: ${CONTACT_CHANNELS.address}.`,
+          `Current main website: ${CONTACT_CHANNELS.currentMainDomain}.`,
         ],
         kind: "facts",
         featured: true,
@@ -930,7 +1225,7 @@ export const pageData = {
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
     ],
-    cta: { label: "Email Venture Electronics", href: "mailto:info@venture-mfg.com" },
+    cta: { label: "Email Venture Electronics", href: `mailto:${CONTACT_CHANNELS.generalEmail}` },
     secondaryCta: { label: "Request a Quote", href: routes.requestQuote },
     showRelatedLinks: false,
   },
@@ -941,7 +1236,7 @@ export const pageData = {
     title: "Request a PCB Assembly, EMS, sourcing or fabrication quote.",
     role: "RFQ action page for PCBA, EMS, sourcing, and fabrication inquiries.",
     summary:
-      "Email the project files and requirements to support@venture-mfg.com. Venture Electronics reviews the available information, identifies missing inputs and confirms the quotation scope before procurement or production begins. General company questions can use info@venture-mfg.com.",
+      `Email the project files and requirements to ${CONTACT_CHANNELS.rfqEmail}. Venture Electronics reviews the available information, identifies missing inputs and confirms the quotation scope before procurement or production begins.`,
     template: "contact-rfq",
     visual: pageVisuals.requestQuote,
     sections: [
@@ -969,8 +1264,8 @@ export const pageData = {
       {
         title: "Confirmed contact route",
         items: [
-          "Email RFQ files and project details to support@venture-mfg.com.",
-          "Use info@venture-mfg.com for general company or official-channel questions.",
+          `Email RFQ files and project details to ${CONTACT_CHANNELS.rfqEmail}.`,
+          `Use ${CONTACT_CHANNELS.generalEmail} for general company or official-channel questions.`,
           "Include company name, contact person, project type, quantity, target schedule, and delivery expectations.",
           "For large files, NDA discussion, or sensitive documents, start by email and ask for the preferred transfer method.",
         ],
@@ -997,7 +1292,7 @@ export const pageData = {
       { label: "Services", href: routes.services },
       { label: "Resources", href: routes.resources },
     ],
-    cta: { label: "Email RFQ Files", href: "mailto:support@venture-mfg.com?subject=Venture%20Electronics%20RFQ" },
+    cta: { label: "Prepare RFQ Email", href: routes.requestQuote },
     secondaryCta: { label: "Contact First", href: routes.contact },
     showRelatedLinks: false,
   },
@@ -1111,7 +1406,7 @@ export const pageData = {
     title: "Continue your Venture Electronics inquiry.",
     role: "Private confirmation route.",
     summary:
-      "The current RFQ process uses email. Open Request a Quote for the file checklist and the confirmed support@venture-mfg.com RFQ route.",
+      `The current RFQ process uses email. Open Request a Quote for the file checklist and the confirmed ${CONTACT_CHANNELS.rfqEmail} RFQ route.`,
     template: "contact-rfq",
     visual: pageVisuals.thankYou,
     sections: [

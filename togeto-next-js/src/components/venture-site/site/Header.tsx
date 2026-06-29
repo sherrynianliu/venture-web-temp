@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navItems, routes, type NavItem } from "@/components/venture-site/site-data";
 import { CTAButton } from "./CTAButton";
@@ -19,12 +20,20 @@ function NavigationChildren({ items, nested = false }: { items: NavItem[]; neste
   );
 }
 
+function normalizePath(value: string | null) {
+  if (!value || value === "/") return "/";
+  return value.endsWith("/") ? value : `${value}/`;
+}
+
 type HeaderProps = {
   variant?: "glass" | "solid";
 };
 
 export function Header({ variant = "glass" }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const activePath = normalizePath(pathname);
   const solid = variant === "solid" || scrolled;
 
   useEffect(() => {
@@ -33,6 +42,10 @@ export function Header({ variant = "glass" }: HeaderProps) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
     <header className={`site-header${solid ? " site-header--scrolled" : " site-header--glass"}`}>
@@ -54,6 +67,9 @@ export function Header({ variant = "glass" }: HeaderProps) {
           <ul className="nav-list">
             {navItems.map((item) => {
               const hasChildren = Boolean(item.children?.length);
+              const active =
+                activePath === normalizePath(item.href) ||
+                Boolean(item.children?.some((child) => normalizePath(child.href) === activePath));
               const triggerContent = (
                 <>
                   {item.label}
@@ -73,8 +89,11 @@ export function Header({ variant = "glass" }: HeaderProps) {
                     </button>
                   ) : (
                     <Link
-                      className={hasChildren ? "nav-trigger" : "nav-link"}
+                      className={`${hasChildren ? "nav-trigger" : "nav-link"}${
+                        active ? ` ${hasChildren ? "nav-trigger" : "nav-link"}--active` : ""
+                      }`}
                       href={item.href}
+                      aria-current={active ? "page" : undefined}
                       aria-haspopup={hasChildren ? "true" : undefined}
                     >
                       {triggerContent}
@@ -89,6 +108,29 @@ export function Header({ variant = "glass" }: HeaderProps) {
 
         <CTAButton className="header-cta" href={routes.requestQuote}>
           <span className="header-cta__dot" aria-hidden="true" />
+          Request a Quote
+        </CTAButton>
+
+        <button
+          className="mobile-nav-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded={mobileOpen}
+          aria-controls="venture-mobile-nav"
+          onClick={() => setMobileOpen((open) => !open)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
+      </div>
+
+      <div
+        className={`mobile-nav-panel${mobileOpen ? " mobile-nav-panel--open" : ""}`}
+        id="venture-mobile-nav"
+      >
+        <NavigationChildren items={navItems} />
+        <CTAButton className="mobile-nav-panel__cta" href={routes.requestQuote}>
           Request a Quote
         </CTAButton>
       </div>

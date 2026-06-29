@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
+import { ventureIdentityStructuredData } from '@/components/venture-site/schema/site-identity';
 
 const siteBaseUrl = new URL('https://www.venture-mfg.com');
 const siteTitle = 'Venture Electronics | PCB Assembly, PCBA & EMS Manufacturing Partner';
@@ -34,34 +35,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const ventureStructuredData = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': 'https://www.venture-mfg.com/#organization',
-      name: 'Venture Electronics',
-      legalName: 'Venture Electronics Technology Ltd',
-      url: 'https://www.venture-mfg.com/',
-      email: 'info@venture-mfg.com',
-      telephone: '+86-755-85296692',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: "Building 36, Chentian Industrial Area, Xixiang, Bao'an District",
-        addressLocality: 'Shenzhen',
-        addressRegion: 'Guangdong',
-        addressCountry: 'CN',
-      },
-    },
-    {
-      '@type': 'WebSite',
-      '@id': 'https://www.venture-mfg.com/#website',
-      name: 'Venture Electronics',
-      url: 'https://www.venture-mfg.com/',
-    },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -80,7 +53,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(ventureStructuredData).replace(/</g, '\\u003c'),
+            __html: JSON.stringify(ventureIdentityStructuredData).replace(/</g, '\\u003c'),
           }}
         />
       </head>

@@ -399,18 +399,26 @@ test('canonical domain signals use the approved Venture public identity', async 
   const layout = await readProjectFile('src/app/layout.tsx');
   const home = await readProjectFile('src/app/page.tsx');
   const metadata = await readProjectFile('src/components/venture-site/pages/page-metadata.ts');
+  const channels = await readProjectFile('src/components/venture-site/content/contact-channels.ts');
+  const identitySchema = await readProjectFile('src/components/venture-site/schema/site-identity.ts');
   const sitemapRoute = await readProjectFile('src/app/sitemap.ts');
   const robotsRoute = await readProjectFile('src/app/robots.ts');
 
   assert.match(layout, /metadataBase: siteBaseUrl/);
-  assert.match(layout, /url: 'https:\/\/www\.venture-mfg\.com\/'/);
+  assert.match(layout, /ventureIdentityStructuredData/);
+  assert.match(identitySchema, /CONTACT_CHANNELS\.currentMainWebsite/);
+  assert.match(channels, /currentMainWebsite: "https:\/\/www\.venture-mfg\.com\/"/);
   assert.doesNotMatch(layout, /sameAs/);
   assert.doesNotMatch(layout, /contactPoint/);
-  assert.doesNotMatch(layout, /faxNumber/);
-  assert.match(layout, /'@id': 'https:\/\/www\.venture-mfg\.com\/#organization'/);
+  assert.doesNotMatch(identitySchema, /sameAs/);
+  assert.doesNotMatch(identitySchema, /contactPoint/);
+  assert.doesNotMatch(identitySchema, /faxNumber/);
+  assert.match(identitySchema, /"@id": "https:\/\/www\.venture-mfg\.com\/#organization"/);
   assert.match(home, /homeCanonical = 'https:\/\/www\.venture-mfg\.com\/'/);
   assert.match(home, /canonical: homeCanonical/);
   assert.match(metadata, /canonical: page\.href/);
+  assert.match(metadata, /page\.seoTitle \?\? `\$\{page\.label\} \| \$\{siteName\}`/);
+  assert.match(metadata, /page\.metaDescription \?\? page\.summary/);
   assert.match(sitemapRoute, /sitemapLinks\.map/);
   assert.match(sitemapRoute, /https:\/\/www\.venture-mfg\.com/);
   assert.match(robotsRoute, /disallow: \['\/thank-you\/'\]/);
@@ -442,62 +450,249 @@ test('metadata routes return the approved indexable URL set', () => {
   assert.equal(pageData.thankYou.showRelatedLinks, false);
 });
 
-test('public Venture domain outputs exclude unapproved domain candidates', async () => {
-  const publicFiles = await Promise.all([
-    readProjectFile('src/app/layout.tsx'),
-    readProjectFile('src/app/page.tsx'),
-    readProjectFile('src/app/robots.ts'),
-    readProjectFile('src/app/sitemap.ts'),
-    readProjectFile('src/components/venture-site/site-routes.ts'),
-    readProjectFile('src/components/venture-site/site-data.ts'),
-    readProjectFile('src/components/venture-site/home/BrandAuthorityTeaser.tsx'),
-    readProjectFile('src/components/venture-site/site/Footer.tsx'),
-    readProjectFile('src/components/social/social-box.tsx'),
-  ]);
-  const combined = publicFiles.join('\n');
+test('official resources categorizes Venture domain roles without expanding official schema or footer links', async () => {
+  const { domainGovernanceGroups, navItems, pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const layout = await readProjectFile('src/app/layout.tsx');
+  const footer = await readProjectFile('src/components/venture-site/site/Footer.tsx');
+  const header = await readProjectFile('src/components/venture-site/site/Header.tsx');
+  const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
+  const pageRenderer = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const sourceCss = await readProjectFile('src/app/(homes)/home-6/venture-exact.css');
 
-  assert.match(combined, /venture-mfg\.com/);
-  assert.match(combined, /venture-pcba\.com/);
-  assert.match(combined, /support@venture-mfg\.com/);
+  const quickAnswerSections = pageData.officialResources.sections.filter((section) => section.kind === 'quick-answer');
+  const domainSections = pageData.officialResources.sections.filter((section) => section.kind === 'domain-cards');
+  const domainTableSections = pageData.officialResources.sections.filter((section) => section.kind === 'domain-table');
+  const faqSections = pageData.officialResources.sections.filter((section) => section.kind === 'faq');
+  const renderedDomainSections = pageData.officialResources.sections.filter((section) =>
+    ['domain-cards', 'domain-table'].includes(section.kind),
+  );
 
-  for (const forbidden of [
-    'venturepcba.com',
+  assert.equal(pageData.officialResources.title, 'Official Websites, Domains & Company Entities');
+  assert.equal(pageData.officialResources.label, 'Official Websites, Domains & Company Entities');
+  assert.equal(pageData.officialResources.heroDensity, 'compact');
+  assert.equal(pageData.officialResources.showHeroVisual, false);
+  assert.match(pageData.officialResources.seoTitle, /Official Venture Electronics Websites/);
+  assert.match(pageData.officialResources.role, /Buyer guide/i);
+  assert.match(pageData.officialResources.summary, /which channels buyers should use for inquiries/i);
+  assert.doesNotMatch(pageData.officialResources.role, /source-of-truth|public entity guidance/i);
+  assert.doesNotMatch(pageData.officialResources.summary, /source-of-truth|AI systems/i);
+  assert.equal(quickAnswerSections.length, 1);
+  assert.equal(
+    quickAnswerSections[0].quickAnswers.find((row) => row.question === 'Current official main website').answer,
+    'venture-mfg.com',
+  );
+  assert.equal(
+    quickAnswerSections[0].quickAnswers.find((row) => row.question === 'Main inquiry path').answer,
+    'info@venture-mfg.com',
+  );
+  assert.equal(
+    quickAnswerSections[0].quickAnswers.find((row) => row.question === 'Not Venture-owned domain').answer,
+    'venturepcb.com',
+  );
+  assert.deepEqual(
+    quickAnswerSections[0].links.map((link) => link.href),
+    [
+      '#current-website',
+      '#legacy-assets',
+      '#associated-sites',
+      '#historical-domains',
+      '#reserved-domains',
+      '#not-official',
+      '#verification',
+      '#faq',
+    ],
+  );
+  assert.ok(
+    pageData.officialResources.sections.some((section) =>
+      section.items?.some((item) => item.includes('Last reviewed: 2026-06-28')),
+    ),
+  );
+  assert.doesNotMatch(siteData, /AI systems|search engines/i);
+  assert.doesNotMatch(siteData, /client-provided|pending final client confirmation|search results/i);
+  assert.equal(domainSections.length, 5);
+  assert.equal(domainTableSections.length, 1);
+  assert.equal(faqSections.length, 1);
+  assert.equal(pageData.officialResources.faqs.length, 6);
+  const aboutNav = navItems.find((item) => item.label === 'About');
+  const resourcesNav = navItems.find((item) => item.label === 'Resources');
+  assert.ok(aboutNav.children.some((child) => child.label === 'Official Websites, Domains & Company Entities' && child.href === '/official-resources/'));
+  assert.ok(resourcesNav.children.every((child) => child.href !== '/official-resources/'));
+  assert.ok(navItems.some((item) => item.label === 'Contact' && item.href === '/contact/'));
+  assert.ok(
+    navItems.every((item) => !(item.label === 'Official Websites' && item.href === '/official-resources/')),
+    'Official Websites should not be a standalone top-level nav item',
+  );
+  assert.match(header, /usePathname/);
+  assert.match(header, /normalizePath/);
+  assert.match(header, /aria-current=\{active \? "page" : undefined\}/);
+  assert.match(pageRenderer, /stage3-quick-answer/);
+  assert.match(pageRenderer, /stage3-domain-card/);
+  assert.match(pageRenderer, /stage3-domain-table/);
+  assert.match(pageRenderer, /What it is/);
+  assert.match(pageRenderer, /How it is used/);
+  assert.match(pageRenderer, /Buyer guidance/);
+  assert.doesNotMatch(pageRenderer, /Safe for public inquiries/);
+  assert.match(pageRenderer, /stage3-page-faq/);
+  assert.match(sourceCss, /\.venture-site \.stage3-quick-answer/);
+  assert.match(sourceCss, /\.venture-site \.stage3-domain-grid/);
+  assert.match(sourceCss, /\.venture-site \.stage3-domain-table/);
+  assert.match(sourceCss, /\.venture-site \.stage3-page-faq/);
+  assert.deepEqual(
+    domainGovernanceGroups.map((group) => group.title),
+    [
+      'Current official main website',
+      'Legacy / vertical web assets',
+      'Venture-owned or associated web assets',
+      'Historical email / redirected domains',
+      'Registered / reserved / unused / candidate domains',
+      'Not Venture-owned / not official',
+    ],
+  );
+  assert.deepEqual(
+    renderedDomainSections.map((section) => section.title),
+    domainGovernanceGroups.map((group) => group.title),
+  );
+
+  const expectedDomains = [
+    'venture-mfg.com',
+    'venture-pcba.com',
+    'pcb-supplier.com',
+    'v-cst.com',
+    'venturegroup-mfg.com',
+    'venturegroup-mfg.net',
+    'uni-venture.com',
     'venture-pcb.com',
     'ventureems.com',
     'venture-ems.com',
+    'venturepcba.com',
     'venturepcb.com',
-    'pcb-supplier.com',
+  ];
+
+  for (const domain of expectedDomains) {
+    const domainRecord = domainGovernanceGroups
+      .flatMap((group) => group.domains)
+      .find((record) => record.domain === domain);
+
+    assert.ok(domainRecord, `${domain} should be listed in domain governance data`);
+    assert.ok(domainRecord.currentRole, `${domain} should include a current role`);
+    assert.ok(domainRecord.howItIsUsed, `${domain} should include how it is used`);
+    assert.ok(domainRecord.buyerGuidance, `${domain} should include buyer guidance`);
+    assert.ok(domainRecord.safePublicInquiries, `${domain} should include inquiry safety guidance`);
+    assert.ok(
+      renderedDomainSections.some((section) => section.domainRecords?.some((record) => record.domain === domain)),
+      `${domain} should render through structured domain data, not a flattened facts bullet`,
+    );
+    assert.match(siteData, new RegExp(domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  assert.equal(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'venture-mfg.com').safePublicInquiries,
+    'Yes - use the current Venture Electronics contact path on venture-mfg.com.',
+  );
+  assert.equal(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'pcb-supplier.com').currentRole,
+    'Venture-owned / associated web asset. Not the current official main Venture Electronics website.',
+  );
+  assert.equal(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'v-cst.com').currentRole,
+    'Related company / registry-linked asset.',
+  );
+  assert.equal(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'venturepcb.com').currentRole,
+    'Not Venture-owned / not official.',
+  );
+  assert.equal(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'venturepcb.com').buyerGuidance,
+    'venturepcb.com is not owned or operated by Venture Electronics and should not be used for Venture Electronics inquiries.',
+  );
+  assert.equal(
+    domainTableSections[0].title,
+    'Registered / reserved / unused / candidate domains',
+  );
+
+  for (const linkedDomain of ['venture-mfg.com', 'venture-pcba.com', 'pcb-supplier.com']) {
+    assert.ok(
+      domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === linkedDomain).href,
+      `${linkedDomain} should have an explicit active link`,
+    );
+  }
+
+  for (const unsafeHrefDomain of [
     'v-cst.com',
-    'uni-venture.com',
-    'venturegroup-mfg.net',
     'venturegroup-mfg.com',
-    'vk.com/venturepcb',
+    'venturegroup-mfg.net',
+    'uni-venture.com',
+    'venture-pcb.com',
+    'ventureems.com',
+    'venture-ems.com',
+    'venturepcba.com',
+    'venturepcb.com',
   ]) {
-    assert.doesNotMatch(combined, new RegExp(forbidden.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.doesNotMatch(
+      siteData,
+      new RegExp(`href: ['"]https?:\\/\\/(?:www\\.)?${unsafeHrefDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`),
+      `${unsafeHrefDomain} should be plain text, not an active official website link`,
+    );
+    assert.doesNotMatch(footer, new RegExp(unsafeHrefDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.doesNotMatch(layout, new RegExp(unsafeHrefDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  assert.doesNotMatch(layout, /sameAs/);
+  assert.match(footer, /CONTACT_CHANNELS\.rfqEmail/);
+  assert.match(footer, /CONTACT_CHANNELS\.generalEmail/);
+  assert.match(footer, /CONTACT_CHANNELS\.rfqEmail === CONTACT_CHANNELS\.generalEmail/);
+  assert.match(footer, /Email \/ RFQ: \$\{CONTACT_CHANNELS\.rfqEmail\}/);
+  assert.match(footer, /General inquiry: \$\{CONTACT_CHANNELS\.generalEmail\}/);
+  assert.doesNotMatch(footer, /support@venture-mfg\.com/);
+});
+
+test('about page uses a short official-domain teaser instead of repeating the domain registry', () => {
+  const { domainGovernanceGroups, pageData, routes } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const aboutSections = pageData.about.sections;
+  const aboutText = JSON.stringify(aboutSections);
+  const nonCanonicalDomains = domainGovernanceGroups
+    .flatMap((group) => group.domains.map((record) => record.domain))
+    .filter((domain) => domain !== 'venture-mfg.com');
+
+  assert.equal(aboutSections[0].title, 'Official websites, domains and company entities');
+  assert.match(aboutSections[0].body, /current domain asset map/i);
+  assert.deepEqual(aboutSections[0].links, [
+    { label: 'View Official Websites & Domain Asset Map', href: routes.officialResources },
+  ]);
+
+  for (const domain of nonCanonicalDomains) {
+    assert.doesNotMatch(aboutText, new RegExp(domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
 });
 
-test('public contact and RFQ paths show both approved email channels', async () => {
+test('public contact and RFQ paths use the centralized approved email channel', async () => {
   const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const composer = await readProjectFile('src/components/venture-site/pages/RfqEmailComposer.tsx');
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
   const footer = await readProjectFile('src/components/venture-site/site/Footer.tsx');
+  const channels = await readProjectFile('src/components/venture-site/content/contact-channels.ts');
 
-  const combined = `${page}\n${siteData}\n${footer}`;
+  const combined = `${page}\n${composer}\n${siteData}\n${footer}\n${channels}`;
 
   assert.match(combined, /info@venture-mfg\.com/);
-  assert.match(combined, /support@venture-mfg\.com/);
-  assert.match(siteData, /RFQ files: support@venture-mfg\.com/);
-  assert.match(siteData, /General inquiry: info@venture-mfg\.com/);
-  assert.match(page, /mailto:support@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ/);
-  assert.match(page, /Email support@venture-mfg\.com/);
+  assert.doesNotMatch(combined, /support@venture-mfg\.com/);
+  assert.match(channels, /rfqEmail:\s*"info@venture-mfg\.com"/);
+  assert.match(siteData, /CONTACT_CHANNELS\.rfqEmail/);
+  assert.match(siteData, /CONTACT_CHANNELS\.generalEmail/);
+  assert.match(composer, /CONTACT_CHANNELS\.rfqEmail/);
+  assert.match(composer, /Prepare RFQ Email/);
+  assert.match(composer, /mailto:/);
+  assert.match(page, /const isMailto = href\.startsWith\("mailto:"\)/);
+  assert.match(page, /<a href=\{row\.href\} \{\.\.\.getExternalAnchorProps\(row\.href\)\}>/);
 });
 
 test('Venture pages emit conservative page-level structured data', () => {
-  const { pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const { domainGovernanceGroups, pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
   const {
     buildPageStructuredData,
     serviceSchemaPages,
   } = loadProjectTsModule('src/components/venture-site/schema/structured-data.ts');
+  const { ventureIdentityStructuredData } = loadProjectTsModule('src/components/venture-site/schema/site-identity.ts');
 
   assert.deepEqual(serviceSchemaPages, [
     '/services/pcb-assembly-pcba/',
@@ -516,6 +711,61 @@ test('Venture pages emit conservative page-level structured data', () => {
 
   const resourcesGraph = buildPageStructuredData(pageData.resources)['@graph'];
   assert.ok(resourcesGraph.some((entry) => entry['@type'] === 'FAQPage'));
+
+  const officialResourcesGraph = buildPageStructuredData(pageData.officialResources)['@graph'];
+  const officialResourcesJson = JSON.stringify(officialResourcesGraph);
+  const domainStatusMap = officialResourcesGraph.find((entry) => entry['@type'] === 'ItemList');
+  const officialResourcesFaq = officialResourcesGraph.find((entry) => entry['@type'] === 'FAQPage');
+  const expectedDomains = domainGovernanceGroups.flatMap((group) =>
+    group.domains.map((record) => record.domain),
+  );
+  const nonCanonicalDomains = expectedDomains.filter((domain) => domain !== 'venture-mfg.com');
+
+  assert.ok(domainStatusMap);
+  assert.equal(domainStatusMap.name, 'Venture Electronics domain status map');
+  assert.equal(domainStatusMap.itemListElement.length, expectedDomains.length);
+  assert.ok(
+    domainStatusMap.itemListElement.every((entry) => entry.item?.['@type'] === 'Thing'),
+    'Domain status ItemList entries should remain clarification Things, not Organization or WebSite nodes',
+  );
+
+  const domainStatusJson = JSON.stringify(domainStatusMap);
+  for (const domain of expectedDomains) {
+    assert.ok(domainStatusJson.includes(domain), `${domain} should appear in the runtime ItemList`);
+  }
+
+  assert.ok(officialResourcesJson.includes('venturepcb.com'));
+  assert.doesNotMatch(officialResourcesJson, /https?:\/\/(?:www\.)?venturepcb\.com/);
+  assert.ok(officialResourcesFaq);
+  assert.equal(officialResourcesFaq.mainEntity.length, 6);
+  assert.doesNotMatch(officialResourcesJson, /sameAs/);
+
+  assert.ok(
+    officialResourcesGraph.every((entry) => !['Organization', 'WebSite'].includes(entry['@type'])),
+    'Page-level structured data should not redefine Organization or WebSite identity',
+  );
+
+  const identityGraph = ventureIdentityStructuredData['@graph'];
+  const identityJson = JSON.stringify(ventureIdentityStructuredData);
+  const organization = identityGraph.find((entry) => entry['@type'] === 'Organization');
+  const website = identityGraph.find((entry) => entry['@type'] === 'WebSite');
+
+  assert.equal(organization.url, 'https://www.venture-mfg.com/');
+  assert.equal(website.url, 'https://www.venture-mfg.com/');
+  assert.doesNotMatch(identityJson, /sameAs/);
+  assert.doesNotMatch(identityJson, /contactPoint/);
+
+  for (const domain of nonCanonicalDomains) {
+    assert.ok(
+      domainStatusJson.includes(domain),
+      `${domain} may appear inside the domain-status ItemList`,
+    );
+    assert.doesNotMatch(
+      identityJson,
+      new RegExp(domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+      `${domain} should not appear in Organization/WebSite schema`,
+    );
+  }
 });
 
 test('Venture route renderer injects page-level structured data', async () => {
@@ -608,13 +858,16 @@ test('approved Venture content does not expose internal implementation boundarie
 
 test('RFQ launch path is mailto-only and has no inactive visual form', async () => {
   const page = await readProjectFile('src/components/venture-site/pages/VenturePage.tsx');
+  const composer = await readProjectFile('src/components/venture-site/pages/RfqEmailComposer.tsx');
   const siteData = await readProjectFile('src/components/venture-site/site-data.ts');
 
-  assert.match(page, /mailto:support@venture-mfg\.com/);
-  assert.match(page, /Email support@venture-mfg\.com/);
-  assert.match(siteData, /cta: \{ label: ['"]Email RFQ Files['"], href: ['"]mailto:support@venture-mfg\.com\?subject=Venture%20Electronics%20RFQ['"] \}/);
-  assert.doesNotMatch(page, /<form className=["']contact-form["']/);
-  assert.doesNotMatch(page, /type=["']button["'][\s\S]*Placeholder only/);
+  assert.match(page, /<RfqEmailComposer \/>/);
+  assert.match(composer, /CONTACT_CHANNELS\.rfqEmail/);
+  assert.match(composer, /mailto:/);
+  assert.match(composer, /Prepare RFQ Email/);
+  assert.match(siteData, /cta: \{ label: ["']Prepare RFQ Email["'], href: routes\.requestQuote \}/);
+  assert.doesNotMatch(composer, /type=["']file["']/);
+  assert.doesNotMatch(composer, /alert\(JSON\.stringify/);
 });
 
 test('legal and utility pages use plain headers with no related link block', async () => {
