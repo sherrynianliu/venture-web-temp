@@ -1,12 +1,12 @@
 /* ============================================================
    Venture Home (Home 06) — overrides
-   Neutralizes togeto's global theme rules (from globals.scss /
-   _theme.scss) that leak into the scoped `.venture-site` design.
+   Neutralizes inherited base-theme rules from theme-main.css that leak into
+   the scoped `.venture-site` design.
    Kept separate from the generated venture-exact.css so re-scoping
    the reference CSS never drops these fixes.
    ============================================================ */
 
-/* togeto sets `h1..h6 { color: var(--it-common-black) }` and
+/* The inherited theme sets `h1..h6 { color: var(--it-common-black) }` and
    `p { color: #5c6675 }` globally. The reference relies on colour
    inheritance for headings/paragraphs on dark sections, so restore
    inheritance (reference component classes with explicit colours

@@ -1,7 +1,7 @@
 /* ============================================================
    Venture Home (Home 06) — overrides
-   Neutralizes the inherited global theme rules (from globals.scss /
-   _theme.scss) that leak into the scoped `.venture-site` design.
+   Neutralizes inherited base-theme rules from theme-main.css that leak into
+   the scoped `.venture-site` design.
    Kept separate from the generated venture-exact.css so re-scoping
    the reference CSS never drops these fixes.
    ============================================================ */

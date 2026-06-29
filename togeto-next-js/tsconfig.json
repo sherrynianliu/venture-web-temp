@@ -19,9 +19,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "@/assets/*": [
-        "./public/assets/*"
       ]
     },
     "target": "ES2017",
@@ -37,9 +34,7 @@
     "src/app/**/*.tsx",
     "src/components/venture-site/**/*.ts",
     "src/components/venture-site/**/*.tsx",
-    "src/utils/**/*.ts",
-    "src/utils/**/*.tsx",
-    "src/utils/**/*.mjs",
+    "src/utils/resolve-wow-constructor.mjs",
     "src/views/home-6/**/*.ts",
     "src/views/home-6/**/*.tsx",
     ".next/types/**/*.ts",

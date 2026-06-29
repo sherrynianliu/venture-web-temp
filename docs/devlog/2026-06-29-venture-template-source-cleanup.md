@@ -75,3 +75,47 @@
 
 - P2 still owns CSS/theme extraction and `theme-main.css` removal.
 - Next config TypeScript strictness should be revisited only after `npx tsc --noEmit` can complete with actionable output.
+
+## Follow-up Cleanup: Source-Only Styles, Types and Utilities
+
+- Started branch `codex/venture-css-theme-audit` from `main` after PR #7 was merged.
+- Kept the scope intentionally narrow:
+  - Remove unused source-only Togeto SCSS and auxiliary CSS files.
+  - Remove unused old template utility/type files.
+  - Remove the public `company-report.txt` template artifact.
+  - Keep `public/assets/css/theme-main.css` loaded for current first-launch visual stability.
+  - Do not attempt full Venture-owned CSS extraction or runtime theme replacement in this branch.
+- Added guardrail tests so removed files do not return:
+  - `src/app/globals.scss`
+  - `public/assets/scss/`
+  - unused `custom-animation.css`, `font-awesome-pro.css`, `spacing.css`
+  - unused `src/utils/*` template helpers except the retained WOW constructor resolver
+  - unused old `src/types/*`
+  - public `company-report.txt`
+- Synchronized the source and static copies of `venture-overrides.css` and updated comments so they reference `theme-main.css` as a transitional base CSS file, not Togeto/Transport branding.
+- Cleaned the top comment in `theme-main.css` to describe it as a transitional base theme dependency for Venture, while leaving the runtime CSS content unchanged.
+
+## Follow-up Verification
+
+- `node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/resolve-wow-constructor.test.mjs tests/template-cleanup.test.mjs`: passed, 51/51 tests.
+- `npm run build`: passed; all 24 static routes generated.
+- `git diff --check`: passed.
+- Active source/runtime residue scan for Togeto/logistics copy, fake form alerts, `support@venture-mfg.com`, Wei Chi/Chinese entity wording, deleted SCSS/type paths and old aliases found matches only in test assertions.
+- Browser MCP route smoke passed for:
+  - `/`
+  - `/services/`
+  - `/quality-testing/`
+  - `/contact/`
+  - `/services/pcb-assembly-pcba/`
+- Browser smoke returned correct Venture page titles for the checked routes.
+- Additional browser overflow smoke at a 1200px viewport passed for `/`, `/services/`, `/quality-testing/`, `/contact/`, and all four service child pages:
+  - no horizontal page overflow detected
+  - no broken images detected
+  - each checked page returned a visible H1
+- Console entries during browser smoke were Next dev Fast Refresh/HMR messages only; no page runtime error was observed in those logs.
+- Playwright CLI screenshot smoke was attempted, but the wrapper tried to download `@playwright/cli` from npm and was blocked by restricted network access. Chrome headless also failed in this desktop sandbox, so this follow-up does not claim a full screenshot-based visual QA pass.
+
+## Follow-up Remaining
+
+- `theme-main.css` is still a runtime dependency and should remain until a separate P2 visual-regression pass extracts the needed styles into Venture-owned CSS.
+- Full mobile visual QA is still a human/browser review task if the future PR removes or rewrites runtime theme CSS.
