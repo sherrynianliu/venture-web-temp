@@ -16,7 +16,7 @@ export default function Error({ error, reset }: ErrorProps) {
           <h1>Something went wrong.</h1>
           <p>{error.message || 'The page could not be loaded. Please retry or return home.'}</p>
           <div className="utility-page__actions">
-            <button className="it-btn-orange" type="button" onClick={reset}>
+            <button className="cta-button cta-button--primary" type="button" onClick={reset}>
               <span>Try Again</span>
             </button>
             <Link className="utility-page__link" href="/">

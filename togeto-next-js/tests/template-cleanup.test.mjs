@@ -15,7 +15,10 @@ async function readProjectFile(path) {
 
 const liveFiles = [
   'src/app/layout.tsx',
+  'src/app/error.tsx',
+  'src/app/not-found.tsx',
   'src/app/page.tsx',
+  'src/components/top-bar/top-bar-area.tsx',
   'src/components/venture-site/site-data.ts',
   'src/components/venture-site/site/Header.tsx',
   'src/components/venture-site/site/Footer.tsx',
@@ -46,6 +49,16 @@ const forbiddenLiveTerms = [
   'Wei Chi',
   '威驰',
   'Chinese entity',
+  '/assets/css/theme-main.css',
+  'it-header-top-area',
+  'it-header-top-ptb',
+  'it-header-top-list-box',
+  'it-btn-orange',
+  'black-bg',
+  'fa-light',
+  'fa-solid',
+  'fa-regular',
+  'fa-brands',
 ];
 
 test('live Venture app files stay free of template and AI-facing copy leaks', async () => {
@@ -249,6 +262,8 @@ const retiredTemplateStyleSourcePaths = [
   'public/assets/css/custom-animation.css',
   'public/assets/css/font-awesome-pro.css',
   'public/assets/css/spacing.css',
+  'public/assets/css/theme-main.css',
+  'public/assets/fonts',
 ];
 
 const retiredTemplatePublicAssetPaths = [
