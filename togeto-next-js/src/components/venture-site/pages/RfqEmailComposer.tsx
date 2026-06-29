@@ -29,10 +29,10 @@ type FormState = {
   phone: string;
   quantity: string;
   targetSchedule: string;
+  deliveryDestination: string;
   projectType: string;
   projectSummary: string;
   testingRequirements: string;
-  notes: string;
   filesReady: string[];
 };
 
@@ -43,10 +43,10 @@ const initialFormState: FormState = {
   phone: "",
   quantity: "",
   targetSchedule: "",
+  deliveryDestination: "",
   projectType: projectTypes[0],
   projectSummary: "",
   testingRequirements: "",
-  notes: "",
   filesReady: [],
 };
 
@@ -58,22 +58,20 @@ function buildRfqBody(form: FormState) {
     "",
     "Please review this RFQ request.",
     "",
-    `Name: ${form.name}`,
+    `Contact person: ${form.name}`,
     `Company: ${form.company}`,
     `Email: ${form.email}`,
     `Phone / WhatsApp: ${form.phone}`,
     `Project type: ${form.projectType}`,
     `Quantity: ${form.quantity}`,
     `Target schedule: ${form.targetSchedule}`,
-    `Files ready: ${files}`,
-    "Project summary:",
+    `Delivery destination: ${form.deliveryDestination}`,
+    `Files available: ${files}`,
+    "Message:",
     form.projectSummary,
     "",
-    "Testing / quality requirements:",
+    "Testing needs:",
     form.testingRequirements,
-    "",
-    "Notes:",
-    form.notes,
     "",
     "I will attach Gerber, BOM, CPL, drawings or related project files in this email client before sending.",
   ].join("\n");
@@ -81,6 +79,7 @@ function buildRfqBody(form: FormState) {
 
 export function RfqEmailComposer() {
   const [form, setForm] = useState<FormState>(initialFormState);
+  const [copyStatus, setCopyStatus] = useState("");
   const RFQ_EMAIL = CONTACT_CHANNELS.rfqEmail;
 
   const subject = useMemo(() => {
@@ -111,6 +110,17 @@ export function RfqEmailComposer() {
     window.location.href = mailtoHref;
   }
 
+  async function copyRfqDetails() {
+    const body = buildRfqBody(form);
+
+    try {
+      await navigator.clipboard.writeText(body);
+      setCopyStatus("RFQ details copied.");
+    } catch {
+      setCopyStatus("Copy failed. Please use Prepare RFQ Email or copy the fields manually.");
+    }
+  }
+
   return (
     <section className="rfq-composer" aria-labelledby="rfq-composer-title">
       <div className="rfq-composer__head">
@@ -121,12 +131,17 @@ export function RfqEmailComposer() {
           message in your email client, attach Gerber, BOM, CPL, drawings, or related files, then
           send it manually.
         </p>
+        <p>
+          This first-launch RFQ page does not upload files directly. Email Gerber, BOM, CPL,
+          drawings or other sensitive files through the confirmed Venture Electronics contact
+          channel.
+        </p>
       </div>
 
       <form className="rfq-composer__form" onSubmit={prepareEmail}>
         <div className="rfq-composer__grid">
           <label>
-            <span>Name</span>
+            <span>Contact person</span>
             <input
               required
               value={form.name}
@@ -177,6 +192,13 @@ export function RfqEmailComposer() {
             />
           </label>
           <label>
+            <span>Delivery destination</span>
+            <input
+              value={form.deliveryDestination}
+              onChange={(event) => updateField("deliveryDestination", event.target.value)}
+            />
+          </label>
+          <label>
             <span>Project type</span>
             <select
               value={form.projectType}
@@ -192,7 +214,7 @@ export function RfqEmailComposer() {
         </div>
 
         <fieldset className="rfq-composer__files">
-          <legend>Files ready</legend>
+          <legend>Files available</legend>
           {fileOptions.map((option) => (
             <label key={option}>
               <input
@@ -206,7 +228,7 @@ export function RfqEmailComposer() {
         </fieldset>
 
         <label className="rfq-composer__full">
-          <span>Project summary</span>
+          <span>Message</span>
           <textarea
             required
             rows={4}
@@ -216,7 +238,7 @@ export function RfqEmailComposer() {
         </label>
 
         <label className="rfq-composer__full">
-          <span>Testing / quality requirements</span>
+          <span>Testing needs</span>
           <textarea
             rows={3}
             value={form.testingRequirements}
@@ -224,21 +246,16 @@ export function RfqEmailComposer() {
           />
         </label>
 
-        <label className="rfq-composer__full">
-          <span>Notes</span>
-          <textarea
-            rows={3}
-            value={form.notes}
-            onChange={(event) => updateField("notes", event.target.value)}
-          />
-        </label>
-
         <div className="rfq-composer__actions">
           <button type="submit">Prepare RFQ Email</button>
+          <button type="button" onClick={copyRfqDetails}>
+            Copy RFQ Details
+          </button>
           <p>
             If your email client does not open, email Gerber, BOM, CPL, drawings, and project
             requirements to {RFQ_EMAIL}.
           </p>
+          {copyStatus ? <p role="status">{copyStatus}</p> : null}
         </div>
       </form>
     </section>
