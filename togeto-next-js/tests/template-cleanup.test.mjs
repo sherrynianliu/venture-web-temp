@@ -1,11 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
+import { constants } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(root, '..');
+const repoRoot = join(projectRoot, '..');
 
 async function readProjectFile(path) {
   return readFile(join(projectRoot, path), 'utf8');
@@ -21,6 +23,8 @@ const liveFiles = [
   'src/components/venture-site/pages/RfqEmailComposer.tsx',
   'src/components/venture-site/schema/structured-data.ts',
   'src/components/venture-home/home-six-content.tsx',
+  'src/components/venture-home/use-venture-reveals.ts',
+  'src/app/(homes)/home-6/venture-overrides.css',
 ];
 
 const forbiddenLiveTerms = [
@@ -104,4 +108,139 @@ test('Venture header has a mobile navigation affordance when desktop nav is hidd
   assert.match(header, /mobile-nav-panel__cta/);
   assert.match(css, /\.venture-site \.mobile-nav-toggle/);
   assert.match(css, /\.venture-site \.mobile-nav-panel/);
+});
+
+const retiredRepoTemplatePaths = [
+  'togeto-documentation',
+  'togeto-rtl-next-js',
+];
+
+const retiredTemplateSourcePaths = [
+  'src/components/about',
+  'src/components/blog',
+  'src/components/bradcrumb',
+  'src/components/brand',
+  'src/components/career',
+  'src/components/cart',
+  'src/components/checkout',
+  'src/components/choose',
+  'src/components/compare',
+  'src/components/copyright',
+  'src/components/faq',
+  'src/components/footer-widget',
+  'src/components/form',
+  'src/components/funfact',
+  'src/components/hero',
+  'src/components/information',
+  'src/components/map',
+  'src/components/modal',
+  'src/components/modal-video',
+  'src/components/newsletter',
+  'src/components/offcanvas',
+  'src/components/portfolio',
+  'src/components/preloader',
+  'src/components/price',
+  'src/components/progress',
+  'src/components/scroll-to-top',
+  'src/components/search-popup',
+  'src/components/select',
+  'src/components/service',
+  'src/components/shop',
+  'src/components/social',
+  'src/components/step',
+  'src/components/svg',
+  'src/components/team',
+  'src/components/testimonial',
+  'src/components/text-slider',
+  'src/components/ui/pagination.tsx',
+  'src/components/video',
+  'src/components/wishlist',
+  'src/components/item-not-found.tsx',
+  'src/components/error-msg.tsx',
+  'src/data/menu-data.ts',
+  'src/data/service-data.tsx',
+  'src/data/faq-data.ts',
+  'src/data/blog-data.ts',
+  'src/data/portfolio-data.ts',
+  'src/data/product-data.ts',
+  'src/data/team-data.tsx',
+  'src/data/testimonial-data.ts',
+  'src/hooks/redux-hooks.ts',
+  'src/hooks/use-gsap-animation.tsx',
+  'src/hooks/use-header-scroll.tsx',
+  'src/hooks/use-is-client.ts',
+  'src/hooks/use-paginate.ts',
+  'src/hooks/use-reveal-bg.tsx',
+  'src/layouts/footers/footer-one.tsx',
+  'src/layouts/footers/footer-two.tsx',
+  'src/layouts/headers/header-menus-onepage.tsx',
+  'src/layouts/headers/header-menus.tsx',
+  'src/layouts/headers/header.tsx',
+  'src/layouts/wrapper.tsx',
+  'src/redux/store.ts',
+  'src/redux/rootReducer.ts',
+  'src/redux/selectors/cart-selector.ts',
+  'src/redux/selectors/compare-selector.ts',
+  'src/redux/selectors/header-selector.ts',
+  'src/redux/selectors/modal-selector.ts',
+  'src/redux/selectors/product-filter-selector.ts',
+  'src/redux/selectors/product-modal-selector.ts',
+  'src/redux/selectors/product-sort-selector.ts',
+  'src/redux/selectors/wishlist-selectors.ts',
+  'src/redux/slices/cart-slice.ts',
+  'src/redux/slices/compare-slice.ts',
+  'src/redux/slices/header-slice.ts',
+  'src/redux/slices/modal-slice.ts',
+  'src/redux/slices/product-filter-slice.ts',
+  'src/redux/slices/product-modal-slice.ts',
+  'src/redux/slices/product-sort-slice.ts',
+  'src/redux/slices/wishlist-slice.ts',
+  'src/app/store-provider.tsx',
+  'src/views/about',
+  'src/views/blog',
+  'src/views/blog-details',
+  'src/views/blog-sidebar',
+  'src/views/cart',
+  'src/views/checkout',
+  'src/views/compare',
+  'src/views/contact',
+  'src/views/error',
+  'src/views/faq',
+  'src/views/home-1',
+  'src/views/home-2',
+  'src/views/home-3',
+  'src/views/home-4',
+  'src/views/home-5',
+  'src/views/portfolio',
+  'src/views/portfolio-details',
+  'src/views/price',
+  'src/views/service',
+  'src/views/service-details',
+  'src/views/shop',
+  'src/views/shop-details',
+  'src/views/shop-sidebar',
+  'src/views/team',
+  'src/views/team-details',
+  'src/views/testimonial',
+  'src/views/wishlist',
+];
+
+test('retired repo-level Togeto template directories are removed', async () => {
+  for (const path of retiredRepoTemplatePaths) {
+    await assert.rejects(
+      access(join(repoRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain in this repository`,
+    );
+  }
+});
+
+test('retired high-risk template files are removed from active source', async () => {
+  for (const path of retiredTemplateSourcePaths) {
+    await assert.rejects(
+      access(join(projectRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain in active source`,
+    );
+  }
 });
