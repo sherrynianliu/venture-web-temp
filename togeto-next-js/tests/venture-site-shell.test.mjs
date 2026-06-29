@@ -267,6 +267,15 @@ test('live Venture image slots use buyer-relevant production visuals', async () 
   assert.doesNotMatch(combined, /Venture SMT placement and assembly equipment/);
 });
 
+test('Venture override CSS stays synchronized between source and public static copy', async () => {
+  const sourceOverrides = await readProjectFile('src/app/(homes)/home-6/venture-overrides.css');
+  const publicOverrides = await readProjectFile('public/venture-static/venture-overrides.css');
+
+  assert.equal(sourceOverrides, publicOverrides);
+  assert.doesNotMatch(sourceOverrides, /Togeto|Transport & Logistics/i);
+  assert.match(sourceOverrides, /theme-main\.css/);
+});
+
 test('public old-site image pool excludes images not approved for direct publication', () => {
   const imageRoot = path.join(rootPath, 'public/assets/img/venture-old-site');
   const publicImages = readdirSync(imageRoot, { recursive: true })

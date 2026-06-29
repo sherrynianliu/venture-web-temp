@@ -225,6 +225,36 @@ const retiredTemplateSourcePaths = [
   'src/views/wishlist',
 ];
 
+const retiredTemplateUtilitySourcePaths = [
+  'src/utils/constants.ts',
+  'src/utils/filtering.tsx',
+  'src/utils/helper.tsx',
+  'src/utils/sorting.tsx',
+  'src/utils/title-animation.ts',
+  'src/types/blog-d-t.ts',
+  'src/types/bootstrap.d.ts',
+  'src/types/faq-d-t.ts',
+  'src/types/menu-d-t.ts',
+  'src/types/portfolio-d-t.ts',
+  'src/types/product-d-t.ts',
+  'src/types/service-d-t.ts',
+  'src/types/team-d-t.ts',
+  'src/types/testimonial-d-t.ts',
+  'src/types/wowjs-d-t.ts',
+];
+
+const retiredTemplateStyleSourcePaths = [
+  'src/app/globals.scss',
+  'public/assets/scss',
+  'public/assets/css/custom-animation.css',
+  'public/assets/css/font-awesome-pro.css',
+  'public/assets/css/spacing.css',
+];
+
+const retiredTemplatePublicAssetPaths = [
+  'public/assets/img/service/download/company-report.txt',
+];
+
 test('retired repo-level Togeto template directories are removed', async () => {
   for (const path of retiredRepoTemplatePaths) {
     await assert.rejects(
@@ -241,6 +271,36 @@ test('retired high-risk template files are removed from active source', async ()
       access(join(projectRoot, path), constants.R_OK),
       /ENOENT/,
       `${path} should not remain in active source`,
+    );
+  }
+});
+
+test('retired template utility and type sources are removed from active source', async () => {
+  for (const path of retiredTemplateUtilitySourcePaths) {
+    await assert.rejects(
+      access(join(projectRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain in active source`,
+    );
+  }
+});
+
+test('retired SCSS and source-only template styles are removed from public source', async () => {
+  for (const path of retiredTemplateStyleSourcePaths) {
+    await assert.rejects(
+      access(join(projectRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain in public or app source`,
+    );
+  }
+});
+
+test('retired public template artifacts are removed', async () => {
+  for (const path of retiredTemplatePublicAssetPaths) {
+    await assert.rejects(
+      access(join(projectRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain in public assets`,
     );
   }
 });
