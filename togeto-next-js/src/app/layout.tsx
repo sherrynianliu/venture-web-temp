@@ -36,10 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <link rel="stylesheet" href="/venture-static/vendor/bootstrap.min.css" />
         <link rel="stylesheet" href="/venture-static/vendor/animate.min.css" />
-        <link rel="stylesheet" href="/venture-static/vendor/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="/venture-static/vendor/modal-video.min.css" />
         <link rel="stylesheet" href="/venture-static/venture-exact.css" />
         <link rel="stylesheet" href="/venture-static/venture-overrides.css" />
         <script
