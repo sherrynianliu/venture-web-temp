@@ -45,6 +45,10 @@
   - `git diff --check`: passed.
   - `git check-ignore -v .playwright-mcp/ output/ togeto-next-js/output/ venture-home-desktop.png togeto-next-js/venture-home-desktop.png docs/.DS_Store`: all expected local artifacts are ignored.
   - Public entity denylist search in `togeto-next-js/src`: no matches.
+- Remote CI note:
+  - PR #13 triggered the new `Venture verification` workflow, but GitHub did not allocate a runner.
+  - Check-run annotation: `The job was not started because your account is locked due to a billing issue.`
+  - This is an account/billing blocker, not a failure in the workflow commands. The equivalent local commands passed.
 
 ## Visual QA
 
