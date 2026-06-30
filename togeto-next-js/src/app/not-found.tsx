@@ -13,7 +13,7 @@ export default function NotFound() {
           <p className="utility-page__eyebrow">404</p>
           <h1>Page not found.</h1>
           <p>The page you requested is not available on the Venture Electronics website.</p>
-          <Link className="it-btn-orange" href="/">
+          <Link className="cta-button cta-button--primary" href="/">
             <span>Back to Home</span>
           </Link>
         </div>

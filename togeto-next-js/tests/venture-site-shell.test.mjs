@@ -273,7 +273,7 @@ test('Venture override CSS stays synchronized between source and public static c
 
   assert.equal(sourceOverrides, publicOverrides);
   assert.doesNotMatch(sourceOverrides, /Togeto|Transport & Logistics/i);
-  assert.match(sourceOverrides, /theme-main\.css/);
+  assert.doesNotMatch(sourceOverrides, /theme-main\.css/);
 });
 
 test('public old-site image pool excludes images not approved for direct publication', () => {
