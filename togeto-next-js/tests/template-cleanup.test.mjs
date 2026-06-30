@@ -50,6 +50,9 @@ const forbiddenLiveTerms = [
   '威驰',
   'Chinese entity',
   '/assets/css/theme-main.css',
+  '/venture-static/vendor/bootstrap.min.css',
+  '/venture-static/vendor/swiper-bundle.min.css',
+  '/venture-static/vendor/modal-video.min.css',
   'it-header-top-area',
   'it-header-top-ptb',
   'it-header-top-list-box',
@@ -264,6 +267,9 @@ const retiredTemplateStyleSourcePaths = [
   'public/assets/css/spacing.css',
   'public/assets/css/theme-main.css',
   'public/assets/fonts',
+  'public/venture-static/vendor/bootstrap.min.css',
+  'public/venture-static/vendor/swiper-bundle.min.css',
+  'public/venture-static/vendor/modal-video.min.css',
 ];
 
 const retiredTemplatePublicAssetPaths = [
