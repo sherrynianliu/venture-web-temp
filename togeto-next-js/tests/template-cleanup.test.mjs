@@ -390,3 +390,17 @@ test('unused template animation helper sources are removed', async () => {
     );
   }
 });
+
+test('runtime route smoke verification is documented and scriptable', async () => {
+  const manifest = JSON.parse(await readProjectFile('package.json'));
+  const readme = await readProjectFile('README.md');
+
+  assert.equal(
+    manifest.scripts?.['smoke:routes'],
+    'node tests/runtime-route-smoke.test.mjs',
+  );
+  assert.match(readme, /Runtime Route Smoke Test/);
+  assert.match(readme, /npm run smoke:routes/);
+
+  await access(join(projectRoot, 'tests/runtime-route-smoke.test.mjs'), constants.R_OK);
+});

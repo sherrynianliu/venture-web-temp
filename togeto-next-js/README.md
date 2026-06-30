@@ -26,3 +26,13 @@ npm run dev:turbo -- --port 3002 --hostname 127.0.0.1
 node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/template-cleanup.test.mjs
 npm run build
 ```
+
+## Runtime Route Smoke Test
+
+After a successful production build, run:
+
+```bash
+npm run smoke:routes
+```
+
+This starts `next start` on an available `127.0.0.1` port, checks the canonical public routes, and verifies the trailing-slash redirects that can otherwise look like broken rendering in a local browser preview.
