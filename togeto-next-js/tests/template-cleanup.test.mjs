@@ -276,6 +276,42 @@ const retiredTemplatePublicAssetPaths = [
   'public/assets/img/service/download/company-report.txt',
 ];
 
+const retiredTemplateRuntimeDependencies = [
+  '@gsap/react',
+  '@hookform/resolvers',
+  '@reduxjs/toolkit',
+  '@types/react-modal-video',
+  'animate.css',
+  'bootstrap',
+  'gsap',
+  'rc-slider',
+  'react-accessible-accordion',
+  'react-countup',
+  'react-fast-marquee',
+  'react-hook-form',
+  'react-intersection-observer',
+  'react-modal-video',
+  'react-paginate',
+  'react-redux',
+  'react-tabs',
+  'react-toastify',
+  'sass',
+  'swiper',
+  'wowjs',
+  'yup',
+];
+
+const allowedRuntimeDependencies = ['next', 'react', 'react-dom'];
+
+const retiredTemplateAnimationSourcePaths = [
+  'src/plugins/gsap-scroll-to-plugin.js',
+  'src/plugins/gsap-scroll-trigger.js',
+  'src/plugins/gsap-split-text.js',
+  'src/plugins/index.js',
+  'src/utils/resolve-wow-constructor.mjs',
+  'tests/resolve-wow-constructor.test.mjs',
+];
+
 test('retired repo-level Togeto template directories are removed', async () => {
   for (const path of retiredRepoTemplatePaths) {
     await assert.rejects(
@@ -322,6 +358,35 @@ test('retired public template artifacts are removed', async () => {
       access(join(projectRoot, path), constants.R_OK),
       /ENOENT/,
       `${path} should not remain in public assets`,
+    );
+  }
+});
+
+test('template-only runtime dependencies are removed from the live app manifest', async () => {
+  const manifest = JSON.parse(await readProjectFile('package.json'));
+  const dependencies = Object.keys(manifest.dependencies ?? {});
+
+  assert.deepEqual(
+    dependencies.sort(),
+    allowedRuntimeDependencies.sort(),
+    'live runtime dependencies should stay limited to the Next/React app runtime',
+  );
+
+  for (const dependency of retiredTemplateRuntimeDependencies) {
+    assert.equal(
+      manifest.dependencies?.[dependency],
+      undefined,
+      `${dependency} should not remain in package.json after template cleanup`,
+    );
+  }
+});
+
+test('unused template animation helper sources are removed', async () => {
+  for (const path of retiredTemplateAnimationSourcePaths) {
+    await assert.rejects(
+      access(join(projectRoot, path), constants.R_OK),
+      /ENOENT/,
+      `${path} should not remain after GSAP/WOW runtime cleanup`,
     );
   }
 });
