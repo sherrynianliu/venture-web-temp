@@ -1,0 +1,13 @@
+# macOS and local filesystem metadata
+.DS_Store
+
+# Local browser / Playwright artifacts
+/.playwright-mcp/
+
+# Generated local outputs
+/output/
+/togeto-next-js/output/
+
+# Local visual QA screenshots
+/venture-*.png
+/togeto-next-js/venture-*.png

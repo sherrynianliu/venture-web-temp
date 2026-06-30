@@ -23,8 +23,9 @@ npm run dev:turbo -- --port 3002 --hostname 127.0.0.1
 ## Verification
 
 ```bash
-node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/template-cleanup.test.mjs
+npm run test:source
 npm run build
+npm run smoke:routes
 ```
 
 ## Runtime Route Smoke Test

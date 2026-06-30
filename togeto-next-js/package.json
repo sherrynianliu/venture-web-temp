@@ -8,7 +8,8 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
-    "smoke:routes": "node tests/runtime-route-smoke.test.mjs"
+    "smoke:routes": "node tests/runtime-route-smoke.test.mjs",
+    "test:source": "node --test tests/home-6.test.mjs tests/venture-site-shell.test.mjs tests/template-cleanup.test.mjs tests/repo-hygiene.test.mjs"
   },
   "dependencies": {
     "next": "16.2.9",
