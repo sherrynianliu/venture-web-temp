@@ -7,7 +7,7 @@ export const ventureIdentityStructuredData = {
       "@type": "Organization",
       "@id": "https://www.venture-mfg.com/#organization",
       name: "Venture Electronics",
-      legalName: "Venture Electronics Technology Ltd",
+      legalName: "Venture Electronics Tech Ltd",
       url: CONTACT_CHANNELS.currentMainWebsite,
       email: CONTACT_CHANNELS.generalEmail,
       telephone: CONTACT_CHANNELS.phone,

@@ -1,6 +1,5 @@
 import { CapabilityEvidence } from "@/components/venture-site/home/CapabilityEvidence";
 import { EMSBoxBuildBlock } from "@/components/venture-site/home/EMSBoxBuildBlock";
-import { HomeFAQBlock } from "@/components/venture-site/home/HomeFAQBlock";
 import { ProjectPathStepper } from "@/components/venture-site/home/ProjectPathStepper";
 import { routes, type PageData } from "@/components/venture-site/site-data";
 
@@ -42,14 +41,6 @@ export function PageEnhancements({ page }: PageEnhancementsProps) {
           secondaryLabel="View PCBA Service"
           secondaryHref={routes.pcba}
         />
-      </div>
-    );
-  }
-
-  if (page.href === routes.resources) {
-    return (
-      <div className="stage3-enhancements stage3-enhancements--resources">
-        <HomeFAQBlock />
       </div>
     );
   }

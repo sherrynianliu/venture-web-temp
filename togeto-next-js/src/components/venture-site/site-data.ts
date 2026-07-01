@@ -388,7 +388,7 @@ const servicesFaqs: PageFAQ[] = [
 
 const resourcesFaqs: PageFAQ[] = [
   {
-    question: "What files are needed for a PCB Assembly quote?",
+    question: "What RFQ inputs should I prepare before emailing Venture?",
     answer:
       "Gerber or ODB++, BOM, CPL, assembly drawing, quantity, testing requirements, and delivery expectations are the main RFQ inputs.",
   },
@@ -574,13 +574,14 @@ export const domainGovernanceGroups: DomainGovernanceGroup[] = [
       },
       {
         domain: "v-cst.com",
-        currentRole: "Related company / registry-linked asset.",
+        currentRole:
+          "Shenzhen export / supply-chain support company site, not the current buyer-facing Venture Electronics website.",
         howItIsUsed:
-          "It may appear in company or registry information connected with the broader business structure.",
+          "It may appear in Shenzhen company, foreign-exchange collection, supply-chain coordination, or export-party records for Shenzhen V-CST Tech Co. Ltd. / 深圳市纬创斯通科技有限公司.",
         buyerGuidance:
-          "It is not the current buyer-facing Venture Electronics website unless Venture confirms a specific purpose.",
+          "It is not the default overseas buyer-facing Venture Electronics website. Foreign buyers should use Venture Electronics, venture-mfg.com, and confirmed contact channels for RFQs.",
         safePublicInquiries:
-          "No - use the current venture-mfg.com contact path until the relationship is confirmed.",
+          "No - use the current venture-mfg.com contact path for public inquiries.",
       },
     ],
   },
@@ -2397,7 +2398,7 @@ export const pageData = {
           ],
           rows: [
             { field: "Brand", wording: "Venture Electronics" },
-            { field: "English entity", wording: "Venture Electronics Technology Ltd" },
+            { field: "Buyer-facing / Hong Kong entity", wording: "Venture Electronics Tech Ltd" },
             { field: "Current official main website", wording: CONTACT_CHANNELS.currentMainDomain },
             {
               field: "Main positioning",
@@ -2464,6 +2465,15 @@ export const pageData = {
           ],
         },
         kind: "content-table",
+      },
+      {
+        title: "Client-approved named references",
+        items: [
+          "Client-approved named customer references include VTech, Nokia, Mindray, Johnson Electric, and Honeywell.",
+          "Use these names as conservative text references only unless Venture supplies separate case details or logo-publication approval.",
+          "Do not add project details, testimonials, production volume, current-contract status, or regulated-industry claims from the names alone.",
+        ],
+        kind: "facts",
       },
       {
         title: "How Venture works with buyers",
@@ -2643,7 +2653,7 @@ export const pageData = {
       {
         title: "Review status and source basis",
         items: [
-          "Last reviewed: 2026-06-28.",
+          "Last reviewed: 2026-06-30.",
           "This page is maintained as the current Venture Electronics domain and official-asset guide.",
           "Domain roles may change; buyers should use venture-mfg.com and confirmed Venture Electronics contact channels for current inquiries.",
         ],
@@ -2653,7 +2663,12 @@ export const pageData = {
         title: "Company entity and inquiry source of truth",
         items: [
           "Primary brand: Venture Electronics.",
-          "English entity: Venture Electronics Technology Ltd.",
+          "Hong Kong buyer-facing company: Venture Electronics Tech Ltd / 威驰科技有限公司.",
+          "The confirmed Hong Kong Chinese name is 威驰科技有限公司 and does not include 深圳市.",
+          "Shenzhen export / supply-chain support company: Shenzhen V-CST Tech Co., Ltd. / 深圳市纬创斯通科技有限公司, USCC 914403000649760968.",
+          "v-cst.com is the Shenzhen V-CST related company site, not the main buyer-facing Venture Electronics website.",
+          "深圳市威驰科技有限公司 is an unrelated false-match entity and should not be treated as a Venture company.",
+          "Client-approved named customer references for the GEO website: VTech, Nokia, Mindray, Johnson Electric, Honeywell.",
           "Main service positioning: PCB Manufacturing, PCB Assembly and EMS Manufacturing partner.",
           `Current official main website: ${CONTACT_CHANNELS.currentMainDomain}.`,
           `RFQ email: ${CONTACT_CHANNELS.rfqEmail}.`,
@@ -2898,25 +2913,54 @@ export const pageData = {
     visual: pageVisuals.requestQuote,
     sections: [
       {
+        title: "Request a PCB Assembly, EMS, sourcing or fabrication quote",
+        body:
+          "Start with the project type that best matches the deliverable. The email-first RFQ flow can still be used when the buyer is not sure which category applies.",
+        table: {
+          columns: [
+            { key: "projectType", label: "Project type" },
+            { key: "include", label: "What to include" },
+            { key: "route", label: "Best starting point" },
+          ],
+          rows: [
+            {
+              projectType: "PCB Assembly / Turnkey PCBA",
+              include:
+                "Supply model, Gerber or ODB++, BOM, CPL, assembly drawing, quantity, programming, coating, marking and testing expectations.",
+              route: "PCB Assembly / PCBA",
+            },
+            {
+              projectType: "EMS & Box Build",
+              include:
+                "System BOM, enclosure and mechanical drawings, cable or harness details, assembly instructions, system-test method, labels, accessories and packaging requirements.",
+              route: "EMS & Box Build",
+            },
+            {
+              projectType: "Component Sourcing / BOM / DFM",
+              include:
+                "No-substitution parts, approved-vendor rules, lifecycle or availability concerns, compliance needs and expected review output.",
+              route: "Component Sourcing, BOM & DFM Review",
+            },
+            {
+              projectType: "PCB Fabrication Support",
+              include:
+                "Stack-up, material, thickness, copper, impedance, surface finish, panelization, hole or via requirements and downstream assembly constraints.",
+              route: "PCB Fabrication Support",
+            },
+          ],
+        },
+        kind: "content-table",
+        featured: true,
+      },
+      {
         title: "First-launch email workflow",
         body:
           "This first-launch RFQ page does not upload files directly. Please email Gerber, BOM, CPL, drawings or other sensitive files through the confirmed Venture Electronics contact channel.",
-        featured: true,
       },
       {
         title: "Core RFQ files",
         items: quoteChecklist,
         kind: "checklist",
-      },
-      {
-        title: "Project-type additions",
-        items: [
-          "PCB Assembly / Turnkey PCBA: state whether the project is consigned, partial-turnkey or full-turnkey; include special packages, programming, coating, marking and test expectations.",
-          "EMS & Box Build: add the system BOM, enclosure and mechanical drawings, cable or harness details, assembly instructions, system-test method, labels, accessories and packaging requirements.",
-          "Component Sourcing / BOM / DFM: identify no-substitution parts, approved-vendor rules, lifecycle or availability concerns, compliance requirements and the review output needed.",
-          "PCB Fabrication Support: add the stack-up, material, thickness, copper, impedance, surface finish, panelization, hole or via requirements and downstream assembly constraints.",
-        ],
-        kind: "list",
       },
       {
         title: "Email, NDA and large files",
