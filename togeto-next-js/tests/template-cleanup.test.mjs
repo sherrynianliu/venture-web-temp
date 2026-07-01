@@ -47,7 +47,6 @@ const forbiddenLiveTerms = [
   'search engines and AI systems',
   'support@venture-mfg.com',
   'Wei Chi',
-  '威驰',
   'Chinese entity',
   '/assets/css/theme-main.css',
   '/venture-static/vendor/bootstrap.min.css',
@@ -86,7 +85,9 @@ test('public source authority is centralized and public copy avoids unconfirmed 
   assert.match(channels, /generalEmail:\s*"info@venture-mfg\.com"/);
   assert.match(siteData, /CONTACT_CHANNELS\.rfqEmail/);
   assert.match(siteData, /CONTACT_CHANNELS\.generalEmail/);
-  assert.doesNotMatch(siteData, /Wei Chi|威驰|Chinese entity/i);
+  assert.match(siteData, /Venture Electronics Tech Ltd \/ 威驰科技有限公司/);
+  assert.match(siteData, /深圳市威驰科技有限公司 is an unrelated false-match entity/);
+  assert.doesNotMatch(siteData, /Wei Chi|Venture Electronics Technology Ltd|Chinese entity/i);
   assert.doesNotMatch(schema, /venture-pcba\.com|venturegroup-mfg|uni-venture|v-cst|venturepcb\.com/);
 });
 

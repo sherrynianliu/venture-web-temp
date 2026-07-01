@@ -96,7 +96,7 @@ export function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copy">
-            © 2026 Venture Electronics Technology Ltd. All rights reserved.
+            © 2026 Venture Electronics Tech Ltd. All rights reserved.
           </p>
           <ul className="footer-legal">
             {footerGroups

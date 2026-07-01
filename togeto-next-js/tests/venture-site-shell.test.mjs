@@ -523,11 +523,27 @@ test('official resources categorizes Venture domain roles without expanding offi
   );
   assert.ok(
     pageData.officialResources.sections.some((section) =>
-      section.items?.some((item) => item.includes('Last reviewed: 2026-06-28')),
+      section.items?.some((item) => item.includes('Last reviewed: 2026-06-30')),
+    ),
+  );
+  assert.ok(
+    pageData.officialResources.sections.some((section) =>
+      section.items?.some((item) => item.includes('Venture Electronics Tech Ltd / 威驰科技有限公司')),
+    ),
+  );
+  assert.ok(
+    pageData.officialResources.sections.some((section) =>
+      section.items?.some((item) => item.includes('Shenzhen V-CST Tech Co., Ltd. / 深圳市纬创斯通科技有限公司')),
+    ),
+  );
+  assert.ok(
+    pageData.officialResources.sections.some((section) =>
+      section.items?.some((item) => item.includes('深圳市威驰科技有限公司 is an unrelated false-match entity')),
     ),
   );
   assert.doesNotMatch(siteData, /AI systems|search engines/i);
   assert.doesNotMatch(siteData, /client-provided|pending final client confirmation|search results/i);
+  assert.doesNotMatch(siteData, /Venture Electronics Technology Ltd/);
   assert.equal(domainSections.length, 5);
   assert.equal(domainTableSections.length, 1);
   assert.equal(faqSections.length, 1);
@@ -614,7 +630,11 @@ test('official resources categorizes Venture domain roles without expanding offi
   );
   assert.equal(
     domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'v-cst.com').currentRole,
-    'Related company / registry-linked asset.',
+    'Shenzhen export / supply-chain support company site, not the current buyer-facing Venture Electronics website.',
+  );
+  assert.match(
+    domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'v-cst.com').howItIsUsed,
+    /Shenzhen V-CST Tech Co\. Ltd\. \/ 深圳市纬创斯通科技有限公司/,
   );
   assert.equal(
     domainGovernanceGroups.flatMap((group) => group.domains).find((record) => record.domain === 'venturepcb.com').currentRole,
@@ -862,6 +882,18 @@ test('P1 buyer-support pages include human-friendly manufacturing guidance witho
   assert.match(siteData, /What stays consolidated instead of becoming thin pages/);
   assert.match(siteData, /RFQ checklist/);
   assert.match(siteData, /Choose the right contact path/);
+  const requestQuoteTable = pageData.requestQuote.sections.find(
+    (item) =>
+      item.kind === 'content-table' &&
+      item.title === 'Request a PCB Assembly, EMS, sourcing or fabrication quote',
+  );
+  const composerIndex = pageData.requestQuote.sections.findIndex(
+    (item) => item.title === 'Prepare an RFQ email for Venture Electronics',
+  );
+  assert.ok(requestQuoteTable, 'Request a Quote should put project-type guidance in a structured table');
+  assert.equal(requestQuoteTable.featured, true);
+  assert.equal(pageData.requestQuote.sections.indexOf(requestQuoteTable), 0);
+  assert.equal(composerIndex, -1, 'RFQ composer stays outside page sections and should render after the project-type table');
   assert.match(siteData, /This first-launch RFQ page does not upload files directly/);
   assert.match(siteData, /Schedule is reviewed by project/);
   assert.match(siteData, /Email \/ RFQ: \$\{CONTACT_CHANNELS\.rfqEmail\}/);
@@ -874,6 +906,26 @@ test('P1 buyer-support pages include human-friendly manufacturing guidance witho
   assert.doesNotMatch(
     `${siteData}\n${composer}`,
     /24\/7|24h response|No MOQ for all projects|fixed lead time for every project|customer logos|IPC Class 3|IATF|BSCI|aerospace|defense/i,
+  );
+});
+
+test('buyer FAQ sets do not duplicate the homepage planning FAQ on Resources or RFQ pages', async () => {
+  const { homeFaqs, pageData } = loadProjectTsModule('src/components/venture-site/site-data.ts');
+  const pageEnhancements = await readProjectFile('src/components/venture-site/pages/PageEnhancements.tsx');
+
+  const homeQuestions = new Set(homeFaqs.map((faq) => faq.question));
+  const resourceQuestions = new Set(pageData.resources.faqs.map((faq) => faq.question));
+  const requestQuoteQuestions = new Set(pageData.requestQuote.faqs.map((faq) => faq.question));
+  const overlaps = [
+    ...[...resourceQuestions].filter((question) => homeQuestions.has(question)),
+    ...[...requestQuoteQuestions].filter((question) => homeQuestions.has(question)),
+  ];
+
+  assert.deepEqual(overlaps, []);
+  assert.doesNotMatch(
+    pageEnhancements,
+    /page\.href === routes\.resources[\s\S]*?<HomeFAQBlock \/>/,
+    'Resources should not render the homepage FAQ block in addition to its own Buyer FAQ',
   );
 });
 
@@ -1112,10 +1164,12 @@ test('Venture pages emit conservative page-level structured data', () => {
   const organization = identityGraph.find((entry) => entry['@type'] === 'Organization');
   const website = identityGraph.find((entry) => entry['@type'] === 'WebSite');
 
+  assert.equal(organization.legalName, 'Venture Electronics Tech Ltd');
   assert.equal(organization.url, 'https://www.venture-mfg.com/');
   assert.equal(website.url, 'https://www.venture-mfg.com/');
   assert.doesNotMatch(identityJson, /sameAs/);
   assert.doesNotMatch(identityJson, /contactPoint/);
+  assert.doesNotMatch(identityJson, /威驰|V-CST|v-cst|深圳市/);
 
   for (const domain of nonCanonicalDomains) {
     assert.ok(
